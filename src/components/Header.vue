@@ -33,7 +33,7 @@ export default {
     watch: {
         '$route' () {
             if (this.$route.path === '/registration') {
-                console.lothis.$refs.uniqueName
+                
                 this.isActive = true;
             } else {
                 this.isActive = false;

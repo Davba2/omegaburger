@@ -84,7 +84,7 @@ export default {
                 userEmail: this.email,
                 userPassword: this.password
             };
-            console.log(user);
+            
             var userObj = {
                 userEmail: this.email,
                 userPassword: this.password,
@@ -103,7 +103,7 @@ export default {
             axios.post('http://localhost:2375/User/Auth', userObj)
             .then((response) => {
             // Ответ был получен
-            console.log(response);
+            console.log(response.config.data);
             })
             .catch(function (error) {
             //если ошибка
