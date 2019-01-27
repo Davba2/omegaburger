@@ -1,17 +1,20 @@
 <template>
     <div class="header-navigation container-fluid">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-7 text-left">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <ul class="navigation">
+                    <li v-bind:class="{ active: isActiveCat }">
+                        <router-link to="/index">Главная</router-link>
+                    </li>
                     <li>
-                        <router-link to="/index">Каталог</router-link>
+                        <router-link to="/helloworld">Каталог</router-link>
                     </li>
                     <li>
                         <router-link to="/helloworld">Помощь</router-link>
                     </li>
-                    <li v-bind:class="{ active: isActive }">
+                    <li v-bind:class="{ active: isActiveReg }">
                         <router-link to="/registration">Войти</router-link>
                     </li>
                     <li>
@@ -27,17 +30,23 @@
 export default {
     data: function() {
         return {
-            isActive: false
+            isActiveCat: false,
+            isActiveReg: false
         }
     },
     watch: {
         '$route' () {
             if (this.$route.path === '/registration') {
-                
-                this.isActive = true;
+                this.isActiveReg = true;
             } else {
-                this.isActive = false;
+                this.isActiveReg = false;
             }
+            if (this.$route.path === '/index') {
+                this.isActiveCat = true;
+            } else {
+                this.isActiveCat = false;
+            }
+            
         }
     }
 }
@@ -47,6 +56,10 @@ export default {
 <style scoped>
 .header-navigation {
     background: #000000;
+}
+.row img {
+    width: 10%;
+    overflow: hidden;
 }
 .navigation {
     list-style-type: none;
@@ -64,10 +77,10 @@ export default {
 .navigation li {
     float: left;
 }
-.active li a {
+.active a {
     background-color: white;
     font-weight: bold;
-    color: white;
+    color: black;
 }
 .navigation a:hover {
     background-color: white;

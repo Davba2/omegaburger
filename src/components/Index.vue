@@ -68,24 +68,29 @@
 		</section>
         <section id="comments">
             <div class="container comment-element">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img class="card-img-top" src="https://static-cdn.jtvnw.net/emoticons/v1/128391/3.0"/>
-                            <div class="card-body">
-                                Студентка. 20
+                <transition name="slide-fade">
+                    <div class="row" v-if="show">
+                        <div class="col-md-4" >
+                            <div class="card">
+                                <img class="card-img-top" src="https://static-cdn.jtvnw.net/emoticons/v1/128391/3.0"/>
+                                <div class="card-body">
+                                    Студентка. 20
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    
                     <div class="col-md-8">
                         <div class="comment-body text-left">
                             Невероятно вкусно! После того, как попробовала двойной гамбургер от шефа Пуарди, слюнки аж потекли.
                         </div>
                     </div>
                 </div>
+            </transition>
             </div>
+            
             <div class="container comment-element">
-                <div class="row">
+                <transition name="slide-fade">
+                <div class="row" v-if="showSecond">
                     <div class="col-md-8">
                         <div class="comment-body text-right">
                             Эм... очень вкусно
@@ -100,9 +105,11 @@
                         </div>
                     </div>
                 </div>
+                </transition>
             </div>
             <div class="container comment-element">
-                <div class="row">
+                <transition name="slide-fade">
+                <div class="row" v-if="showThird">
                     <div class="col-md-4">
                         <div class="card">
                             <img class="card-img-top" src="https://static-cdn.jtvnw.net/emoticons/v1/195855/3.0"/>
@@ -117,24 +124,18 @@
                         </div>
                     </div>
                 </div>
+                </transition>
             </div>
         </section>
-        <section>
-            <div class="container">
-                <div id="mapid">
-                    <l-map ref="map" :zoom=13 :center="[47.413220, -1.219482]">
-                        {{some}}
-                    </l-map>
-                </div>
+        <section id="map">
+            <div class="container-fluid">
+                <div id="mapid" ref="mapElement"></div>
             </div>
-            <hr/>
-            Возможно тут будет ещё один блок. Возможно
-            <hr/>
         </section>
         <footer id="mainFooter">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <p class="help-text">
                             Магазин
                         </p>
@@ -145,7 +146,7 @@
                             <li>Кабинет</li>
                         </ul>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <p class="help-text">
                             Доставка
                         </p>
@@ -155,8 +156,9 @@
                             <li>Долгая доставка?</li>
                         </ul>
                     </div>
-                    <div class="col-md-6">
-                        LOGO компании
+                    <div class="col-md-4">
+                       <img src="https://my.mixtape.moe/iwxgkq.PNG"
+                        class="img img-fluid"/>
                     </div>
                 </div>
             </div>
@@ -164,33 +166,52 @@
                 2019
             </span>
         </footer>
+
     </div>
 </template>
 
 <script>
-import "leaflet/dist/leaflet.css";
+import {LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+import L from 'leaflet';
 export default {
     data () {
         return {
            map: null,
-           some: ''
+           show: true,
+           showSecond: true,
+           showThird: true
+        }
+    },
+    methods: {
+        toggleComments: function () {
+            console.log(this.show);
+            this.show = !this.show;
         }
     },
     props: {
         msg: String
     },
     components: {
-        
+        LMap,
+        LTileLayer,
+        LMarker
+    },
+    created() {
+        this.interval = setInterval(() => this.toggleComments(), 11000);
     },
     mounted () {
+        
         this.$nextTick(() => {
-        this.map = this.$refs.map.mapObject; 
-        console.log(map)// work as expected
+            this.map = L.map(this.$refs['mapElement']).setView([53.902237, 30.335839], 14);
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
+            new L.Marker([53.902237, 30.335839]).bindPopup('OMEGA Burger').addTo(this.map);
+            
         })
     }
 }
 </script>
 <style scoped>
+@import "~leaflet/dist/leaflet.css";
 .carousel-item
 {
     clear: both;
@@ -198,6 +219,9 @@ export default {
 }
 .carousel-item .btn {
     background: yellow;
+}
+.carousel-item .btn:hover {
+    background: rgb(238, 238, 32);
 }
 .carousel-item p, h1 {
     color: #E8FDF5;
@@ -211,6 +235,13 @@ export default {
 #facts p {
     margin: 15px 0 0 0;
     font-size: 26px;
+}
+#facts img {
+    overflow: hidden;
+    transition: .3s ease-in-out;
+}
+#facts img:hover  {
+    transform: scale(1.2);
 }
 .merits {
     padding: 20px 10px 5px 10px;
@@ -235,6 +266,8 @@ export default {
 #comments {
     width: 800px;
     margin: 0 auto;
+    border-bottom: 1px black;
+    margin-bottom: 10px;
 }
 .comment-element {
     margin: 15px 5px;
@@ -265,7 +298,30 @@ export default {
     list-style-type: none;
     padding: 0;
 }
+#mainFooter img {
+    width: 35%;
+}
 .help-text {
     border-bottom: 1px solid;
+}
+#map {
+    border-top: 2px black;
+    border-bottom: 2px black; 
+    margin: 10px 0 10px 0;
+}
+#mapid {
+    width: 100%;
+    height: 400px;
+}
+.slide-fade-enter-active {
+  transition: all .7s ease;
+}
+.slide-fade-leave-active {
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active до версии 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
