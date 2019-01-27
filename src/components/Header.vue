@@ -5,16 +5,16 @@
             </div>
             <div class="col-md-4">
                 <ul class="navigation">
-                    <li v-bind:class="{ active: isActive }">
+                    <li>
                         <router-link to="/index">Каталог</router-link>
                     </li>
-                    <li v-bind:class="{ active: isActive }">
+                    <li>
                         <router-link to="/helloworld">Помощь</router-link>
                     </li>
                     <li v-bind:class="{ active: isActive }">
                         <router-link to="/registration">Войти</router-link>
                     </li>
-                    <li v-bind:class="{ active: isActive }">
+                    <li>
                         <a href="#">Кабинет</a>
                     </li>
                 </ul>
@@ -64,9 +64,10 @@ export default {
 .navigation li {
     float: left;
 }
-.active {
+.active li a {
     background-color: white;
     font-weight: bold;
+    color: white;
 }
 .navigation a:hover {
     background-color: white;

@@ -4,6 +4,7 @@ import BootstrapVue from 'bootstrap-vue'
 import VueRouter from 'vue-router'
 import router from './routes'
 //для карты
+import Vue2Leaflet from 'vue2-leaflet';
 import { L, LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 Vue.use(BootstrapVue);
@@ -25,5 +26,7 @@ L.Icon.Default.mergeOptions({
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  L,
+  Vue2Leaflet
 }).$mount('#app')

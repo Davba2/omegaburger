@@ -121,10 +121,11 @@
         </section>
         <section>
             <div class="container">
-                <l-map :zoom="zoom" :center="center">
-                    <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-                    <l-marker :lat-lng="marker"></l-marker>
-                </l-map>
+                <div id="mapid">
+                    <l-map ref="map" :zoom=13 :center="[47.413220, -1.219482]">
+                        {{some}}
+                    </l-map>
+                </div>
             </div>
             <hr/>
             Возможно тут будет ещё один блок. Возможно
@@ -167,27 +168,25 @@
 </template>
 
 <script>
-import {LMap, LTileLayer, LMarker } from 'vue2-leaflet';
-
+import "leaflet/dist/leaflet.css";
 export default {
-    data: function () {
+    data () {
         return {
-            titleName: 'IndexPage',
-            zoom:13,
-            center: L.latLng(47.413220, -1.219482),
-            url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-            attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-            marker: L.latLng(47.413220, -1.219482),
+           map: null,
+           some: ''
         }
     },
     props: {
         msg: String
     },
     components: {
-        LMap, LTileLayer, LMarker 
+        
     },
     mounted () {
-        this.renderMap()
+        this.$nextTick(() => {
+        this.map = this.$refs.map.mapObject; 
+        console.log(map)// work as expected
+        })
     }
 }
 </script>

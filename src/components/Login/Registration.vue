@@ -93,7 +93,7 @@ export default {
             .catch(function (error) {
             //если ошибка
             })
-            console.log(user);
+            console.log(userObj);
         },
         checkForm: function (event) {
             this.errorsEmail = [];
