@@ -60,6 +60,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
     data () {
         return {
@@ -74,7 +75,7 @@ export default {
     methods: {
         sendUserData: function (event) {
             var isValid = this.checkForm(event);
-
+            event.preventDefault();
             if (!isValid) {
                 return false;
             }
@@ -84,6 +85,30 @@ export default {
                 userPassword: this.password
             };
             console.log(user);
+            var userObj = {
+                userEmail: this.email,
+                userPassword: this.password,
+            };
+            
+            /**
+             * Отправляет запрос к контр. User - Action Auth.
+             * Вид объекта:
+             * obj = {
+             *     userEmail
+             *     userPassword
+             * }
+             * 
+             * */
+
+            axios.post('http://localhost:2375/User/Auth', userObj)
+            .then((response) => {
+            // Ответ был получен
+            console.log(response);
+            })
+            .catch(function (error) {
+            //если ошибка
+            })
+            
         },
         checkForm: function (event) {
             console.log(this.$router.currentRoute);
