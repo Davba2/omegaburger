@@ -78,13 +78,14 @@ export default {
 
             var userEmail = this.email;
             var userPassword = this.password;
-
+            var rememberUser = remember;
             /**
-             * Отправляет запрос к контр. User - Action Auth.
+             * Отправляет запрос к контр. Account - Action Login.
              * Вид объекта:
              * obj = {
              *     userEmail
-             *     userPassword
+             *     userPassword,
+             *     rememberUser
              * }
              * 
              * */
@@ -95,7 +96,8 @@ export default {
                 url: "http://localhost:64349/Account/Login",
                 data: {
                     userEmail,
-                    userPassword
+                    userPassword,
+                    rememberUser
                 }
             })
             .then((response) => {
