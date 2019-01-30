@@ -91,31 +91,27 @@ export default {
              * */
 
 
-            // axios.post({
-            //     method: "POST",
-            //     headers: { "Content-Type": "application/json" },
-            //     url: "http://localhost:64349/Account/Login",
-            //     data: {
-            //         userEmail,
-            //         userPassword,
-            //         rememberUser
-            //     }
-            // })
-            // .then((response) => {
-            // // Ответ был получен
-            // this.$store.dispatch('registerUser', userEmail)
-            // .then(() =>{
-            //     this.$route.push('/catalog')
-            // });
-            // console.log(response);
-            // })
-            // .catch(function (error) {
-            // //если ошибка
-            // })
+            axios.post({
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                url: "http://localhost:64349/Account/Login",
+                data: {
+                    userEmail,
+                    userPassword,
+                    rememberUser
+                }
+            })
+            .then((response) => {
+            // Ответ был получен
             this.$store.dispatch('registerUser', userEmail)
             .then(() =>{
-                this.$router.push('/catalog')
+                this.$route.push('/catalog')
             });
+            console.log(response);
+            })
+            .catch(function (error) {
+            //если ошибка
+            })
         },
         checkForm: function (event) {
             this.errorsEmail = [];

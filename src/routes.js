@@ -7,7 +7,7 @@ import CatalogBody from './components/Catalog/Catalog.vue'
 export default new VueRouter({
     routes: [
         {
-            path: '/index',
+            path: '/',
             component: MainBody
         },
         {

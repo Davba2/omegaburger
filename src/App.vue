@@ -30,7 +30,7 @@ export default {
       if (!this.isUserLogged) {
         return [
           {
-            title: 'Главная', url: '/index'
+            title: 'Главная', url: '/'
           },
           {
             title: 'Каталог', url: '/catalog'
@@ -45,7 +45,7 @@ export default {
       }
       return [
         {
-          title: 'Главная', url: '/index'
+          title: 'Главная', url: '/'
         },
         {
           title: 'Войти', url: '/registration'
