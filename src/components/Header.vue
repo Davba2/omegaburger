@@ -30,7 +30,14 @@ export default {
             isActiveCat: false,
             isActiveReg: false,
             isActiveMag: false,
-            isUserLog: false
+            isUserLog: false,
+            
+        }
+    },
+    computed: {
+        test() {
+            //для теста. Просто выводит из стейта объект пользователя
+            return this.$store.state.user;
         }
     },
     watch: {

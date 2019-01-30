@@ -105,13 +105,19 @@ export default {
             // Ответ был получен
             this.$store.dispatch('registerUser', userEmail)
             .then(() =>{
-                this.$route.push('/catalog')
+                this.$router.push('/catalog')
             });
             console.log(response);
             })
             .catch(function (error) {
             //если ошибка
             })
+
+            //Если нужно просто проверить вход
+            // this.$store.dispatch('registerUser', userEmail)
+            //  .then(() =>{
+            //     this.$router.push('/catalog')
+            // });
         },
         checkForm: function (event) {
             this.errorsEmail = [];

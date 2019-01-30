@@ -27,7 +27,7 @@ export default {
       return this.$store.getters.isUserLogin;
     },
     links () {
-      if (!this.isUserLogged) {
+      if (this.isUserLogged) {
         return [
           {
             title: 'Главная', url: '/'

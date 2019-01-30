@@ -5,12 +5,16 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        user: null,
+        user: {
+            email: null,
+            logged: false
+        },
         commnets: []
     },
     mutations: {
         setUser (state, payload) {
-            state.user = payload
+            state.user.email = payload;
+            state.user.logged = true;
         }
     },
     actions: {
@@ -20,7 +24,7 @@ export const store = new Vuex.Store({
     },
     getters: {
         isUserLogin (state) {
-            return Object.keys(state.user).length === 0;
+            return state.user.logged;
         }
     }
 })
