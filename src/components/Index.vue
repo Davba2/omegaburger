@@ -132,41 +132,6 @@
                 <div id="mapid" ref="mapElement"></div>
             </div>
         </section>
-        <footer id="mainFooter">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <p class="help-text">
-                            Магазин
-                        </p>
-                        <ul>
-                            <li>Каталог</li>
-                            <li>Помощь</li>
-                            <li>Войти</li>
-                            <li>Кабинет</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="help-text">
-                            Доставка
-                        </p>
-                        <ul>
-                            <li>Способ доставки</li>
-                            <li>Как оплатить</li>
-                            <li>Долгая доставка?</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4">
-                       <img src="https://my.mixtape.moe/iwxgkq.PNG"
-                        class="img img-fluid"/>
-                    </div>
-                </div>
-            </div>
-            <span>
-                2019
-            </span>
-        </footer>
-
     </div>
 </template>
 

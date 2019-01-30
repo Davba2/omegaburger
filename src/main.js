@@ -5,6 +5,9 @@ import VueRouter from 'vue-router'
 import router from './routes'
 import { L } from 'vue2-leaflet'
 import 'leaflet/dist/leaflet.css'
+import Vuex from 'vuex';
+import {store} from './store/store'
+Vue.use(Vuex);
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.config.productionTip = false
@@ -19,5 +22,6 @@ L.Icon.Default.mergeOptions({
 new Vue({
   render: h => h(App),
   L,
+  store,
   router,
 }).$mount('#app')

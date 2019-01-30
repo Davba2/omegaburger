@@ -38,6 +38,11 @@
                                 </span>
                             </div>
                             <div class="section-input">
+                                <label for="password">Запомнить меня</label>
+                                <input type="checkbox" id="checkbox" class="form-control custom-field"
+                                 v-model="remember"/>
+                            </div>
+                            <div class="section-input">
                                 <button 
                                 type="submit" class="btn btn-lg button"
                                 v-on:click="sendUserData">Войти</button>
@@ -58,6 +63,7 @@ export default {
         return {
             email: '',
             password: '',
+            remember: false,
             errorsEmail: [],
             passwordError: []
         }
@@ -86,7 +92,7 @@ export default {
             axios.post({
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                url: "http://localhost:64349/User/Login",
+                url: "http://localhost:64349/Account/Login",
                 data: {
                     userEmail,
                     userPassword
@@ -163,6 +169,7 @@ export default {
     display: block;
     text-align: left;
 }
+
 .section-input {
     margin: 15px 0 15px 0;
 }
@@ -177,6 +184,9 @@ export default {
 .section-input input:focus {
     outline-style: none;
     box-shadow: none;
+}
+.section-input .custom-field {
+    border-radius: 15px;
 }
 .button {
     width: 100%;

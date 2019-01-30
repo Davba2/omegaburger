@@ -2,6 +2,7 @@
   <div id="app">
     <HeaderBody/>
     <router-view></router-view>
+    <footer-body/>
   </div>
 </template>
 
@@ -10,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import HeaderBody from './components/Header.vue'
 import axios from 'axios';
+import FooterBody from './components/Footer.vue'
 export default {
   data: function () {
   return {
@@ -17,7 +19,8 @@ export default {
   }
 },
   components: {
-    HeaderBody
+    HeaderBody,
+    FooterBody
   },
   methods: {
     getApi: function (c) {
@@ -44,4 +47,5 @@ body {
   text-align: center;
   color: #2c3e50;
 }
+
 </style>

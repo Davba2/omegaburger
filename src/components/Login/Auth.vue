@@ -96,7 +96,7 @@ export default {
             axios.post({
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                url: "http://localhost:64349/User/Auth",
+                url: "http://localhost:64349/Account/Auth",
                 data: {
                     userEmail,
                     userPassword
