@@ -80,16 +80,9 @@ export default {
                 return false;
             }
 
-            var user = {
-                userEmail: this.email,
-                userPassword: this.password
-            };
-            
-            var userObj = {
-                userEmail: this.email,
-                userPassword: this.password,
-            };
-            
+            var userEmail = this.email;
+            var userPassword = this.password;
+
             /**
              * Отправляет запрос к контр. User - Action Auth.
              * Вид объекта:
@@ -100,10 +93,18 @@ export default {
              * 
              * */
 
-            axios.post('http://localhost:2375/User/Auth', userObj)
+            axios.post({
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                url: "http://localhost:64349/User/Auth",
+                data: {
+                    userEmail,
+                    userPassword
+                }
+            })
             .then((response) => {
             // Ответ был получен
-            console.log(response.config.data);
+            console.log(response);
             })
             .catch(function (error) {
             //если ошибка

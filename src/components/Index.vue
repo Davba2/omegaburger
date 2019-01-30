@@ -205,7 +205,6 @@ export default {
             this.map = L.map(this.$refs['mapElement']).setView([53.902237, 30.335839], 14);
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
             new L.Marker([53.902237, 30.335839]).bindPopup('OMEGA Burger').addTo(this.map);
-            
         })
     }
 }

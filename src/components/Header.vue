@@ -8,8 +8,8 @@
                     <li v-bind:class="{ active: isActiveCat }">
                         <router-link to="/index">Главная</router-link>
                     </li>
-                    <li>
-                        <router-link to="/helloworld">Каталог</router-link>
+                    <li v-bind:class="{ active: isActiveMag }">
+                        <router-link to="/catalog">Каталог</router-link>
                     </li>
                     <li>
                         <router-link to="/helloworld">Помощь</router-link>
@@ -31,7 +31,8 @@ export default {
     data: function() {
         return {
             isActiveCat: false,
-            isActiveReg: false
+            isActiveReg: false,
+            isActiveMag: false
         }
     },
     watch: {
@@ -45,6 +46,11 @@ export default {
                 this.isActiveCat = true;
             } else {
                 this.isActiveCat = false;
+            }
+            if (this.$route.path === '/catalog') {
+                this.isActiveMag = true;
+            } else {
+                this.isActiveMag = false;
             }
             
         }
