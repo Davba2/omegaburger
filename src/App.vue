@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HeaderBody/>
+    <HeaderBody v-bind:links="links"/>
     <router-view></router-view>
     <footer-body/>
   </div>
@@ -15,12 +15,43 @@ import FooterBody from './components/Footer.vue'
 export default {
   data: function () {
   return {
-    count: ''
+    count: '',
   }
 },
   components: {
     HeaderBody,
     FooterBody
+  },
+  computed: {
+    isUserLogged () {
+      return this.$store.getters.isUserLogin;
+    },
+    links () {
+      if (!this.isUserLogged) {
+        return [
+          {
+            title: 'Главная', url: '/index'
+          },
+          {
+            title: 'Каталог', url: '/catalog'
+          },
+          {
+            title: 'Кабинет', url: '/cabinet'
+          },
+          {
+            title: 'Выйти', url: '/log_out'
+          }
+        ];
+      }
+      return [
+        {
+          title: 'Главная', url: '/index'
+        },
+        {
+          title: 'Войти', url: '/registration'
+        }
+      ];
+    }
   },
   methods: {
     getApi: function (c) {

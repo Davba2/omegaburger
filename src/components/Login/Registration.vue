@@ -78,7 +78,7 @@ export default {
 
             var userEmail = this.email;
             var userPassword = this.password;
-            var rememberUser = remember;
+            var rememberUser = this.remember;
             /**
              * Отправляет запрос к контр. Account - Action Login.
              * Вид объекта:
@@ -90,23 +90,32 @@ export default {
              * 
              * */
 
-            axios.post({
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                url: "http://localhost:64349/Account/Login",
-                data: {
-                    userEmail,
-                    userPassword,
-                    rememberUser
-                }
-            })
-            .then((response) => {
-            // Ответ был получен
-            console.log(response);
-            })
-            .catch(function (error) {
-            //если ошибка
-            })
+
+            // axios.post({
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     url: "http://localhost:64349/Account/Login",
+            //     data: {
+            //         userEmail,
+            //         userPassword,
+            //         rememberUser
+            //     }
+            // })
+            // .then((response) => {
+            // // Ответ был получен
+            // this.$store.dispatch('registerUser', userEmail)
+            // .then(() =>{
+            //     this.$route.push('/catalog')
+            // });
+            // console.log(response);
+            // })
+            // .catch(function (error) {
+            // //если ошибка
+            // })
+            this.$store.dispatch('registerUser', userEmail)
+            .then(() =>{
+                this.$router.push('/catalog')
+            });
         },
         checkForm: function (event) {
             this.errorsEmail = [];
