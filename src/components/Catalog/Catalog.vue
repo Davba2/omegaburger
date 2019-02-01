@@ -2,66 +2,10 @@
     <div>
         <div class="container">
             <div class="row omega">
-                <div class="col-md-3 food-body">
-                    <img src="https://image.flaticon.com/icons/svg/1365/1365596.svg"/>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12 counter">
-                                    <p>
-                                        0
-                                    </p>
-                                    <p>
-                                        0
-                                    </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 food-body">
-                    <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12 counter">
-                                    <p class="burger-count">
-                                        {{burger.first}}
-                                    </p>
-                                    <p class="burger-count">
-                                        {{burger.second}}
-                                    </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>  
-                <div class="col-md-3 food-body">
-                    <img src="https://image.flaticon.com/icons/png/512/1365/1365576.png"/>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12 counter">
-                                    <p>
-                                        {{drinks.first}}
-                                    </p>
-                                    <p>
-                                        {{drinks.second}}
-                                    </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>    
-                <div class="col-md-3 food-body">
-                    <img src="https://image.flaticon.com/icons/svg/1408/1408052.svg"/>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12 counter">
-                                    <p>
-                                        0
-                                    </p>
-                                    <p>
-                                        0
-                                    </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>  
+                <Counter v-bind:counterData="counterData.drinks"/>
+                <Counter v-bind:counterData="counterData.burger"/>
+                <Counter v-bind:counterData="counterData.sweat"/>   
+                <Counter v-bind:counterData="counterData.dishes"/> 
             </div>
         </div>
         <div class="container">
@@ -380,25 +324,40 @@
 <script>
 import Burger from './ChildComponents/Burger.vue'
 import Drinks from './ChildComponents/Drinks.vue'
+import Counter from './ChildComponents/Counter.vue'
 export default {
     data() {
         return {
             burgerShow: false,
             hello: null,
             array: [],
-            burger: {
-                first: 0,
-                second: 0
-            },
-            drinks: {
-                first: 0,
-                second: 0
+            counterData: {
+                burger: {
+                    first: 0,
+                    second: 0,
+                    url: 'https://image.flaticon.com/icons/svg/1046/1046784.svg'
+                },
+                sweat: {
+                    first: 0,
+                    second: 0,
+                    url: 'https://image.flaticon.com/icons/png/512/1365/1365576.png'
+                },
+                drinks: {
+                    first: 0,
+                    second: 0,
+                    url: 'https://image.flaticon.com/icons/svg/1365/1365596.svg'
+                },
+                dishes: {
+                    first: 0,
+                    second: 0,
+                    url: 'https://image.flaticon.com/icons/svg/1408/1408052.svg'
+                }
             }
-        }
-    },
+    }},
     components: {
         Burger,
-        Drinks
+        Drinks,
+        Counter
     },
     methods: {
         toggle: function (event) {
@@ -424,7 +383,7 @@ export default {
             this.toggleNumber(data.type);
         },
         toggleNumber: function (type) {
-            var obj = this[type];
+            var obj = this.counterData[type];
 
             if (obj.first === 9 && obj.second === 9) {
                 return;
