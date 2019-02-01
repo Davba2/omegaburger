@@ -12,7 +12,7 @@
                         <p class="lead display-6">
                             Просматривайте тысячи блюд и выбирайте то, что вам по-душе. От блюд до гамбургеров
                         </p>
-                        <router-link to="/registration" class="btn btn-lg">
+                        <router-link to="/authentication" class="btn btn-lg">
                             Регистрация
                         </router-link>
                     </div>
@@ -72,7 +72,7 @@
                     <div class="row" v-if="show">
                         <div class="col-md-4" >
                             <div class="card">
-                                <img class="card-img-top" src="https://static-cdn.jtvnw.net/emoticons/v1/128391/3.0"/>
+                                <img class="card-img-top" sr="https://static-cdn.jtvnw.net/emoticons/v1/128391/3.0"/>
                                 <div class="card-body">
                                     Студентка. 20
                                 </div>
@@ -98,7 +98,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="card">
-                            <img class="card-img-top" src="https://static-cdn.jtvnw.net/emoticons/v1/147833/3.0"/>
+                            <img class="card-img-top" sr="https://static-cdn.jtvnw.net/emoticons/v1/147833/3.0"/>
                             <div class="card-body">
                                 Студентка. 21
                             </div>
@@ -112,7 +112,7 @@
                 <div class="row" v-if="showThird">
                     <div class="col-md-4">
                         <div class="card">
-                            <img class="card-img-top" src="https://static-cdn.jtvnw.net/emoticons/v1/195855/3.0"/>
+                            <img class="card-img-top" sr="https://static-cdn.jtvnw.net/emoticons/v1/195855/3.0"/>
                             <div class="card-body">
                                 Студентка. 19
                             </div>
@@ -131,12 +131,21 @@
             <div class="container-fluid">
                 <div id="mapid" ref="mapElement"></div>
             </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mt-2">
+                        <button class="btn btn-success" v-on:click="getUserCoord">
+                            Отправить координаты
+                        </button>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 </template>
 
 <script>
-import {LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import L from 'leaflet';
 export default {
     data () {
@@ -144,14 +153,66 @@ export default {
            map: null,
            show: true,
            showSecond: true,
-           showThird: true
+           showThird: true,
+           position: {}
         }
     },
     methods: {
         toggleComments: function () {
             console.log(this.show);
             this.show = !this.show;
+        },
+        getUserCoord: function () {
+            console.log('wrok');
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(this.showCoord);
+            } else {
+                this.position = "Невозможно определить ваши коориданаты";
+            }
+        },
+        showCoord: function (coord) {
+            this.position = {
+                lat: coord.coords.latitude,
+                lon: coord.coords.longitude
+            };
+
+            var icon = L.icon({
+                iconUrl: "http://www.goldshieldservices.com/wp-content/blogs.dir/22/files/2015/11/map-marker-icon.png",
+                iconSize: [48, 48],
+                iconAnchor: [8, 8],
+                popupAnchor: [0, 0]
+            });
+            var popup = L.popup({
+                closeButton: true,
+                autoClose: true,
+                className: "user-popup",
+            }).setContent('Вы здесь')
+            .setLatLng([this.position.lat, this.position.lon])
+            .openOn(this.map)
+            new L.Marker([this.position.lat, this.position.lon])
+            .bindPopup(popup)
+            .addTo(this.map);
+        },
+        showError: function (error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                return "User denied the request for Geolocation."
+                break;
+                case error.POSITION_UNAVAILABLE:
+                return "Location information is unavailable."
+                break;
+                case error.TIMEOUT:
+                return  "The request to get user location timed out."
+                break;
+                case error.UNKNOWN_ERROR:
+                return  "An unknown error occurred."
+                break;
+            }
+        },
+        calculateDistance: function (coord) {
+            //в js нету radiands? WTF
         }
+
     },
     props: {
         msg: String
@@ -162,14 +223,14 @@ export default {
         LMarker
     },
     created() {
-        this.interval = setInterval(() => this.toggleComments(), 11000);
+        //this.interval = setInterval(() => this.toggleComments(), 11000);
     },
     mounted () {
-        
         this.$nextTick(() => {
             this.map = L.map(this.$refs['mapElement']).setView([53.902237, 30.335839], 14);
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
             new L.Marker([53.902237, 30.335839]).bindPopup('OMEGA Burger').addTo(this.map);
+            new L.Marker([53.904237, 30.345839]).bindPopup('OMEGA Burger').addTo(this.map);
         })
     }
 }

@@ -4,6 +4,7 @@ import helloworld from './components/HelloWorld.vue'
 import Registraion from './components/Login/Registration.vue'
 import AuthBody from './components/Login/Auth.vue'
 import CatalogBody from './components/Catalog/Catalog.vue'
+import CabinetBody from './components/User/Cabinet.vue'
 export default new VueRouter({
     routes: [
         {
@@ -25,6 +26,10 @@ export default new VueRouter({
         {
             path: '/catalog',
             component: CatalogBody
+        },
+        {
+            path: '/cabinet',
+            component: CabinetBody
         }
     ]
 });

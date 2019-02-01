@@ -25,7 +25,7 @@
                                 <label for="email">Почта</label>
                                 <input type="text" id="email" class="form-control" v-model="email"/>
                                 <span class="error-text" 
-                                v-if='errorsEmail.length' v-for='(value, key) in errorsEmail'>
+                                v-if='errorsEmail.length' v-for='value in errorsEmail'>
                                     {{value}}
                                 </span>
                             </div>
@@ -103,19 +103,26 @@ export default {
             })
             .then((response) => {
             // Ответ был получен
-            this.$store.dispatch('registerUser', userEmail)
-            .then(() =>{
-                this.$router.push('/catalog')
-            });
-            console.log(response);
-            })
-            .catch(function (error) {
-            //если ошибка
-            })
+                var payload = {
+                    email: userEmail,
+                    access_token: response.access_token
+                };
 
-            //Если нужно просто проверить вход
-            // this.$store.dispatch('registerUser', userEmail)
-            //  .then(() =>{
+                this.$store.dispatch('registerUser', payload)
+                .then(() =>{
+                    this.$router.push('/catalog')
+                })
+            }).catch((error) => {
+                console.log(error);
+            })
+            //если ошибка, связянная с проблемой пароля/почты
+            // var payload = {
+            //     email: userEmail,
+            //     access_token: 'hello'
+            // };
+
+            // this.$store.dispatch('registerUser', payload)
+            //  .then(() => {
             //     this.$router.push('/catalog')
             // });
         },
