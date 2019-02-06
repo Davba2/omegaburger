@@ -1,6 +1,6 @@
 <template>
     <div>
-        <footer id="mainFooter">
+        <footer id="mainFooter" class="footer fixed">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">

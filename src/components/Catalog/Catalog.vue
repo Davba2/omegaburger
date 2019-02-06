@@ -8,14 +8,52 @@
                 <Counter v-bind:counterData="counterData.dishes"/> 
             </div>
         </div>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-md-10 catalog bg-primary">
+                <div class="col-md-3 option">
+                    <div class="option-element">
+                        <a href="#demo" @click="toggle" class="plead" data-toggle="collapse" data-type="burger">
+                            Бургеры
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-2 option">
+                    <div class="option-element">
+                        <a href="#demo2" @click="toggle" class="plead" data-toggle="collapse" data-type="salad">
+                            Салаты
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3 option">
+                    <div class="option-element">
+                        <a href="#demo3" @click="toggle" class="plead" data-toggle="collapse" data-type="sweat">
+                            Десерты
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-2 option">
+                    <div class="option-element">
+                        <a href="#demo4" @click="toggle" class="plead" data-toggle="collapse" data-type="drinks">
+                            Напитки
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-2 option">
+                    <div class="option-element">
+                        <a href="#demo5" @click="toggle" class="plead" data-toggle="collapse" data-type="dishes">
+                            Закуски
+                        </a>
+                    </div>
+                </div>
+                </div>
+            
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 catalog bg-primary">
                         <div class="collapse burger" id="demo">
                             <div class="container text-center">
-                                <div id="recipeCarousel" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner" role="listbox">
-                                        <div class="carousel-item row equal catalog-items active">
+                                        <div class="row catalog-items">
                                             <!-- <div class="col-3 float-left" v-for="item in burgersArray">
                                                  <div class="items-body">
                                                     <p>
@@ -87,22 +125,12 @@
                                             </div> -->
                                         </div>
                                     </div>
-                                    <a class="carousel-control-prev catalog-nav-left" href="#recipeCarousel" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next catalog-nav-right" href="#recipeCarousel" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="collapse salad" id="demo2">
                             <div class="container text-center">
-                                <div id="recipeCarousel" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner" role="listbox">
                                         <div class="carousel-item row equal catalog-items active">
                                             <!-- <div class="col-3 float-left" v-for="item in burgersArray">
                                                  <div class="items-body">
@@ -175,16 +203,8 @@
                                             </div> -->
                                         </div>
                                     </div>
-                                    <a class="carousel-control-prev catalog-nav-left" href="#recipeCarousel" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next catalog-nav-right" href="#recipeCarousel" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </div>
+                                    
+                               
                         </div>
                         <div class="collapse sweat" id="demo3">
                             
@@ -196,8 +216,6 @@
                         </div>
                         <div class="collapse drinks" id="demo4">
                             <div class="container text-center">
-                                <div id="recipeCarousel" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner" role="listbox">
                                         <div class="carousel-item row equal catalog-items active">
                                             <!-- <div class="col-3 float-left" v-for="item in burgersArray">
                                                  <div class="items-body">
@@ -270,16 +288,9 @@
                                             </div> -->
                                         </div>
                                     </div>
-                                    <a class="carousel-control-prev catalog-nav-left" href="#recipeCarousel" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next catalog-nav-right" href="#recipeCarousel" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </div>
+                                    
+                                  
+                               
                         </div>
                         <div class="collapse dishes" id="demo5">
                             <div class="card">
@@ -289,7 +300,7 @@
                             </div>
                         </div>
                 </div>
-                <div class="col-md-2 option">
+                <!-- <div class="col-md-2 option">
                     <div class="option-element">
                         <a href="#demo" @click="toggle" class="plead" data-toggle="collapse" data-type="burger">
                             Бургеры
@@ -316,9 +327,7 @@
                         </a>
                     </div>
                     2
-                </div>
-            </div>
-        </div>
+                </div> -->
     </div>
 </template>
 <script>
@@ -470,6 +479,9 @@ export default {
     width: 100%;
     height: 100%;
     text-align: center;
+}
+.catalog {
+    height: 900px;
 }
 .catalog-nav-left {
     left: -60px;

@@ -8,7 +8,9 @@ export const store = new Vuex.Store({
         user: {
             email: null,
             logged: false,
-            token: null
+            accessToken: null,
+            refreshToken: null,
+            expired: null
         },
         commnets: [],
         burgerArray: [
@@ -57,7 +59,9 @@ export const store = new Vuex.Store({
         setUser (state, payload) {
             state.user.email = payload.email;
             state.user.logged = true;
-            state.user.token = payload.access_token;
+            state.user.accessToken = payload.accessToken;
+            state.user.refreshToken = payload.refreshToken;
+            state.user.expired = payload.accessJwt.ValidTo;
         },
         ToOrder (state, payload) {
             state.userOrder.push(payload)
@@ -74,6 +78,15 @@ export const store = new Vuex.Store({
 
     },
     getters: {
+
+        checkRefreshTokens (state) {
+            if (Date.now() > state.user.expired) {
+                //return true
+                return true;
+            }
+
+            return false;
+        },
         getToken (state) {
             return state.user.token;
         },

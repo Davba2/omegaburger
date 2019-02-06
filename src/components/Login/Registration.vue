@@ -105,7 +105,9 @@ export default {
             // Ответ был получен
                 var payload = {
                     email: userEmail,
-                    access_token: response.access_token
+                    accessToken: response.AccessToken,
+                    refresToken: response.RefreshToken,
+                    expiredIn: response.accessJwt.ValidTo
                 };
 
                 this.$store.dispatch('registerUser', payload)

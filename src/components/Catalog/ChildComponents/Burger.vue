@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="col-3 float-left" v-for="item in burgersArray">
+        <div class="col-md-4" v-for="item in burgersArray">
             <div class="items-body">
                 <p>
                     {{item.title}}
