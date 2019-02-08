@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="container-fluid" id="userBackground">
-
         </div>
+        <falling-obj/>
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -16,37 +16,57 @@
                             <p class="card-text">То, что мы о вас знаем</p>
                             <div class="phone">
                                 <p>
-                                    +4325325
+                                    Ваш телефон <br/>
+                                    <kbd v-if="userInfo.phone === null" class="phone-number">Неизвестно</kbd>
+                                    <kbd v-else class="phone-number">{{userInfo.phone}}</kbd>
+                                </p>
+                                <p>
+                                    Ваш адрес  <br/>
+                                    <kbd v-if="userInfo.location === null" class="street">Неизвестно</kbd>
+                                    <kbd v-else class="street">{{userInfo.location}}</kbd>
                                 </p>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary">Сбросить пароль</button>
+                            <button class="btn bg-button-info">Сбросить пароль</button>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary">Указать телефон</button>
+                            <button class="btn bg-button-info" 
+                            v-on:click="phoneHide = !phoneHide">Указать телефон</button>
+                            <transition name="fade">
+                                <div v-if="phoneHide">
+                                    <input type="text" class="street-name" placeholder="Введите телефон"/>
+                                    <span class="user-confirmed">Ok</span>
+                                </div>
+                            </transition>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body text-white">
                             <p class="coord-info">
                                 Ваше местоположение:
                             </p>
                             <div id="mapid" ref="mapElement">
 
                             </div>
-                            <button class="btn btn-primary">Указать местоположение</button>
+                            <button class="btn bg-button-info" 
+                            v-on:click="streetHide = !streetHide">Указать местоположение</button>
+                            <transition name="fade">
+                                <div v-if="streetHide">
+                                    <input class="street-name" type="text" placeholder="Название улицы"/>
+                                    <span class="user-confirmed">Ok</span>
+                                </div>
+                            </transition>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-8">
-                    Твои заказы чувак
                     <div class="contaniner">
                         <div class="row">
                             <div class="col-12 orders-info" v-bind:key ="order.title" v-for="order in userOrders">
-                                <p>Вы заказали:</p>
-                                {{order.title}}
-                                <div class="container">
+                                <h3>Вы заказали:</h3>
+                                <p>{{order.title}}</p>
+                                <div class="container order-prop">
                                     <div class="row text-white">
                                         <div class="col-md-6 text-left">
                                             <time>
@@ -54,10 +74,10 @@
                                             </time>
                                         </div>
                                         <div class="col-md-6 text-right price">
-                                            Цена - <kbd>{{order.price}} $</kbd>
+                                            Цена - <kbd>{{order.price}} BYN</kbd>
                                         </div>
-                                        <div class="col-md-12 text-center">
-                                            <button class="btn btn-info">Заказать такой же</button>
+                                        <div class="col-md-12 text-center mb-2">
+                                            <button class="btn bg-button-info">Заказать такой же</button>
                                         </div>
                                     </div>
                                 </div>
@@ -71,12 +91,15 @@
 </template>
 <script>
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+import FallingObj from './FallingObj'
 import L from 'leaflet';
 export default {
     data () {
         return {
            map: null,
            show: true,
+           phoneHide: false,
+           streetHide: false,
            userOrders : [
                {
                    title: 'Мексиканский мейнстрим, отличная фрутешница',
@@ -88,13 +111,14 @@ export default {
                    price: 3.1,
                    date: '4.1.2019'
                }
-           ]
+           ],
         }
     },
     components: {
         LMap,
         LTileLayer,
-        LMarker
+        LMarker,
+        FallingObj
     },
     computed: {
         token () {
@@ -102,6 +126,9 @@ export default {
         },
         email () {
             return this.$store.getters.getEmail;
+        },
+        userInfo () {
+            return this.$store.getters.getUserInfo;
         }
     },
     mounted () {
@@ -109,7 +136,7 @@ export default {
             this.map = L.map(this.$refs['mapElement']).setView([53.902237, 30.335839], 14);
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
             new L.Marker([53.902237, 30.335839]).bindPopup('OMEGA Burger').addTo(this.map);
-        });
+        })
     }
 }
 </script>
@@ -124,13 +151,21 @@ body {
     background-repeat: no-repeat;
     color: #fff;
 }
+.card {
+    background: #0B3954;
+}
 .profile {
     margin: -250px 0 50px 0 ;
+    color: white;
 }
 .phone {
-    height: 25px;
     margin: 10px 0 10px 0;
     border-top: 1px solid gray;
+}
+.phone-number, .street {
+    background: #BFD7EA;
+    color: black;
+    margin: 5px 0 0 0;
 }
 .phone p {
     font-size: 20px;
@@ -147,7 +182,7 @@ body {
     margin: 10px 0 10px 0;
 }
 .col-12 p {
-    font-size: 30px;
+    font-size: 18px;
     font-weight: bold;
 }
 .row time {
@@ -157,6 +192,41 @@ body {
     font-size: 25px;
 }
 .orders-info {
-    background: #28A6C0;
+    background: #FF6663;
+}
+.street-name {
+    -webkit-text-fill-color: rgb(191, 241, 210);
+    border: none;
+    border-bottom: 2px solid white;
+    border-radius: 0;
+    background: inherit;
+    outline: none;
+    margin: 10px 0 5px 0;
+}
+.bg-button-info {
+    background: #E0FF4F;
+}
+.bg-button-info:hover {
+    background: rgb(208, 240, 68);
+}
+.order-prop {
+    border-top: 1px solid black;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0 .5s;
+}
+.user-confirmed {
+    display: inline-block;
+    border: 2px solid;
+    background: black;
+    padding: 0 5px 0 5px;
+    margin: 15px 0 0 10px;
+}
+.user-confirmed:hover{
+    cursor: pointer;
+    background: rgb(14, 13, 13);
 }
 </style>

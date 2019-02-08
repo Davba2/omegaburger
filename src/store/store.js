@@ -10,7 +10,9 @@ export const store = new Vuex.Store({
             logged: false,
             accessToken: null,
             refreshToken: null,
-            expired: null
+            expired: null,
+            phone: '+375295881143',
+            location: 'ул. Ленинская д.23 кв. 2'
         },
         commnets: [],
         burgerArray: [
@@ -78,7 +80,9 @@ export const store = new Vuex.Store({
 
     },
     getters: {
-
+        getUserInfo (state) {
+            return state.user;
+        },
         checkRefreshTokens (state) {
             if (Date.now() > state.user.expired) {
                 //return true
