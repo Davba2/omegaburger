@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-3 food-body">
         <img :src="counterData.url"/>
-        <div class="container">
+        <div class="container sticky">
             <div class="row">
                 <div class="col-md-12 counter">
                         <p>
@@ -26,7 +26,7 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style>
 .food-body img {
     width: 50%;
     margin-bottom: 3%; 

@@ -16,6 +16,11 @@
                             <p class="card-text">То, что мы о вас знаем</p>
                             <div class="phone">
                                 <p>
+                                    Ваша почта <br/>
+                                    <kbd v-if="userInfo.email === null" class="phone-number">Неизвестно</kbd>
+                                    <kbd v-else class="phone-number">{{userInfo.email}}</kbd>
+                                </p>
+                                <p>
                                     Ваш телефон <br/>
                                     <kbd v-if="userInfo.phone === null" class="phone-number">Неизвестно</kbd>
                                     <kbd v-else class="phone-number">{{userInfo.phone}}</kbd>
@@ -63,22 +68,24 @@
                 <div class="col-md-8">
                     <div class="contaniner">
                         <div class="row">
-                            <div class="col-12 orders-info" v-bind:key ="order.title" v-for="order in userOrders">
+                            <div class="col-12 orders-info" v-bind:key ="order.title" v-for="order in getOrderHistory">
                                 <h3>Вы заказали:</h3>
-                                <p>{{order.title}}</p>
+                                <p>
+                                    <span v-for="title in order.title">
+                                        {{title}}
+                                    </span>
+                                </p>
                                 <div class="container order-prop">
-                                    <div class="row text-white">
+                                    <div class="row mt-2 text-white">
                                         <div class="col-md-6 text-left">
-                                            <time>
-                                                {{order.date}}
-                                            </time>
+                                           {{order.date2}}
                                         </div>
                                         <div class="col-md-6 text-right price">
                                             Цена - <kbd>{{order.price}} BYN</kbd>
                                         </div>
                                         <div class="col-md-12 text-center mb-2">
-                                            <button class="btn bg-button-info">Заказать такой же</button>
-                                        </div>
+                                            <button class="btn bg-button-info" v-on:click="show2"> Заказать такой же</button>
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
@@ -100,6 +107,7 @@ export default {
            show: true,
            phoneHide: false,
            streetHide: false,
+           date: this.getOrderHistory.title,
            userOrders : [
                {
                    title: 'Мексиканский мейнстрим, отличная фрутешница',
@@ -120,7 +128,18 @@ export default {
         LMarker,
         FallingObj
     },
+    methods: {
+        show2: function () {
+            console.log(this.date)
+        }
+    },
     computed: {
+        getOrderHistory() {
+            return this.$store.getters.getOrderHistory;
+        },
+        order2() {
+            return this.$store.getters.getOrder;
+        },
         token () {
             return this.$store.getters.getToken;
         },
@@ -188,11 +207,14 @@ body {
 .row time {
     font-size: 25px;
 }
+time, .price {
+    color: black;
+}
 .price {
     font-size: 25px;
 }
 .orders-info {
-    background: #FF6663;
+    background: rgb(191, 215, 234);
 }
 .street-name {
     -webkit-text-fill-color: rgb(191, 241, 210);

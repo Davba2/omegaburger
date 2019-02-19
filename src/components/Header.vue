@@ -64,7 +64,7 @@ export default {
 </script>
 <style scoped>
 .header-navigation {
-    background: #000000;
+    background: #9381FF;
 }
 .navbar {
     padding: 0;

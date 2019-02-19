@@ -5,6 +5,7 @@ import Registraion from './components/Login/Registration.vue'
 import AuthBody from './components/Login/Auth.vue'
 import CatalogBody from './components/Catalog/Catalog.vue'
 import CabinetBody from './components/User/Cabinet.vue'
+import SumbitBody from './components/Catalog/ChildComponents/SubmitOrder.vue'
 export default new VueRouter({
     routes: [
         {
@@ -30,6 +31,10 @@ export default new VueRouter({
         {
             path: '/cabinet',
             component: CabinetBody
+        },
+        {
+            path: '/submit_order',
+            component: SumbitBody
         }
     ]
 });

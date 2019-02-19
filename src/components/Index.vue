@@ -252,7 +252,7 @@ export default {
     color: #E8FDF5;
 }
 #facts {
-    background: #cf5c36;
+    background: #B8B8FF;
 }
 #facts img {
     width: 25%;

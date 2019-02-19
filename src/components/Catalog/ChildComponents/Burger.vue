@@ -1,37 +1,73 @@
 <template>
     <div>
-        <div class="col-md-4" v-for="item in burgersArray">
-            <div class="items-body">
-                <p>
-                    {{item.title}}
-                </p>
-                <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
-                <p class="item-decsription">
-                    {{item.desc}}
-                </p>
-                <p class="item-price">
-                    Цена - {{item.price}} BYN
-                </p>
-                <div>
-                    <button class="btn btn-danger" :id="item.id"  v-on:click="addToOrder">Добавить</button>
+        <div class="row">
+            <div class="col-md-4" v-bind:key="item.id" v-for="item in burgersArray">
+                <div class="items-body">
+                     <p>
+                        {{item.title}}
+                    </p>
+                    <a :href="'#'+item.title"  @click="fuckYou" class="plead" data-toggle="collapse">
+                        <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg" />
+                    </a>
                 </div>
             </div>
+        </div>
+    <!--Отдельный компонент для просмотра бургера и с возможностью добавлять начинки-->
+        <div class="" >
+           <C :current="current" @addToOrder='addToOrder'/>
         </div>
     </div>
 </template>
 
 <script>
+import DescComponent from './BurgerDesc.vue'
+import C from './BurgerDesc.vue'
 export default {
+    data () {
+        return {
+            currentIt: 'comp',
+            current: {
+                id: 1,
+                title: 'Бургер с сыром',
+                price: 1.5,
+                desc: 'Блаженная булочка наполнена котлеткой и облита сыром',
+                url: 'http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png',
+                nutritional: {
+                    protein: 4,
+                    carbo: 22,
+                    fat: 10,
+                    calc: 300
+                }
+            }
+        }
+    },
     props: ['burgersArray'],
+    components: {
+        comp: DescComponent,
+        C
+    },
     methods: {
-        addToOrder: function (event) {
-            var element = event.target.id;
-            console.log(event.target)
-            this.$emit('addToOrder', {
-                element: element,
-                type: 'burger'
+        fuckYou: function (event) {
+            var item = this.burgersArray.filter(function (item) {
+                return item.title === event.target.closest('a').getAttribute("href").substring(1);
             });
-            //this.$store.dispatch('addToOrder', event.target.id);
+            this.current = item[0];
+
+            console.log(event.target.closest('a').getAttribute("href"));
+            //$('.vg').collapse('hide');
+        },
+        addToOrder: function (data) {
+            //var element = event.target.id;
+            this.$emit('addToOrder', data);
+        },
+        showDesc: function (event) {
+            console.log('helo')
+            console.log(event.target.id);
+        }
+    },
+    computed: {
+        currentItem: function () {
+            this.DescComponent;
         }
     }
     
@@ -96,10 +132,14 @@ export default {
 .catalog-nav-right {
     right: -60px;
 }
-.items-body img {
-    width: 70%;
+.items-body {
+    margin: 3% 0 0 0;
+    font-size: 22px;
+    font-family: fantasy
 }
-
+.items-body img {
+    width: 50%;
+}
 .price {
     vertical-align: bottom;
 }
@@ -132,5 +172,13 @@ export default {
 /* .slide-fade-leave-active до версии 2.1.8 */ {
   transform: translateX(10px);
   opacity: 0;
+}
+.burg {
+    margin: 15px 0 0 0;
+    border-top: 2px solid;
+    /*border-image: url(http://www.clker.com/cliparts/H/8/G/H/k/8/stylish-pink-border-md.png) 20 round;*/
+}
+.col-md-4 {
+    margin: 5px 0 5px 0;
 }
 </style>

@@ -28,7 +28,6 @@ export default {
         },
         dropBox() {
             var length = this.randomValue(40, ($(".game").width() - 50));
-            console.log(length)
             var velocity = this.randomValue(820, 13000);
             var thisBox = $("<div/>", {
                 class: "box",
@@ -42,7 +41,7 @@ export default {
             }, this.randomValue(0, 1000));
             thisBox.one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
                 function (event) {
-                    $(this).remove();
+                    $(this).fadeOut(400).remove();
                 });
         }
     },
@@ -67,6 +66,6 @@ export default {
     z-index: -100;
 }
 .move {
-   transform: translateY(185vmin);
+   transform: translateY(189vmin);
 }
 </style>
