@@ -1,6 +1,6 @@
 <template>
     <div>
-        <footer id="mainFooter" class="footer fixed">
+        <footer id="mainFooter" class="footer fixed text-white">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
@@ -44,7 +44,7 @@ export default {
 <style scoped>
 #mainFooter {
     margin: 40px 0 0 0;
-    background: #F9F8F8;
+    background: #272838;
     padding: 40px 20px 15px 20px;
 }
 #mainFooter ul {

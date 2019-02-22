@@ -71,7 +71,7 @@
                             <div class="col-12 orders-info"  v-bind:key ="order.title" v-for="order in getOrderHistory">
                                 <h3>Вы заказали:</h3>
                                 <p>
-                                    {{title}}
+                                    
                                 </p>
                                 <div class="container order-prop">
                                     <div class="row mt-2 text-white">

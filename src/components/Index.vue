@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="">
-            <video autoplay muted loop id="myVideo" class=" d-sm-none d-md-block" style="width: 100%;z-index:1">
-                <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
-            </video>
+            <!-- <video autoplay muted loop id="myVideo" class=" d-sm-none d-md-block" style="width: 100%;z-index:1">
+                <source src="https://my.mixtape.moe/oerohs.webm" type="video/webm">
+            </video> -->
             <div class="content" style="    z-index: 100;
     bottom: -140px;
     right: 16px;
@@ -16,7 +16,7 @@
                 </p>
             </div>
         </div>
-        <div id="demo" class=" slide" data-ride="carousel">
+        <!-- <div id="demo" class=" slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active carousel-image-1">
                     <div class="carousel-caption d-none d-sm-block text-right mb-5">
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-        </div>
+        </div> -->
         <section id="facts">
 			<div class="container">
 				<div class="d-flex d-flex align-items-center">
@@ -58,19 +58,34 @@
 					</div>
 				</div>
             </div>
-            <div class="container">
+            <div class="container" style=" border-top: 1px solid gray;">
+                <img class="img img-fluid" src="https://image.flaticon.com/icons/svg/265/265699.svg" style="width: 15%"/>
+                <p>Немного статистики</p>
+                <br/>
                 <div class="row">
                     <div class="col-md-4">
                         <h3>
                             Кол-во успешных заказов
                         </h3>
-                        counting...
+                        <kbd id="ordersCountJs" style="font-size: 26px;
+    letter-spacing: 6px;text-shadow: 5px 1px 2px darkmagenta;
+}">{{orderSucc}}</kbd>
                     </div>
                     <div class="col-md-4">
-                        counting...
+                        <h3>
+                            Кол-во заказывающих
+                        </h3>
+                        <kbd id="ordersCountJs" style="font-size: 26px;
+                            letter-spacing: 6px;text-shadow: 5px 1px 2px darkmagenta;
+                        }">{{orderPeople}}</kbd>
                     </div>
                     <div class="col-md-4">
-                        counting...
+                        <h3>
+                            Кол-во проданных товаров
+                        </h3>
+                        <kbd id="ordersCountJs" style="font-size: 26px;
+                            letter-spacing: 6px;text-shadow: 5px 1px 2px darkmagenta;
+                        }">{{orderCol}}</kbd>
                     </div>
                 </div>
             </div>
@@ -80,8 +95,8 @@
                 <div class="row">
                     <div class="col-lg col-md align-items-center">
                         <div class="container" style="text-align: -webkit-right;
-    margin-top: 168px">
-                            <h1 class="display-2">
+    margin-top: 196px">
+                            <h1 class="display-2" style="border-bottom: 1px solid gray;width: 76%">
                                 Аппетитные булочки
                             </h1>
                             <p class="lead">Попробуйте, пока горячие</p>
@@ -90,7 +105,7 @@
                 </div>
             </div>
 		</section>
-        <section id="comments">
+        <section id="comments" class="text-white">
             <div class="container" style="text-align: center;font-size: 26px">
                 Отзывы о нашей компании:
             </div>
@@ -162,7 +177,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 mt-2">
-                        <button class="btn btn-success" v-on:click="getUserCoord">
+                        <button class="btn btn-success"  v-on:click="getUserCoord">
                             Отправить координаты
                         </button>
                     </div>
@@ -182,7 +197,11 @@ export default {
            show: true,
            showSecond: true,
            showThird: true,
-           position: {}
+           position: {},
+           orderSucc: 1600,
+           current: 5,
+           orderPeople: 510,
+           orderCol: 8999
         }
     },
     methods: {
@@ -239,8 +258,10 @@ export default {
         },
         calculateDistance: function (coord) {
             //в js нету radiands? WTF
+        },
+        interval : function () {
+            
         }
-
     },
     props: {
         msg: String
@@ -251,6 +272,20 @@ export default {
         LMarker
     },
     created() {
+        let self = this;
+        let end = 4200;
+        let duration = 4;
+        //this.animateValue(100, 25, 7500);
+        //
+        let a = setInterval(function() {
+            self.orderSucc +=6;
+            self.orderPeople += 14
+            self.orderCol +=22;
+            if (self.orderSucc > end) {
+                clearInterval(a)
+            };
+            duration += 0.1;
+        }, duration) 
         //this.interval = setInterval(() => this.toggleComments(), 11000);
     },
     mounted () {
@@ -259,7 +294,7 @@ export default {
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
             new L.Marker([53.902237, 30.335839]).bindPopup('OMEGA Burger').addTo(this.map);
             new L.Marker([53.904237, 30.345839]).bindPopup('OMEGA Burger').addTo(this.map);
-        })
+        });
     }
 }
 </script>
@@ -310,7 +345,7 @@ export default {
     background-size: cover;
 }
 .overlay {
-    height: 350px;
+    height: 410px;
     background: url("https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-4870.png");
     background-attachment: fixed;
     background-repeat: no-repeat;

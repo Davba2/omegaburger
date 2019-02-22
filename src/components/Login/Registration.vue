@@ -38,11 +38,6 @@
                                 </span>
                             </div>
                             <div class="section-input">
-                                <label for="password">Запомнить меня</label>
-                                <input type="checkbox" id="checkbox" class="form-control custom-field"
-                                 v-model="remember"/>
-                            </div>
-                            <div class="section-input">
                                 <button 
                                 type="submit" class="btn btn-lg button"
                                 v-on:click="sendUserData">Войти</button>
@@ -158,12 +153,11 @@ export default {
 </script>
 <style scoped>
 .under-form {
-    margin-bottom: 10%;
+    margin-bottom: 5%;
 }
 .form-input {
-    margin-top: 150px;
     border-radius: 7px;
-    background: #cf5c36;
+    background: #A6B1E1;
     margin: 0 auto;
     width: 60%;
     color: #F7FFF7;
