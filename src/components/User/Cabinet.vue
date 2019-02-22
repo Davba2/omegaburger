@@ -67,13 +67,11 @@
                 </div>
                 <div class="col-md-8">
                     <div class="contaniner">
-                        <div class="row">
-                            <div class="col-12 orders-info" v-bind:key ="order.title" v-for="order in getOrderHistory">
+                        <div class="row" v-if=" getOrderHistory !==null">
+                            <div class="col-12 orders-info"  v-bind:key ="order.title" v-for="order in getOrderHistory">
                                 <h3>Вы заказали:</h3>
                                 <p>
-                                    <span v-for="title in order.title">
-                                        {{title}}
-                                    </span>
+                                    {{title}}
                                 </p>
                                 <div class="container order-prop">
                                     <div class="row mt-2 text-white">
@@ -107,19 +105,7 @@ export default {
            show: true,
            phoneHide: false,
            streetHide: false,
-           date: this.getOrderHistory.title,
-           userOrders : [
-               {
-                   title: 'Мексиканский мейнстрим, отличная фрутешница',
-                   price: 2.2,
-                   date: '4.1.2019'
-               },
-               {
-                   title: 'Жаренная курочка, кола и жока',
-                   price: 3.1,
-                   date: '4.1.2019'
-               }
-           ],
+           date: this.getOrderHistory
         }
     },
     components: {

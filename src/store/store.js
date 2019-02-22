@@ -11,8 +11,8 @@ export const store = new Vuex.Store({
             accessToken: null,
             refreshToken: null,
             expired: null,
-            phone: 'fdsf',
-            location: 'ул. Ленинская д.23 кв. 2'
+            phone: null,
+            location: null
         },
         commnets: [],
         burgerArray: [

@@ -24,14 +24,20 @@
                              src="https://image.flaticon.com/icons/svg/148/148766.svg" 
                              v-on:click="deleteOrder" :id="order.element" :title="order.type" class="remove">
                             {{order.title}}
-                    </div>
-                    <img src="https://image.flaticon.com/icons/svg/660/660522.svg" 
-                    v-if="order.picks !== null"/>
-                    <div class="card-content" 
-                        v-if="order.picks !== null" 
-                        v-for="pick in order.picks">
-                            {{pick}}
-                    </div>
+                        </div>
+                        <img src="https://image.flaticon.com/icons/svg/660/660522.svg" 
+                         v-if="order.picks !== null"/>
+                        <div class="card-content" 
+                            v-if="order.picks !== null" 
+                            v-for="pick in order.picks">
+                                {{pick}}
+                        </div>
+                        <div class="card-footer">
+                            <input class="form-control" type="number" min="1" max="20" style="padding-right: 8px;
+    padding-left: 35px;
+    margin: 0 auto;
+    font-size: 20px;border-radius: 4.25rem"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -130,8 +136,9 @@ export default {
                 this.showHelp = true;
                 console.log('hello')
                 return;
-            }
+            } 
             //dispatch
+            this.showHelp = false;
             this.spinner = true;
             var spinner = document.querySelector('.loader');
             var fun = this.turnOffAnimation;
@@ -161,7 +168,7 @@ export default {
             }
         },
         addLocation: function (event) {
-            this.$store.dispatch('addLocation', this.phone);
+            this.$store.dispatch('addLocation', this.location);
         },
         turnOffAnimation: function () {
             this.spinner = false;

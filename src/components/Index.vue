@@ -1,10 +1,22 @@
 <template>
     <div>
-        <div id="demo" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#demo" data-slide-to="0" class="active"></li>
-                <li data-target="#demo" data-slide-to="1"></li>
-            </ol>
+        <div class="">
+            <video autoplay muted loop id="myVideo" class=" d-sm-none d-md-block" style="width: 100%;z-index:1">
+                <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+            </video>
+            <div class="content" style="    z-index: 100;
+    bottom: -140px;
+    right: 16px;
+    position: absolute;
+    width: 30%">
+                <h1>Магазин гамбургеров</h1>
+                <hr/>
+                <p>
+                  Компания OMEGA BURGER
+                </p>
+            </div>
+        </div>
+        <div id="demo" class=" slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active carousel-image-1">
                     <div class="carousel-caption d-none d-sm-block text-right mb-5">
@@ -24,51 +36,67 @@
                     </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#demo" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
+
         </div>
         <section id="facts">
 			<div class="container">
 				<div class="d-flex d-flex align-items-center">
-					<div class="col-md mb-4 text-center merits">
+					<div class="mb-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
 						<img src="https://image.flaticon.com/icons/svg/1162/1162486.svg" class="img-fluid">
 						<p class="lead">Большой ассортиент</p>
 					</div>
-                    <div class="col-md mb-4 text-center merits">
+                    <div class="col-md-4 mb-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
 						<img src="https://image.flaticon.com/icons/svg/726/726455.svg" class="img-fluid">
 						<p class="lead">Быстрая доставка</p>
 					</div>
-                    <div class="col-md mb-4 text-center merits">
+                    <div class="col-md-4 mb-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
 						<img src="https://image.flaticon.com/icons/svg/1408/1408430.svg" class="img-fluid">
 						<p class="lead">Вкусно</p>
 					</div>
 				</div>
-			</div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>
+                            Кол-во успешных заказов
+                        </h3>
+                        counting...
+                    </div>
+                    <div class="col-md-4">
+                        counting...
+                    </div>
+                    <div class="col-md-4">
+                        counting...
+                    </div>
+                </div>
+            </div>
 		</section>
         <section>
-			 <div class="overlay container-fluid">
-				 <div class="row">
-					 <div class="col-lg col-md align-items-center">
-						 <div class="container">
-							 <h1 class="display-2">
-								 Сайт все ещё делается
-							 </h1>
-							 <p class="lead">Некоторый функионал пока не доступен</p>
-						 </div>
-					 </div>
-				 </div>
-			 </div>
+            <div class="overlay container-fluid">
+                <div class="row">
+                    <div class="col-lg col-md align-items-center">
+                        <div class="container" style="text-align: -webkit-right;
+    margin-top: 168px">
+                            <h1 class="display-2">
+                                Аппетитные булочки
+                            </h1>
+                            <p class="lead">Попробуйте, пока горячие</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		</section>
         <section id="comments">
+            <div class="container" style="text-align: center;font-size: 26px">
+                Отзывы о нашей компании:
+            </div>
             <div class="container comment-element">
                 <transition name="slide-fade">
+                    
                     <div class="row" v-if="show">
                         <div class="col-md-4" >
                             <div class="card">
@@ -252,10 +280,10 @@ export default {
     color: #E8FDF5;
 }
 #facts {
-    background: #B8B8FF;
+    background: #F3DE8A;
 }
 #facts img {
-    width: 25%;
+    width: 32%;
 }
 #facts p {
     margin: 15px 0 0 0;
@@ -282,8 +310,8 @@ export default {
     background-size: cover;
 }
 .overlay {
-    height: 250px;
-    background: url("https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-168649.png");
+    height: 350px;
+    background: url("https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-4870.png");
     background-attachment: fixed;
     background-repeat: no-repeat;
     color:#fff;
@@ -349,4 +377,5 @@ export default {
   transform: translateX(10px);
   opacity: 0;
 }
+
 </style>

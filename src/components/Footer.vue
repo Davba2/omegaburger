@@ -44,7 +44,7 @@ export default {
 <style scoped>
 #mainFooter {
     margin: 40px 0 0 0;
-    background: #FFEEDD;
+    background: #F9F8F8;
     padding: 40px 20px 15px 20px;
 }
 #mainFooter ul {

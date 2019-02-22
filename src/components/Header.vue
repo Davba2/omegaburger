@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <nav class="navbar navbar-expand-sm header-navigation">
             <div class="container">
@@ -64,7 +63,7 @@ export default {
 </script>
 <style scoped>
 .header-navigation {
-    background: #9381FF;
+    background: #272838;
 }
 .navbar {
     padding: 0;
