@@ -12,7 +12,7 @@
                     <ul class="navbar-nav ml-auto navigation ">
                         <li class="nav-item"
                         v-for="link in links" v-bind:key="link.title">
-                            <router-link class="nav-link" :to="link.url">{{link.title}}</router-link>
+                            <router-link class="nav-link active"   :to="link.url">{{link.title}}</router-link>
                         </li>
                     </ul>
                 </div>
@@ -43,16 +43,19 @@ export default {
         '$route' () {
             if (this.$route.path === '/registration') {
                 this.isActiveReg = true;
+                return;
             } else {
                 this.isActiveReg = false;
             }
             if (this.$route.path === '/index') {
                 this.isActiveCat = true;
+                return;
             } else {
                 this.isActiveCat = false;
             }
             if (this.$route.path === '/catalog') {
                 this.isActiveMag = true;
+                return;
             } else {
                 this.isActiveMag = false;
             }

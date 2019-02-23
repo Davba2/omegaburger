@@ -1,25 +1,25 @@
 <template>
     <div>
         <div class="">
-            <!-- <video autoplay muted loop id="myVideo" class=" d-sm-none d-md-block" style="width: 100%;z-index:1">
+            <video autoplay muted loop id="myVideo" class=" d-sm-none d-md-block" style="width: 100%;z-index:1">
                 <source src="https://my.mixtape.moe/oerohs.webm" type="video/webm">
-            </video> -->
+            </video>
             <div class="content" style="    z-index: 100;
     bottom: -140px;
     right: 16px;
     position: absolute;
     width: 30%">
-                <h1>Магазин гамбургеров</h1>
+                <h1 style="font-size: 38px; font-weight:bold;color: navy;" class="lead">Магазин гамбургеров</h1>
                 <hr/>
                 <p>
                   Компания OMEGA BURGER
                 </p>
             </div>
         </div>
-        <!-- <div id="demo" class=" slide" data-ride="carousel">
+        <div id="demo" class=" slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active carousel-image-1">
-                    <div class="carousel-caption d-none d-sm-block text-right mb-5">
+                    <div class="carousel-caption d-none d-sm-block text-right mb-5" style="right: 9%">
                         <h1 class="display-4">Берите то, что хотите</h1>
                         <p class="lead display-6">
                             Просматривайте тысячи блюд и выбирайте то, что вам по-душе. От блюд до гамбургеров
@@ -29,15 +29,9 @@
                         </router-link>
                     </div>
                 </div>
-                <div class="carousel-item carousel-image-2">
-                    <div class="carousel-caption">
-                        <h1 class="display-4">Сочные как сочники</h1>
-                        <p class="lead">Доступные как воздух</p>
-                    </div>
-                </div>
             </div>
 
-        </div> -->
+        </div>
         <section id="facts">
 			<div class="container">
 				<div class="d-flex d-flex align-items-center">
@@ -68,8 +62,8 @@
                             Кол-во успешных заказов
                         </h3>
                         <kbd id="ordersCountJs" style="font-size: 26px;
-    letter-spacing: 6px;text-shadow: 5px 1px 2px darkmagenta;
-}">{{orderSucc}}</kbd>
+                            letter-spacing: 6px;text-shadow: 5px 1px 2px darkmagenta;
+                        }">{{orderSucc}}</kbd>
                     </div>
                     <div class="col-md-4">
                         <h3>
@@ -95,7 +89,7 @@
                 <div class="row">
                     <div class="col-lg col-md align-items-center">
                         <div class="container" style="text-align: -webkit-right;
-    margin-top: 196px">
+                                                            margin-top: 196px">
                             <h1 class="display-2" style="border-bottom: 1px solid gray;width: 76%">
                                 Аппетитные булочки
                             </h1>
@@ -105,30 +99,31 @@
                 </div>
             </div>
 		</section>
+        <header/>
         <section id="comments" class="text-white">
             <div class="container" style="text-align: center;font-size: 26px">
                 Отзывы о нашей компании:
             </div>
-            <div class="container comment-element">
-                <transition name="slide-fade">
-                    
+            <div class="container">
+        <div class="container comment-element">
+                <transition name="slide-fade" > 
                     <div class="row" v-if="show">
                         <div class="col-md-4" >
-                            <div class="card">
-                                <img class="card-img-top" sr="https://static-cdn.jtvnw.net/emoticons/v1/128391/3.0"/>
+                                <div class="card">
+                                <img class="card-img-top"  :src="commentFirst.url"/>
                                 <div class="card-body">
-                                    Студентка. 20
+                                    {{commentFirst.name}}. {{commentFirst.age}}
                                 </div>
                             </div>
+                           
                         </div>
-                    
-                    <div class="col-md-8">
-                        <div class="comment-body text-left">
-                            Невероятно вкусно! После того, как попробовала двойной гамбургер от шефа Пуарди, слюнки аж потекли.
+                        <div class="col-md-8">
+                            <div class="comment-body text-left">
+                                {{commentFirst.text}}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </transition>
+                </transition>
             </div>
             
             <div class="container comment-element">
@@ -136,14 +131,14 @@
                 <div class="row" v-if="showSecond">
                     <div class="col-md-8">
                         <div class="comment-body text-right">
-                            Эм... очень вкусно
+                           {{commentSecond.text}}
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card">
-                            <img class="card-img-top" sr="https://static-cdn.jtvnw.net/emoticons/v1/147833/3.0"/>
+                            <img class="card-img-top" :src="commentSecond.url"/>
                             <div class="card-body">
-                                Студентка. 21
+                                {{commentSecond.name}}. {{commentSecond.age}}
                             </div>
                         </div>
                     </div>
@@ -155,20 +150,21 @@
                 <div class="row" v-if="showThird">
                     <div class="col-md-4">
                         <div class="card">
-                            <img class="card-img-top" sr="https://static-cdn.jtvnw.net/emoticons/v1/195855/3.0"/>
+                            <img class="card-img-top" :src="commentThird.url"/>
                             <div class="card-body">
-                                Студентка. 19
+                                {{commentThird.name}}. {{commentThird.age}}
                             </div>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="comment-body text-left">
-                            Че гамбургер не такой как на пикче?
+                            {{commentThird.text}}
                         </div>
                     </div>
                 </div>
                 </transition>
             </div>
+    </div>
         </section>
         <section id="map">
             <div class="container-fluid">
@@ -176,8 +172,8 @@
             </div>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 mt-2">
-                        <button class="btn btn-success"  v-on:click="getUserCoord">
+                    <div class="col-md-12 mt-3">
+                        <button class="btn" style="    background: #E0FF4F"  v-on:click="getUserCoord">
                             Отправить координаты
                         </button>
                     </div>
@@ -188,6 +184,8 @@
 </template>
 
 <script>
+import CommentsBody from '../../src/components/Comments/Comments.vue';
+import Counter from '../components/Catalog/Catalog.vue'
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import L from 'leaflet';
 export default {
@@ -201,8 +199,29 @@ export default {
            orderSucc: 1600,
            current: 5,
            orderPeople: 510,
-           orderCol: 8999
+           orderCol: 8999,
+           commentFirst: {
+               name: 'Олечка',
+               age: 23,
+               text: 'Невероятно вкусно! После того, как попробовала двойной гамбургер от шефа Пуарди, слюнки аж потекли.',
+               url: 'https://static-cdn.jtvnw.net/emoticons/v1/128391/3.0'
+           },
+           commentSecond: {
+               name: 'Габриэль',
+               age: 17,
+               text: 'Очень вкусно!',
+               url: 'https://static-cdn.jtvnw.net/emoticons/v1/147833/3.0'
+           },
+           commentThird: {
+               name: 'Жора',
+               age: 23,
+               text: 'Че гамбургер не такой как на пичке?',
+               url: 'https://static-cdn.jtvnw.net/emoticons/v1/195855/3.0'
+           }
         }
+    },
+    components: {
+        'fuck-you-nigger':CommentsBody
     },
     methods: {
         toggleComments: function () {
@@ -259,8 +278,16 @@ export default {
         calculateDistance: function (coord) {
             //в js нету radiands? WTF
         },
-        interval : function () {
-            
+        intervalComment : function (objArray, sortArray) {
+            this.commentFirst = sortArray[0];
+            this.commentSecond = sortArray[1];
+            this.commentThird = sortArray[2];
+            this.show = true;
+            this.showSecond = true;
+            this.showThird = true;
+        },
+        compareRandom: function () {
+            return Math.random() - 0.5;
         }
     },
     props: {
@@ -275,8 +302,10 @@ export default {
         let self = this;
         let end = 4200;
         let duration = 4;
+        let objArray = [self.commentFirst, self.commentSecond, self.commentThird];
         //this.animateValue(100, 25, 7500);
         //
+        console.log(self.commentSecond)
         let a = setInterval(function() {
             self.orderSucc +=6;
             self.orderPeople += 14
@@ -284,9 +313,23 @@ export default {
             if (self.orderSucc > end) {
                 clearInterval(a)
             };
-            duration += 0.1;
+            duration += 0.3;
         }, duration) 
         //this.interval = setInterval(() => this.toggleComments(), 11000);
+        let toggleCommentsInterval = setInterval(function() {
+            self.show = false;
+            self.showSecond = false;
+            self.showThird = false;
+            let array = ['commentFirst', 'commentSecond', 'commentThird'];
+            let arrayItem = objArray.slice();
+            arrayItem.sort(function() {
+                return Math.random() - 0.5;
+            });
+            console.log('вызваю')
+            setTimeout(function() {
+                 self.intervalComment(objArray, arrayItem);
+            }, 500)
+        }, 6000)
     },
     mounted () {
         this.$nextTick(() => {
@@ -353,6 +396,7 @@ export default {
 }
 #comments {
     width: 800px;
+    height: 920px;
     margin: 0 auto;
     border-bottom: 1px black;
     margin-bottom: 10px;
@@ -402,10 +446,10 @@ export default {
     height: 400px;
 }
 .slide-fade-enter-active {
-  transition: all .7s ease;
+  transition: all .4s ease;
 }
 .slide-fade-leave-active {
-  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active до версии 2.1.8 */ {

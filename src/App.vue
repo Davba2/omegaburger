@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <HeaderBody v-bind:links="links"/>
-    <router-view></router-view>
+    <transition  name="page" mode="out-in">
+      <router-view></router-view>
+    </transition>
     <footer-body/>
   </div>
 </template>
@@ -79,4 +81,11 @@ body {
   color: #2c3e50;
 }
 
+.page-enter-active, .page-leave-active {
+  transition: opacity 0.8s, transform 1s;
+}
+.page-enter, .page-leave-to {
+  opacity: 0;
+  transform: translateX(-25%);
+}
 </style>

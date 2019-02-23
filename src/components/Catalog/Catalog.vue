@@ -1,217 +1,217 @@
 <template>
-    <transition name='fade'>
-        <div class="catalog-body">
-            <div class="col-md-12 lead h2" >
-                Вы заказали:
-                {{order}}
+    
+    <div class="catalog-body">
+        <div class="col-md-12 lead h2" >
+            Вы заказали:
+            {{order}}
+        </div>
+        <div class="sticky" style="    position: sticky;
+        top: -165px;
+        z-index: 2;"
+        id="stickyCounter"
+        >
+            <div class="row omega">
+                <Counter v-bind:counterData="counterData.drinks"/>
+                <Counter v-bind:counterData="counterData.burger"/>
+                <Counter v-bind:counterData="counterData.sweat"/>   
+                <Counter v-bind:counterData="counterData.dishes"/> 
             </div>
-            <div class="sticky" style="    position: sticky;
-            top: -165px;
-            z-index: 2;"
-            id="stickyCounter"
-            >
-                <div class="row omega">
-                    <Counter v-bind:counterData="counterData.drinks"/>
-                    <Counter v-bind:counterData="counterData.burger"/>
-                    <Counter v-bind:counterData="counterData.sweat"/>   
-                    <Counter v-bind:counterData="counterData.dishes"/> 
-                </div>
-            </div>
-            <div class="container-fluid" style="padding: 0;">
-                <div class="row" id="catalogPicks">
-                    <div class="col-md-3 option">
-                        <div class="option-element">
-                            <a href="#demo" @click="toggle" class="plead" data-toggle="collapse" data-type="burger">
-                                Бургеры
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-2 option">
-                        <div class="option-element">
-                            <a href="#demo2" @click="toggle" class="plead" data-toggle="collapse" data-type="salad">
-                                Салаты
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-3 option">
-                        <div class="option-element">
-                            <a href="#demo3" @click="toggle" class="plead" data-toggle="collapse" data-type="sweat">
-                                Десерты
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-2 option">
-                        <div class="option-element">
-                            <a href="#demo4" @click="toggle" class="plead" data-toggle="collapse" data-type="drinks">
-                                Напитки
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-2 option">
-                        <div class="option-element">
-                            <a href="#demo5" @click="toggle" class="plead" data-toggle="collapse" data-type="dishes">
-                                Закуски
-                            </a>
-                        </div>
-                    </div>
-                    </div>
-                
-            </div>
-            <div class="container-fluid catalog bg-primary">
-                <div class="collapse burger" id="demo">
-                    <div class="catalog-items text-center">
-                        <burger 
-                        v-bind:burgersArray="burgersArray"
-                        @addToOrder='addToOrder'/>
+        </div>
+        <div class="container-fluid" style="padding: 0;">
+            <div class="row" id="catalogPicks">
+                <div class="col-md-3 option">
+                    <div class="option-element">
+                        <a href="#demo" @click="toggle" class="plead" data-toggle="collapse" data-type="burger">
+                            Бургеры
+                        </a>
                     </div>
                 </div>
-                <div class="collapse salad" id="demo2">
-                    <div class="container text-center">
-                                <div class="carousel-item row equal catalog-items active">
-                                    <burger 
-                                    v-bind:drinksArray="drinksArray"
-                                    @addToOrder='addToOrder'/>
-                                    <!-- <div class="col-3 float-left">
-                                        <div class="items-body">
-                                            <p>
-                                                Бургер с сыром
-                                            </p>
-                                            <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
-                                            <p class="item-decsription">
-                                                Гамбурегр с сыром
-                                            </p>
-                                            <p class="item-price">
-                                                Цена - 1.6 BYN
-                                            </p>
-                                            <div>
-                                                <button class="btn btn-danger">Добавить</button>
-                                            </div>
+                <div class="col-md-2 option">
+                    <div class="option-element">
+                        <a href="#demo2" @click="toggle" class="plead" data-toggle="collapse" data-type="salad">
+                            Салаты
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3 option">
+                    <div class="option-element">
+                        <a href="#demo3" @click="toggle" class="plead" data-toggle="collapse" data-type="sweat">
+                            Десерты
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-2 option">
+                    <div class="option-element">
+                        <a href="#demo4" @click="toggle" class="plead" data-toggle="collapse" data-type="drinks">
+                            Напитки
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-2 option">
+                    <div class="option-element">
+                        <a href="#demo5" @click="toggle" class="plead" data-toggle="collapse" data-type="dishes">
+                            Закуски
+                        </a>
+                    </div>
+                </div>
+                </div>
+            
+        </div>
+        <div class="container-fluid catalog bg-primary">
+            <div class="collapse burger" id="demo">
+                <div class="catalog-items text-center">
+                    <burger 
+                    v-bind:burgersArray="burgersArray"
+                    @addToOrder='addToOrder'/>
+                </div>
+            </div>
+            <div class="collapse salad" id="demo2">
+                <div class="container text-center">
+                            <div class="carousel-item row equal catalog-items active">
+                                <burger 
+                                v-bind:drinksArray="drinksArray"
+                                @addToOrder='addToOrder'/>
+                                <!-- <div class="col-3 float-left">
+                                    <div class="items-body">
+                                        <p>
+                                            Бургер с сыром
+                                        </p>
+                                        <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
+                                        <p class="item-decsription">
+                                            Гамбурегр с сыром
+                                        </p>
+                                        <p class="item-price">
+                                            Цена - 1.6 BYN
+                                        </p>
+                                        <div>
+                                            <button class="btn btn-danger">Добавить</button>
                                         </div>
                                     </div>
-                                    <div class="col-3 float-left"> <div class="items-body">
-                                            <p>
-                                                Бургер с сыром
-                                            </p>
-                                            <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
-                                            <p class="item-decsription">
-                                                Гамбурегр с сыром
-                                            </p>
-                                            <p class="item-price">
-                                                Цена - 1.6 BYN
-                                            </p>
-                                            <div>
-                                                <button class="btn btn-danger">Добавить</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3 float-left"> <div class="items-body">
-                                            <p>
-                                                Бургер с сыром
-                                            </p>
-                                            <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
-                                            <p class="item-decsription">
-                                                Гамбурегр с сыром 
-                                            </p>
-                                            <div class="price">
-                                                <p class="item-price">
-                                                    Цена - 1.6 BYN
-                                                </p>
-                                                    <button class="btn btn-danger">Добавить</button>
-                                            </div>
-                                        </div>
-                                    </div> -->
                                 </div>
+                                <div class="col-3 float-left"> <div class="items-body">
+                                        <p>
+                                            Бургер с сыром
+                                        </p>
+                                        <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
+                                        <p class="item-decsription">
+                                            Гамбурегр с сыром
+                                        </p>
+                                        <p class="item-price">
+                                            Цена - 1.6 BYN
+                                        </p>
+                                        <div>
+                                            <button class="btn btn-danger">Добавить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 float-left"> <div class="items-body">
+                                        <p>
+                                            Бургер с сыром
+                                        </p>
+                                        <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
+                                        <p class="item-decsription">
+                                            Гамбурегр с сыром 
+                                        </p>
+                                        <div class="price">
+                                            <p class="item-price">
+                                                Цена - 1.6 BYN
+                                            </p>
+                                                <button class="btn btn-danger">Добавить</button>
+                                        </div>
+                                    </div>
+                                </div> -->
                             </div>
-                            
+                        </div>
                         
+                    
+            </div>
+                <div class="collapse sweat" id="demo3">
+                    
+            <div class="card">
+                <div class="card-header">здесь изображение </div>
+                <div class="card-body">Бургер лососевый</div> 
+                <div class="card-footer">цена</div>
+            </div>
                 </div>
-                    <div class="collapse sweat" id="demo3">
+            <div class="collapse drinks" id="demo4">
+                <div class="container text-center">
+            
+                    <div class="row">
+                            <div class="carousel-item row equal catalog-items active">
+                                <drinks 
+                                v-bind:drinksArray="drinksArray"
+                                @addToOrder='addToOrder'/>
+                                <!-- <div class="col-3 float-left">
+                                    <div class="items-body">
+                                        <p>
+                                            Бургер с сыром
+                                        </p>
+                                        <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
+                                        <p class="item-decsription">
+                                            Гамбурегр с сыром
+                                        </p>
+                                        <p class="item-price">
+                                            Цена - 1.6 BYN
+                                        </p>
+                                        <div>
+                                            <button class="btn btn-danger">Добавить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 float-left"> <div class="items-body">
+                                        <p>
+                                            Бургер с сыром
+                                        </p>
+                                        <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
+                                        <p class="item-decsription">
+                                            Гамбурегр с сыром
+                                        </p>
+                                        <p class="item-price">
+                                            Цена - 1.6 BYN
+                                        </p>
+                                        <div>
+                                            <button class="btn btn-danger">Добавить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 float-left"> <div class="items-body">
+                                        <p>
+                                            Бургер с сыром
+                                        </p>
+                                        <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
+                                        <p class="item-decsription">
+                                            Гамбурегр с сыром 
+                                        </p>
+                                        <div class="price">
+                                            <p class="item-price">
+                                                Цена - 1.6 BYN
+                                            </p>
+                                                <button class="btn btn-danger">Добавить</button>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                    </div>
                         
+                        
+                </div>  
+            </div>
+            <div class="collapse dishes" id="demo5">
                 <div class="card">
                     <div class="card-header">здесь изображение </div>
                     <div class="card-body">Бургер лососевый</div> 
                     <div class="card-footer">цена</div>
                 </div>
-                    </div>
-                <div class="collapse drinks" id="demo4">
-                    <div class="container text-center">
-                
-                        <div class="row">
-                                <div class="carousel-item row equal catalog-items active">
-                                    <drinks 
-                                    v-bind:drinksArray="drinksArray"
-                                    @addToOrder='addToOrder'/>
-                                    <!-- <div class="col-3 float-left">
-                                        <div class="items-body">
-                                            <p>
-                                                Бургер с сыром
-                                            </p>
-                                            <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
-                                            <p class="item-decsription">
-                                                Гамбурегр с сыром
-                                            </p>
-                                            <p class="item-price">
-                                                Цена - 1.6 BYN
-                                            </p>
-                                            <div>
-                                                <button class="btn btn-danger">Добавить</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3 float-left"> <div class="items-body">
-                                            <p>
-                                                Бургер с сыром
-                                            </p>
-                                            <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
-                                            <p class="item-decsription">
-                                                Гамбурегр с сыром
-                                            </p>
-                                            <p class="item-price">
-                                                Цена - 1.6 BYN
-                                            </p>
-                                            <div>
-                                                <button class="btn btn-danger">Добавить</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3 float-left"> <div class="items-body">
-                                            <p>
-                                                Бургер с сыром
-                                            </p>
-                                            <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg"/>
-                                            <p class="item-decsription">
-                                                Гамбурегр с сыром 
-                                            </p>
-                                            <div class="price">
-                                                <p class="item-price">
-                                                    Цена - 1.6 BYN
-                                                </p>
-                                                    <button class="btn btn-danger">Добавить</button>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                </div>
-                        </div>
-                            
-                            
-                    </div>  
-                </div>
-                <div class="collapse dishes" id="demo5">
-                    <div class="card">
-                        <div class="card-header">здесь изображение </div>
-                        <div class="card-body">Бургер лососевый</div> 
-                        <div class="card-footer">цена</div>
-                    </div>
-                </div>
             </div>
-            <hr/>
-            <transition name="fade">
-                <div style="container continue-order" v-if="showConOrder">
-                <button class="btn btn-success" v-on:click="submitOrder">Оформить заказ</button>
-                </div>
-            </transition>
         </div>
-    </transition>
+        <hr/>
+        <transition name="fade">
+            <div style="container continue-order" v-if="showConOrder">
+            <button class="btn btn-success" v-on:click="submitOrder">Оформить заказ</button>
+            </div>
+        </transition>
+    </div>
+
 </template>
 <script>
 import Burger from './ChildComponents/Burger.vue'
@@ -299,6 +299,7 @@ export default {
 }
 </script>
 <style scoped>
+
 .equal {
     display: table;
 }
@@ -391,7 +392,7 @@ export default {
   opacity: 0;
 }
 .fade-enter-active, .fade-leave-active {
-    transition: opacity 2s;
+    transition: opacity 1s;
 }
 .fade-enter, .fade-leave-to {
     opacity: 0;

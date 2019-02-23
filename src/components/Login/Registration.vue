@@ -1,5 +1,6 @@
 <template>
     <div class="registraion">
+        {{currentPath}}
         <div class="under-form">
         </div>
         <div class="form-input">
@@ -60,7 +61,8 @@ export default {
             password: '',
             remember: false,
             errorsEmail: [],
-            passwordError: []
+            passwordError: [],
+            currentPath: this.$route.path
         }
     },
     methods: {

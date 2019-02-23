@@ -146,12 +146,12 @@ export default {
 </script>
 <style scoped>
 .under-form {
-    margin-bottom: 10%;
+    margin-bottom: 5%;
 }
 .form-input {
     margin-top: 150px;
     border-radius: 7px;
-    background: #cf5c36;
+    background: #A6B1E1;
     margin: 0 auto;
     width: 60%;
     color: #F7FFF7;
