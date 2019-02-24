@@ -8,7 +8,7 @@
         <div class="container" v-show="getOrder.length > 0">
             <div class="row">
                 <div class="col-md-12 text-left">
-                    <span class="lead" style="font-size: 20px">Вы заказали:</span>
+                    <span class="lead facts-text">Вы заказали:</span>
                 </div>
             </div>
         </div>
@@ -23,20 +23,22 @@
                             <img 
                              src="https://image.flaticon.com/icons/svg/148/148766.svg" 
                              v-on:click="deleteOrder" :id="order.element" :title="order.type" class="remove">
-                            {{order.title}}
+                            <span style="">
+                                {{order.title}}
+                            </span>
                         </div>
                         <img src="https://image.flaticon.com/icons/svg/660/660522.svg" 
                          v-if="order.picks !== null"/>
                         <div class="card-content" 
                             v-if="order.picks !== null" 
                             v-for="pick in order.picks">
-                                {{pick}}
+                               &#8728; {{pick}}
                         </div>
                         <div class="card-footer">
                             <input class="form-control" type="number" min="1" max="20" style="padding-right: 8px;
-    padding-left: 35px;
-    margin: 0 auto;
-    font-size: 20px;border-radius: 4.25rem"/>
+                            padding-left: 35px;
+                            margin: 0 auto;
+                            font-size: 20px;border-radius: 4.25rem"/>
                         </div>
                     </div>
                 </div>
@@ -45,39 +47,42 @@
                 
                 <img src="https://image.flaticon.com/icons/svg/136/136326.svg" 
                 style="width: 15%" class="img fluid-img"/>
-                <p style="font-family: Verdanda;font-size: 20px">
-                    Предметов для заказа нету...
-                </p>
-                 <button class="btn btn-success" 
-                    v-on:click="returnToCatalog" v-show="getOrder.length === 0">Вернуться в каталог</button>
+                <div class="empty-order">
+                    <p>
+                        Предметов для заказа нету...
+                    </p>
+                </div>
+                 <button class="btn btn-success mt-2" 
+                    v-on:click="returnToCatalog" v-show="getOrder.length === 0">Вернуться в каталог
+                </button>
             </div>
         </div>
         <div class="container">
-            <div class="row">
+            <div class="row" v-show="getOrder.length > 0">
                 <div class="col-md-6">
                     <div>
-                        <kbd>Ваш адрес </kbd><br/>
+                        <kbd class="user-info" v-if="userInfo.location">Ваш адресс </kbd><br/>
                         <kbd style="background:#2171c0;border-radius: 1.2rem;font-size: 22px;" v-if="userInfo.location !== null">{{userInfo.location}}</kbd>
                         <div v-else>
-                            <kbd>
-                                Укажите адрес
+                            <kbd class="user-info">
+                                Укажите <span style="font-weight: bold">адресс</span>
                             </kbd>
-                            <input type="text" class="form-control" placeholder="Адрес" v-model="location">
+                            <input type="text" class="form-control mt-2 mb-2" placeholder="Адрес" v-model="location">
                             <button class="btn btn-info ml-2" v-on:click="addLocation">Ok</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div>
-                        <kbd>Ваш телефон</kbd> 
+                        <kbd class="user-info" v-if="userInfo.phone">Ваш телефон</kbd> 
                         <br/>
                         <kbd style="background:#2171c0;border-radius: 1.2rem;font-size: 22px;" v-if="userInfo.phone !== null">{{userInfo.phone}}</kbd>
                         <div v-else class="text-center">
-                            <kbd>
+                            <kbd class="user-info">
                                 Укажите телефон
                             </kbd>
                             <div>
-                            <input type="text" class="form-control mt-2" style="width: 30%;display:inline-block" 
+                            <input type="text" class="form-control mt-2 mb-2" style="width: 30%;display:inline-block" 
                             value="+375"placeholder="Телефон" v-model="phone">
                             <button class="btn btn-info ml-2" v-on:click="addPhone">Ok</button>
                             </div>
@@ -100,7 +105,7 @@
                 <div class="col-md-10">
                 </div>
                 <div class="col-md-2">
-                    <div class="order-price">
+                    <div class="order-price facts-text">
                         {{priceOrder}} BYN
                     </div>
                     <button class="btn btn-danger" v-on:click="submitOrder" v-show="getOrder.length > 0">Купить</button>
@@ -196,7 +201,7 @@ export default {
 <style scoped>
     .order-price {
         border: 0;
-        border-bottom: 1px solid gray;  
+        border-bottom: 2px solid gray;  
         font-size: 22px;
         margin: 0 0 9px 0;
     }
@@ -211,6 +216,32 @@ export default {
         position: absolute;
         right: 1px
     }
+    .user-info {
+        font-size: 24px;
+    }
+
+    .facts-text {
+        font-size: 28px;
+        font-weight: bold;
+        background: black;
+        color: white;
+    }
+    .empty-order {
+        font-size: 32px;
+        font-weight: bold;
+        background: black;
+        color: white;
+        width: 51%;
+        margin: 0 auto;
+    }
+    .card input {
+        margin: 0 auto;
+        width: 60%;
+        /* padding-right: 8px; */
+        /* padding-left: 35px; */
+        border-radius: 4.25rem;
+        font-size: 22px;
+    }    
     .loader {
         width: 120px;
         height: 120px;

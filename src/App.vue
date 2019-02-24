@@ -73,6 +73,9 @@ body {
   margin: 0;
   background: #841424;
 }
+body * {
+  font-family: Georgia;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

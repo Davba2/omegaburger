@@ -1,10 +1,5 @@
 <template>
-    
     <div class="catalog-body">
-        <div class="col-md-12 lead h2" >
-            Вы заказали:
-            {{order}}
-        </div>
         <div class="sticky" style="    position: sticky;
         top: -165px;
         z-index: 2;"
@@ -21,35 +16,35 @@
             <div class="row" id="catalogPicks">
                 <div class="col-md-3 option">
                     <div class="option-element">
-                        <a href="#demo" @click="toggle" class="plead" data-toggle="collapse" data-type="burger">
+                        <a href="#demo" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="burger">
                             Бургеры
                         </a>
                     </div>
                 </div>
                 <div class="col-md-2 option">
                     <div class="option-element">
-                        <a href="#demo2" @click="toggle" class="plead" data-toggle="collapse" data-type="salad">
+                        <a href="#demo2" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="salad">
                             Салаты
                         </a>
                     </div>
                 </div>
                 <div class="col-md-3 option">
                     <div class="option-element">
-                        <a href="#demo3" @click="toggle" class="plead" data-toggle="collapse" data-type="sweat">
+                        <a href="#demo3" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="sweat">
                             Десерты
                         </a>
                     </div>
                 </div>
                 <div class="col-md-2 option">
                     <div class="option-element">
-                        <a href="#demo4" @click="toggle" class="plead" data-toggle="collapse" data-type="drinks">
+                        <a href="#demo4" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="drinks">
                             Напитки
                         </a>
                     </div>
                 </div>
                 <div class="col-md-2 option">
                     <div class="option-element">
-                        <a href="#demo5" @click="toggle" class="plead" data-toggle="collapse" data-type="dishes">
+                        <a href="#demo5" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="dishes">
                             Закуски
                         </a>
                     </div>
@@ -211,7 +206,6 @@
             </div>
         </transition>
     </div>
-
 </template>
 <script>
 import Burger from './ChildComponents/Burger.vue'
@@ -311,8 +305,8 @@ export default {
 .omega {
     position: sticky;
     top: 0;
-    margin-top: 5%;
-    margin-bottom: 10%;
+    margin-top: 2%;
+    margin-bottom: 9%;
 }
 .food-body img {
     width: 50%;
@@ -339,6 +333,12 @@ export default {
     height: 70px;
     width: 100%;
     text-align: center;
+}
+.info-text {
+    font-size: 32px;
+    font-weight: bold;
+    border-bottom: 4px solid;
+    padding-bottom: 10px
 }
 .option-element a {
     font-size: 25px;
@@ -385,7 +385,12 @@ export default {
 .sweat {
     background: #001B44;
 }
-
+.facts-text {
+    font-size: 28px;
+    font-weight: bold;
+    background: black;
+    color: white;
+}
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active до версии 2.1.8 */ {
   transform: translateX(10px);
@@ -399,11 +404,10 @@ export default {
 }
 .sticky {
    transition: background-color 1s ease-in-out;
-   background: #EEE5E9;
    border-radius: 0 10px 10px 10px;
    margin: 0 0 5px 0;
 }
 .sticky-active {
-    background: rgb(226, 216, 245);
+    background: rgb(255, 255, 255);
 }
 </style>

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-4" v-bind:key="item.id" v-for="item in burgersArray">
                 <div class="items-body">
-                     <p>
+                     <p class="desc-title">
                         {{item.title}}
                     </p>
                     <a :href="'#'+item.title"  @click="fuckYou" class="plead" data-toggle="collapse">
@@ -100,7 +100,10 @@ export default {
     display: inline-block;
     margin: 0 5px 0 5px;
 }
-
+.desc-title {
+    font-weight : bold;
+    font-size: 25px;
+}
 .option, .catalog, .drinks, .sweat, .dishes {
     padding: 0;
     text-align: center

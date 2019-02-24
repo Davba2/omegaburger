@@ -9,7 +9,7 @@
                     <div class="col-md-5 info-body">
                         <div>
                             <img src="https://image.flaticon.com/icons/svg/891/891389.svg">
-                            <h1 class="lead message">
+                            <h1 class="lead message facts-text">
                                 Войти в аккаунт
                             </h1>
                         </div>
@@ -187,7 +187,12 @@ export default {
     display: block;
     text-align: left;
 }
-
+.facts-text {
+    font-size: 28px;
+    font-weight: bold;
+    background: black;
+    color: white;
+}
 .section-input {
     margin: 15px 0 15px 0;
 }

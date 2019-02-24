@@ -71,15 +71,17 @@
                                 {{current.desc}}
                             </p>
                         </div>
-                        <div class="col-md-4">
-                            <p class="plead" style="font-size: 26px" >
+                        <div class="col-md-4 mb-2">
+                            <p class="plead" style="font-size: 26px; border-bottom: 2px solid;font-weight: bold" >
                                 {{current.title}}
                             </p>
                             <img :src="current.url"
                             class="img img-fluid" alt="Гамбургер"/>
-                            <p class="current-price" >
-                                Цена - {{current.price}} BYN
-                            </p>
+                            <div class="facts-text">
+                                <p class="current-price" >
+                                    Цена - {{current.price}} BYN
+                                </p>
+                            </div>
                             <div>
                                 {{checkedPicks}}
                                 {{order}}
@@ -129,22 +131,22 @@ export default {
 </script>
 <style scoped>
 
-    .custom-labels {
-        display: flex;
-        justify-content: center;
-	    align-currents: center;
-    }
-    h3 {
-        margin: 5px 0 15px
-    }
-    img {
-        width: 150%;
-    }
+.custom-labels {
+    display: flex;
+    justify-content: center;
+    align-currents: center;
+}
+h3 {
+    margin: 5px 0 15px
+}
+img {
+    width: 150%;
+}
 
-    input[type=checkbox]{
-	height: 0;
-	width: 0;
-	visibility: hidden;
+input[type=checkbox]{
+height: 0;
+width: 0;
+visibility: hidden;
 }
 
 label {
@@ -157,6 +159,12 @@ label {
 	display: block;
 	border-radius: 20px;
 	position: relative;
+}
+.facts-text {
+    font-size: 28px;
+    font-weight: bold;
+    background: black;
+    color: white;
 }
 
 label::after {

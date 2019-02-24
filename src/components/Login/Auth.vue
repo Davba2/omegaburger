@@ -8,7 +8,7 @@
                     <div class="col-md-5 info-body">
                         <div>
                             <img src="https://image.flaticon.com/icons/svg/1265/1265427.svg">
-                            <h1 class="lead message">
+                            <h1 class="lead message facts-text">
                                 Регистрация
                             </h1>
                         </div>
@@ -166,6 +166,12 @@ export default {
 .message {
     margin: 10px 0 25px 0;
     font-size: 30px;
+}
+.facts-text {
+    font-size: 28px;
+    font-weight: bold;
+    background: black;
+    color: white;
 }
 .login-help, .password-help {
     font-size: 14px;

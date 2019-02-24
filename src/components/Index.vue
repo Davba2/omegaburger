@@ -5,17 +5,15 @@
                 <source src="https://my.mixtape.moe/oerohs.webm" type="video/webm">
             </video>
             <div class="content" style="    z-index: 100;
-    bottom: -140px;
-    right: 16px;
-    position: absolute;
-    width: 30%">
-                <h1 style="font-size: 38px; font-weight:bold;color: navy;" class="lead">Магазин гамбургеров</h1>
-                <hr/>
-                <p>
-                  Компания OMEGA BURGER
-                </p>
+                bottom: -140px;
+                right: 16px;
+                position: absolute;
+                width: 32%">
+                <h1 style="font-size: 36px; font-weight:bold;color: white;font-family: Georgia;" class="lead">Магазин гамбургеров</h1>
+                <hr style="border-top: 3px double #8c8b8b;"/>
             </div>
         </div>
+        <img src="@/assets/logo.png"/>
         <div id="demo" class=" slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active carousel-image-1">
@@ -32,53 +30,52 @@
             </div>
 
         </div>
-        <section id="facts">
+        <section id="facts" @mouseover="f">
 			<div class="container">
 				<div class="d-flex d-flex align-items-center">
 					<div class="mb-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
 						<img src="https://image.flaticon.com/icons/svg/1162/1162486.svg" class="img-fluid">
-						<p class="lead">Большой ассортиент</p>
+						<p class="lead facts-text">Большой ассортиент</p>
 					</div>
                     <div class="col-md-4 mb-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
 						<img src="https://image.flaticon.com/icons/svg/726/726455.svg" class="img-fluid">
-						<p class="lead">Быстрая доставка</p>
+						<p class="lead facts-text">Быстрая доставка</p>
 					</div>
                     <div class="col-md-4 mb-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
 						<img src="https://image.flaticon.com/icons/svg/1408/1408430.svg" class="img-fluid">
-						<p class="lead">Вкусно</p>
+						<p class="lead facts-text">Вкусно</p>
 					</div>
 				</div>
             </div>
-            <div class="container" style=" border-top: 1px solid gray;">
-                <img class="img img-fluid" src="https://image.flaticon.com/icons/svg/265/265699.svg" style="width: 15%"/>
-                <p>Немного статистики</p>
+            <div class="container pb-2" style=" border-top: 1px solid gray;">
+                <img class="img img-fluid" src="https://image.flaticon.com/icons/svg/265/265699.svg" style="width: 13%"/>
                 <br/>
-                <div class="row">
+                <div class="row mt-4">
                     <div class="col-md-4">
-                        <h3>
-                            Кол-во успешных заказов
+                        <h3 class="facts-text">
+                            Кол-во заказов
                         </h3>
                         <kbd id="ordersCountJs" style="font-size: 26px;
-                            letter-spacing: 6px;text-shadow: 5px 1px 2px darkmagenta;
+                            letter-spacing: 6px;text-shadow: 5px 1px 2px darkmagenta;background:#108591d1
                         }">{{orderSucc}}</kbd>
                     </div>
                     <div class="col-md-4">
-                        <h3>
+                        <h3 class="facts-text">
                             Кол-во заказывающих
                         </h3>
                         <kbd id="ordersCountJs" style="font-size: 26px;
-                            letter-spacing: 6px;text-shadow: 5px 1px 2px darkmagenta;
+                            letter-spacing: 6px;text-shadow: 5px 1px 2px darkmagenta;background:#108591d1
                         }">{{orderPeople}}</kbd>
                     </div>
                     <div class="col-md-4">
-                        <h3>
-                            Кол-во проданных товаров
+                        <h3 class="facts-text">
+                            Кол-во прод. товаров
                         </h3>
                         <kbd id="ordersCountJs" style="font-size: 26px;
-                            letter-spacing: 6px;text-shadow: 5px 1px 2px darkmagenta;
+                            letter-spacing: 6px;text-shadow: 5px 1px 2px darkmagenta;background:#108591d1
                         }">{{orderCol}}</kbd>
                     </div>
                 </div>
@@ -89,8 +86,12 @@
                 <div class="row">
                     <div class="col-lg col-md align-items-center">
                         <div class="container" style="text-align: -webkit-right;
-                                                            margin-top: 196px">
-                            <h1 class="display-2" style="border-bottom: 1px solid gray;width: 76%">
+                                                            margin-top: 240px">
+                            <h1 class="display-2" style="border-bottom: 1px solid gray;
+                                width: 75%;
+                                font-weight: bold;
+                                font-size: 4.5rem;
+                                font-family: Georgia">
                                 Аппетитные булочки
                             </h1>
                             <p class="lead">Попробуйте, пока горячие</p>
@@ -102,7 +103,11 @@
         <header/>
         <section id="comments" class="text-white">
             <div class="container" style="text-align: center;font-size: 26px">
-                Отзывы о нашей компании:
+            <div class="container" 
+            style="margin-top: 20px;
+            border-bottom: 3px double #8c8b8b;font-size: 32px; font-weight: bold; background: black">
+                Вот что думают он нас:
+            </div>
             </div>
             <div class="container">
         <div class="container comment-element">
@@ -167,6 +172,16 @@
     </div>
         </section>
         <section id="map">
+            <div class="container" 
+                style="margin-bottom: 20px;
+                border-bottom: 3px double rgb(140, 139, 139);
+                font-size: 32px;
+                font-weight: bold;
+                background: black;
+                color: white;
+                width: 30%">
+                Доступные магазины
+            </div>
             <div class="container-fluid">
                 <div id="mapid" ref="mapElement"></div>
             </div>
@@ -176,6 +191,15 @@
                         <button class="btn" style="    background: #E0FF4F"  v-on:click="getUserCoord">
                             Отправить координаты
                         </button>
+                        <div class="container" 
+                            style="margin-top: 20px;
+                            font-size: 32px;
+                            font-weight: bold;
+                            background: black;
+                            color: white;
+                            width: 60%" v-if="userDistance">
+                            {{distanceMessage}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -200,6 +224,9 @@ export default {
            current: 5,
            orderPeople: 510,
            orderCol: 8999,
+           statToggle: false,
+           userDistance: false,
+           distanceMessage: 'Вы в 2.4 км, доставка около 15 мин',
            commentFirst: {
                name: 'Олечка',
                age: 23,
@@ -232,6 +259,7 @@ export default {
             console.log('wrok');
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(this.showCoord);
+                this.userDistance = true;
             } else {
                 this.position = "Невозможно определить ваши коориданаты";
             }
@@ -288,6 +316,24 @@ export default {
         },
         compareRandom: function () {
             return Math.random() - 0.5;
+        },
+        f: function () {
+            console.log('hello')
+            if (!this.statToggle && window.scrollY > 1500) {
+                let duration = 4;
+                let end = 4000;
+                let self = this;
+                let a = setInterval(function() {
+                    self.orderSucc += 6;
+                    self.orderPeople += 14
+                    self.orderCol +=22;
+                    if (self.orderSucc > end) {
+                        clearInterval(a);
+                        self.statToggle = true;
+                    };
+                    duration += 0.3;
+                }, duration) 
+            }
         }
     },
     props: {
@@ -300,21 +346,9 @@ export default {
     },
     created() {
         let self = this;
-        let end = 4200;
-        let duration = 4;
+        window.addEventListener('scroll', this.f);
         let objArray = [self.commentFirst, self.commentSecond, self.commentThird];
-        //this.animateValue(100, 25, 7500);
-        //
         console.log(self.commentSecond)
-        let a = setInterval(function() {
-            self.orderSucc +=6;
-            self.orderPeople += 14
-            self.orderCol +=22;
-            if (self.orderSucc > end) {
-                clearInterval(a)
-            };
-            duration += 0.3;
-        }, duration) 
         //this.interval = setInterval(() => this.toggleComments(), 11000);
         let toggleCommentsInterval = setInterval(function() {
             self.show = false;
@@ -329,7 +363,7 @@ export default {
             setTimeout(function() {
                  self.intervalComment(objArray, arrayItem);
             }, 500)
-        }, 6000)
+        }, 20000)
     },
     mounted () {
         this.$nextTick(() => {
@@ -366,6 +400,12 @@ export default {
 #facts p {
     margin: 15px 0 0 0;
     font-size: 26px;
+}
+.facts-text {
+    font-size: 28px;
+    font-weight: bold;
+    background: black;
+    color: white;
 }
 #facts img {
     overflow: hidden;
