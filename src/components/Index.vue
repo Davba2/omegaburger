@@ -9,49 +9,78 @@
                 right: 16px;
                 position: absolute;
                 width: 32%">
-                <h1 style="font-size: 36px; font-weight:bold;color: white;font-family: Georgia;" class="lead">Магазин гамбургеров</h1>
+                <h1 style="font-size: 36px; font-weight:bold;color: white;font-family: Georgia;background:black;border-bottom: 2px solid;" class="lead">Магазин гамбургеров</h1>
                 <hr style="border-top: 3px double #8c8b8b;"/>
             </div>
         </div>
-        <img src="@/assets/logo.png"/>
-        <div id="demo" class=" slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active carousel-image-1">
-                    <div class="carousel-caption d-none d-sm-block text-right mb-5" style="right: 9%">
-                        <h1 class="display-4">Берите то, что хотите</h1>
-                        <p class="lead display-6">
-                            Просматривайте тысячи блюд и выбирайте то, что вам по-душе. От блюд до гамбургеров
-                        </p>
-                        <router-link to="/authentication" class="btn btn-lg">
-                            Регистрация
-                        </router-link>
+       
+        <div id="demo" class=" slide">
+            <div id="overlay-fixed">
+                <div class="row" style="margin-right: 0px;">
+                    <div class="col-lg col-md align-items-center">
+                        <div class="container" style="text-align: -webkit-right;
+                            margin-top: 350px">
+                        
+                            <h1 class="display-4" style="border-bottom: 3px solid white;
+                            width: 59%;
+                            font-weight: bold;
+                            font-size: 3.5rem;
+                            font-family: Georgia;
+                            background: black;
+                            ">Берите то, что хотите</h1>
+                            <p class="lead" style="font-size: 24px">
+                                Просматривайте тысячи блюд и выбирайте то, что вам по-душе
+                            </p>
+                            <router-link to="/authentication" class="btn btn-lg">
+                                Регистрация
+                            </router-link>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
+        <section>
+            <div class="overlay-fact container-fluid">
+                <div class="row">
+                    <div class="col-lg col-md align-items-center">
+                        <div class="container" style="text-align: -webkit-right;
+                                                            margin-top: 240px">
+                            <h1 class="display-2" style="border-bottom: 3px solid white;
+                                width: 76%;
+                                font-weight: bold;
+                                font-size: 3.5rem;
+                                font-family: Georgia;
+                                background: black">
+                                По секретным технологиям
+                            </h1>
+                            <p style="font-size: 26px"> С любовью к покупателям</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</section>
         <section id="facts" @mouseover="f">
 			<div class="container">
 				<div class="d-flex d-flex align-items-center">
 					<div class="mb-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
-						<img src="https://image.flaticon.com/icons/svg/1162/1162486.svg" class="img-fluid">
+						<img src="@/assets/1162486.svg" class="img-fluid">
 						<p class="lead facts-text">Большой ассортиент</p>
 					</div>
                     <div class="col-md-4 mb-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
-						<img src="https://image.flaticon.com/icons/svg/726/726455.svg" class="img-fluid">
+						<img src="@/assets/726455.svg" class="img-fluid">
 						<p class="lead facts-text">Быстрая доставка</p>
 					</div>
                     <div class="col-md-4 mb-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
-						<img src="https://image.flaticon.com/icons/svg/1408/1408430.svg" class="img-fluid">
+						<img src="@/assets//1408430.svg" class="img-fluid">
 						<p class="lead facts-text">Вкусно</p>
 					</div>
 				</div>
             </div>
             <div class="container pb-2" style=" border-top: 1px solid gray;">
-                <img class="img img-fluid" src="https://image.flaticon.com/icons/svg/265/265699.svg" style="width: 13%"/>
+                <img class="img img-fluid" src="@/assets/265699.svg" style="width: 13%"/>
                 <br/>
                 <div class="row mt-4">
                     <div class="col-md-4">
@@ -319,7 +348,7 @@ export default {
         },
         f: function () {
             console.log('hello')
-            if (!this.statToggle && window.scrollY > 1500) {
+            if (!this.statToggle && window.scrollY > 1200) {
                 let duration = 4;
                 let end = 4000;
                 let self = this;
@@ -377,18 +406,18 @@ export default {
 </script>
 <style scoped>
 @import "~leaflet/dist/leaflet.css";
-.carousel-item
+#overlay-fixed
 {
     clear: both;
     height: 550px;
 }
-.carousel-item .btn {
+#overlay-fixed .btn {
     background: yellow;
 }
-.carousel-item .btn:hover {
+#overlay-fixed .btn:hover {
     background: rgb(238, 238, 32);
 }
-.carousel-item p, h1 {
+#overlay-fixed p, h1 {
     color: #E8FDF5;
 }
 #facts {
@@ -417,19 +446,26 @@ export default {
 .merits {
     padding: 20px 10px 5px 10px;
 }
+#overlay-fixed {
+    height: 610px;
+    background: url("https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-653433.jpg");
+    color:#fff;
+}
 .carousel-image-1 {
     box-shadow: 0 0 150px rgba(0, 0, 0, 0.623) inset;
-    background: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-715711.jpg');
-    background-size: cover;
-}
-.carousel-image-2 {
-    box-shadow: 0 0 150px rgba(0,0,0,0.623) inset;
-    background: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-709583.jpg');
+    background: url('../assets/wallhaven-715711.jpg');
     background-size: cover;
 }
 .overlay {
     height: 410px;
-    background: url("https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-4870.png");
+    background: url("../assets/wallhaven-4870.png");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color:#fff;
+}
+.overlay-fact {
+    height: 410px;
+    background: url("../assets/wallhaven-692427.jpg");
     background-attachment: fixed;
     background-repeat: no-repeat;
     color:#fff;

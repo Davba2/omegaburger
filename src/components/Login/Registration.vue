@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-md-5 info-body">
                         <div>
-                            <img src="https://image.flaticon.com/icons/svg/891/891389.svg">
+                            <img src="@/assets/891389.svg">
                             <h1 class="lead message facts-text">
                                 Войти в аккаунт
                             </h1>

@@ -21,7 +21,7 @@ export const store = new Vuex.Store({
                 title: 'Бургер с сыром',
                 price: 1.5,
                 desc: 'Блаженная булочка наполнена котлеткой и облита сыром',
-                url: 'http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png',
+                url: require('@/assets/Hamburger-PNG-Photos.png'),
                 nutritional: {
                     protein: 4,
                     carbo: 22,
@@ -34,7 +34,7 @@ export const store = new Vuex.Store({
                 title: 'Двойной бурегр с сыром',
                 price: 2.1,
                 desc: 'Та же булочка с сыром, но с двойном удовольствием',
-                url: 'http://pluspng.com/img-png/burger-png-burger-free-download-png-png-image-2126.png',
+                url: require('@/assets/burger-png-burger-free-download-png-png-image-2126.png'),
                 nutritional: {
                     protein: 4,
                     carbo: 22,
@@ -47,7 +47,7 @@ export const store = new Vuex.Store({
                 title: 'Бургер с двойной котлетой',
                 price: 1.75,
                 desc: 'Когда 2 котлеты, понимаешь, что такое белок',
-                url: 'https://banner2.kisspng.com/20180324/osq/kisspng-hamburger-bacon-sushi-pizza-cheeseburger-burger-king-5ab6e5746c0b92.1832730815219357324426.jpg',
+                url: require('@/assets/kisspng-hamburger-bacon-sushi-pizza-cheeseburger-burger-king-5ab6e5746c0b92.1832730815219357324426.jpg'),
                 nutritional: {
                     protein: 4,
                     carbo: 22,
@@ -81,22 +81,22 @@ export const store = new Vuex.Store({
             burger: {
                 first: 0,
                 second: 0,
-                url: 'https://image.flaticon.com/icons/svg/1046/1046784.svg'
+                url: require('@/assets/1046784.svg')
             },
             sweat: {
                 first: 0,
                 second: 0,
-                url: 'https://image.flaticon.com/icons/png/512/1365/1365576.png'
+                url: require('@/assets/1365576.png')
             },
             drinks: {
                 first: 0,
                 second: 0,
-                url: 'https://image.flaticon.com/icons/svg/1365/1365596.svg'
+                url: require('@/assets/1365596.svg')
             },
             dishes: {
                 first: 0,
                 second: 0,
-                url: 'https://image.flaticon.com/icons/svg/1408/1408052.svg'
+                url: require('@/assets/1408052.svg')
             }
         },
         orderHistory: []

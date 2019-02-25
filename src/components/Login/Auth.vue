@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-md-5 info-body">
                         <div>
-                            <img src="https://image.flaticon.com/icons/svg/1265/1265427.svg">
+                            <img src="@/assets/1265427.svg">
                             <h1 class="lead message facts-text">
                                 Регистрация
                             </h1>
