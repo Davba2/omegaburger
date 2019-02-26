@@ -120,7 +120,7 @@
             role="alert" v-show="successSubmit">
                 Ваш заказ был принят, наши ребята уже приступили к нему<br/> <span style="border-bottom: 2px solid white;font-size: 28px">{{orderText}}</span>
             </div>
-            <div class="container-fluid">
+            <div class="container-fluid" v-show="successSubmit">
                 <div id="mapid" ref="mapElement"></div>
             </div>
         </div>
@@ -130,7 +130,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="order-price facts-text">
-                        {{priceOrder}} BYN
+                        {{priceOrder.toFixed(2)}} BYN
                     </div>
                     <button class="btn bg-button-info" v-on:click="submitOrder" v-show="getOrder.length > 0">Купить</button>
                 </div>
@@ -159,6 +159,9 @@ export default {
     },
     methods: {
         deleteOrder: function (event) {
+            if (this.successSubmit) {
+                return;
+            }
             this.$store.dispatch('removeFromOrder', event.target.id);
             this.$store.dispatch('decriseCounter', event.target.title);
         },
@@ -263,6 +266,7 @@ export default {
         }
     },
     mounted () {
+        window.scrollTo(0, 60);
         this.$nextTick(() => {
             this.map = L.map(this.$refs['mapElement']).setView([53.902237, 30.335839], 14);
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
@@ -341,7 +345,7 @@ export default {
         transition: all .1s ease;
     }
     .spin {
-    animation: spinner 1s linear infinite;
+        animation: spinner 1s linear infinite;
     }
 
     @keyframes spinner {

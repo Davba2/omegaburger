@@ -23,10 +23,10 @@ export const store = new Vuex.Store({
                 desc: 'Блаженная булочка наполнена котлеткой и облита сыром',
                 url: require('@/assets/Hamburger-PNG-Photos.png'),
                 nutritional: {
-                    protein: 4,
-                    carbo: 22,
-                    fat: 10,
-                    calc: 300
+                    protein: 40,
+                    carbo: 70,
+                    fat: 33,
+                    calc: 457
                 }
             },
             {
@@ -36,10 +36,10 @@ export const store = new Vuex.Store({
                 desc: 'Та же булочка с сыром, но с двойном удовольствием',
                 url: require('@/assets/burger-png-burger-free-download-png-png-image-2126.png'),
                 nutritional: {
-                    protein: 4,
-                    carbo: 22,
-                    fat: 10,
-                    calc: 300
+                    protein: 24,
+                    carbo: 28,
+                    fat: 19,
+                    calc: 380
                 }
             },
             {
@@ -49,7 +49,7 @@ export const store = new Vuex.Store({
                 desc: 'Когда 2 котлеты, понимаешь, что такое белок',
                 url: require('@/assets/kisspng-hamburger-bacon-sushi-pizza-cheeseburger-burger-king-5ab6e5746c0b92.1832730815219357324426.jpg'),
                 nutritional: {
-                    protein: 4,
+                    protein: 41,
                     carbo: 22,
                     fat: 10,
                     calc: 300

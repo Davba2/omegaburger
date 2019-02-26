@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="row">
+        <div class="row" style="margin-right: 0px">
             <div class="col-md-4" v-bind:key="item.id" v-for="item in burgersArray">
                 <div class="items-body">
                      <p class="desc-title">
                         {{item.title}}
                     </p>
                     <a :href="'#'+item.title"  @click="fuckYou" class="plead" data-toggle="collapse">
-                        <img src="https://image.flaticon.com/icons/svg/1046/1046784.svg" />
+                        <img :src="item.url" style="width: 75%"/>
                     </a>
                 </div>
             </div>

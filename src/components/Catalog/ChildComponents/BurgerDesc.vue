@@ -18,13 +18,13 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>8.5</td>
-                                        <td>43</td>
-                                        <td>12</td>
+                                        <td>{{nutritional.protein}}</td>
+                                        <td>{{nutritional.carbo}}</td>
+                                        <td>{{nutritional.fat}}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">
-                                            546 кКал.
+                                           {{nutritional.calc}} кКал.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -35,7 +35,7 @@
                                         <td>
                                             <div class='custom-labels'>
                                                 <input type="checkbox" :id='current.id + "1"' v-model="checkedPicks" value="Кетчуп">
-                                                <label :for='current.id + "1"' class="ketchupLabel">
+                                                <label :for='current.id + "1"' v-on:click="calcCalculation" class="ketchupLabel">
                                                 
                                                 </label>
                                             </div>
@@ -46,7 +46,7 @@
                                         <td>
                                             <div class='custom-labels'>
                                                 <input type="checkbox" :id='current.id + "2"' v-model="checkedPicks" value="Майонез">
-                                                <label class="mayoLabel" :for='current.id + "2"'>
+                                                <label class="mayoLabel" :for='current.id + "2"' v-on:click="calcCalculation">
                                                 </label>
                                             </div>
                                             <kbd>
@@ -56,7 +56,7 @@
                                         <td>
                                             <div class='custom-labels'>
                                                 <input type="checkbox" :id='current.id + "3"' v-model="checkedPicks" value="Специи">
-                                                <label class="spiceLabel" :for='current.id + "3"'>
+                                                <label class="spiceLabel" :for='current.id + "3"' v-on:click="calcCalculation"> 
                                                 </label>
                                             </div>
                                             <kbd>
@@ -79,12 +79,10 @@
                             class="img img-fluid" alt="Гамбургер"/>
                             <div class="facts-text">
                                 <p class="current-price" >
-                                    Цена - {{current.price}} BYN
+                                    Цена - {{curPrice.toFixed(2)}} BYN
                                 </p>
                             </div>
                             <div>
-                                {{checkedPicks}}
-                                {{order}}
                                 <button class="btn btn-danger" :id="current.id"  v-on:click="addToOrder">Добавить</button>
                             </div>
                         </div>
@@ -101,7 +99,9 @@ export default {
       order: '',
       checkedPicks: [],
       title: this.current.title,
-      curPrice: this.current.price
+      curPrice: this.current.price,
+      nutritional: JSON.parse(JSON.stringify(this.current.nutritional)),
+      togglerPicks: []
     }},
     methods: {
         addToOrder: function (event) {
@@ -117,6 +117,23 @@ export default {
                 picks: this.checkedPicks,
                 type: 'burger'
             });
+        },
+        calcCalculation: function (event) {
+            let id = event.target.previousSibling.id;
+            if (this.togglerPicks.indexOf(id) > -1) {
+                for (var prop in this.nutritional) {
+                    this.nutritional[prop] = +this.nutritional[prop] - 7 -id;
+                }
+                this.togglerPicks.splice(this.togglerPicks.indexOf(id), 1);
+                this.curPrice -= 0.4;
+            } else {
+                this.togglerPicks.push(id)
+                console.log(this.togglerPicks)
+                this.curPrice += 0.4;
+                for (var prop in this.nutritional) {
+                    this.nutritional[prop] = +this.nutritional[prop] + 7 + +id;
+                }
+            }
         }
     },
     watch: {
@@ -124,6 +141,11 @@ export default {
             this.checkedPicks = [];
             this.title = this.current.title;
             this.curPrice = this.current.price;
+            this.nutritional = JSON.parse(JSON.stringify(this.current.nutritional));
+            this.togglerPicks = [];
+        },
+        checkedPicks: function () {
+            console.log('Изменилось')
         }
     }
    

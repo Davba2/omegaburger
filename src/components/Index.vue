@@ -2,10 +2,10 @@
     <div>
         <div class="">
             <video autoplay muted loop id="myVideo" class=" d-sm-none d-md-block" style="width: 100%;z-index:1">
-                <source src="https://my.mixtape.moe/oerohs.webm" type="video/webm">
+                <source src="https://my.mixtape.moe/rsxpmr.webm" type="video/webm">
             </video>
             <div class="content" style="    z-index: 100;
-                bottom: -140px;
+                bottom: -80px;
                 right: 16px;
                 position: absolute;
                 width: 32%">
@@ -226,7 +226,7 @@
                             font-weight: bold;
                             background: black;
                             color: white;
-                            width: 60%" v-if="userDistance">
+                            width: 63%" v-if="userDistance">
                             {{distanceMessage}}
                         </div>
                     </div>
@@ -288,7 +288,6 @@ export default {
             console.log('wrok');
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(this.showCoord);
-                this.userDistance = true;
             } else {
                 this.position = "Невозможно определить ваши коориданаты";
             }
@@ -315,6 +314,7 @@ export default {
             new L.Marker([this.position.lat, this.position.lon])
             .bindPopup(popup)
             .addTo(this.map);
+            this.calculateDistance(this.position);
         },
         showError: function (error) {
             switch(error.code) {
@@ -332,8 +332,17 @@ export default {
                 break;
             }
         },
+        radians: function (degrees) {
+            return degrees * Math.PI / 180;
+        },
         calculateDistance: function (coord) {
             //в js нету radiands? WTF
+            let shopCoord = [53.902237, 30.335839];
+            let calc = 6371 * Math.acos(Math.sin(this.radians(coord.lat)) * Math.sin(this.radians(shopCoord[0]))
+            + Math.cos(this.radians(coord.lat)) * Math.cos(this.radians(shopCoord[0])) * Math.cos(this.radians(coord.lon)-this.radians(shopCoord[1])));
+            this.userDistance = true;
+            let min = (calc / 15);
+            this.distanceMessage = `Вы в ${calc.toFixed(1)} км. Это в ~${ (min * 100).toFixed(0)} минутах от нас.`;
         },
         intervalComment : function (objArray, sortArray) {
             this.commentFirst = sortArray[0];
@@ -376,7 +385,62 @@ export default {
     created() {
         let self = this;
         window.addEventListener('scroll', this.f);
-        let objArray = [self.commentFirst, self.commentSecond, self.commentThird];
+        let objArray = [
+                {
+                    name: 'Олечка',
+                    age: 23,
+                    text: 'Невероятно вкусно! После того, как попробовала двойной гамбургер от шефа Пуарди, слюнки аж потекли.',
+                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/128391/3.0'
+                },
+                {
+                    name: 'Габриэль',
+                    age: 17,
+                    text: 'Очень вкусно!',
+                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/147833/3.0'
+                },
+                {
+                    name: 'Жора',
+                    age: 23,
+                    text: 'Че гамбургер не такой как на пичке?',
+                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/195855/3.0'
+                },
+                {
+                    name: 'Сергей',
+                    age: 24,
+                    text: 'Цены немного завышены, но в целом покупать здесь можно',
+                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1564343/3.0'
+                },
+                {
+                    name: 'Гоша',
+                    age: 35,
+                    text: 'Вкусно....',
+                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1817217/3.0'
+                },
+                {
+                    name: 'Вика',
+                    age: 22,
+                    text: 'Быстро доставили + всегда вкусно.',
+                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/143034/3.0'
+                },
+                {
+                    name: 'Александр',
+                    age: 28,
+                    text: 'Рекомендую!',
+                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/109723/3.0'
+                },
+                {
+                    name: 'Вадим',
+                    age: 15,
+                    text: 'Ха-ха, неплохая сеть питания))',
+                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1597801/3.0'
+                },
+                {
+                    name: 'Никита',
+                    age: 33,
+                    text: 'Нормальные закуски. Но цены не очень',
+                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1611444/3.0'
+                }
+        ];
         console.log(self.commentSecond)
         //this.interval = setInterval(() => this.toggleComments(), 11000);
         let toggleCommentsInterval = setInterval(function() {
@@ -387,12 +451,12 @@ export default {
             let arrayItem = objArray.slice();
             arrayItem.sort(function() {
                 return Math.random() - 0.5;
-            });
+            }).slice(0, 4);
             console.log('вызваю')
             setTimeout(function() {
                  self.intervalComment(objArray, arrayItem);
             }, 500)
-        }, 20000)
+        }, 5000)
     },
     mounted () {
         this.$nextTick(() => {
