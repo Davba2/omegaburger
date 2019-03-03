@@ -120,7 +120,7 @@
             role="alert" v-show="successSubmit">
                 Ваш заказ был принят, наши ребята уже приступили к нему<br/> <span style="border-bottom: 2px solid white;font-size: 28px">{{orderText}}</span>
             </div>
-            <div class="container-fluid" v-show="successSubmit">
+            <div class="container-fluid">
                 <div id="mapid" ref="mapElement"></div>
             </div>
         </div>
@@ -231,9 +231,8 @@ export default {
                         self.popup = new L.Marker([coord[0]+ 0.0001, coord[1]])
                         .bindPopup('Курьер')
                         .addTo(self.map);
-                        self.orderText = 'Курьер подъехал'
+                        self.orderText = 'Курьер подъехал';
                         return;
-
                     }
                     self.map.removeLayer(self.popup);
                     self.popup = new L.Marker([lag, lat])

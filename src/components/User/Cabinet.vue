@@ -79,7 +79,7 @@
                                            {{order.date2}}
                                         </div>
                                         <div class="col-md-6 text-right price">
-                                            Цена - <kbd>{{order.price}} BYN</kbd>
+                                            Цена - <kbd>{{order.price.toFixed(2)}} BYN</kbd>
                                         </div>
                                         <div class="col-md-12 text-center mb-2">
                                             <button class="btn bg-button-info" v-on:click="show2"> Заказать такой же</button>

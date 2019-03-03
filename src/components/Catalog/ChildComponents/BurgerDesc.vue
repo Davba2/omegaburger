@@ -18,13 +18,19 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{nutritional.protein}}</td>
-                                        <td>{{nutritional.carbo}}</td>
-                                        <td>{{nutritional.fat}}</td>
+                                        <td>
+                                            <p class="nutritional-text">{{nutritional.protein}}</p>
+                                        </td>
+                                        <td>
+                                            <p class="nutritional-text">{{nutritional.carbo}}</p>
+                                        </td>
+                                        <td>
+                                            <p class="nutritional-text">{{nutritional.fat}}</p>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">
-                                           {{nutritional.calc}} кКал.
+                                            <p class="nutritional-text">{{nutritional.calc}} кКал</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -67,9 +73,16 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <p class="plead" style="font-size: 26px">
+                            <div class="container" 
+                                style="margin-bottom: 20px;
+                                border-bottom: 3px double rgb(140, 139, 139);
+                                font-size: 32px;
+                                font-weight: bold;
+                                background: black;
+                                color: white;
+                                width: 100%">
                                 {{current.desc}}
-                            </p>
+                            </div>
                         </div>
                         <div class="col-md-4 mb-2">
                             <p class="plead" style="font-size: 26px; border-bottom: 2px solid;font-weight: bold" >
@@ -188,7 +201,10 @@ label {
     background: black;
     color: white;
 }
-
+.nutritional-text {
+    font-size: 22px;
+    font-weight: bold;
+}
 label::after {
     position: absolute;
     padding-top: 4px;

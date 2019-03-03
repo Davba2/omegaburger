@@ -24,14 +24,14 @@
                             <li>Долгая доставка?</li>
                         </ul>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-4 col-sm-4 d-sm-none d-md-block">
                        <img src="https://my.mixtape.moe/iwxgkq.PNG"
                         class="img img-fluid"/>
                     </div>
                 </div>
             </div>
             <span>
-                2019
+                20192
             </span>
         </footer>
     </div>

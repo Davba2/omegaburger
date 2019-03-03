@@ -8,10 +8,18 @@
                             Магазин
                         </p>
                         <ul>
-                            <li>Каталог</li>
-                            <li>Помощь</li>
-                            <li>Войти</li>
-                            <li>Кабинет</li>
+                            <li>
+                                <router-link to="/catalog">Каталог</router-link>
+                            </li>
+                            <li>
+                                <router-link to="/help">Помощь</router-link>
+                            </li>
+                            <li>
+                                <router-link to="/registration">Войти</router-link>
+                            </li>
+                            <li>
+                                <router-link to="/cabinet">Кабинет</router-link>
+                            </li>
                         </ul>
                     </div>
                     <div class="col-md-4">
@@ -24,7 +32,7 @@
                             <li>Долгая доставка?</li>
                         </ul>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 d-none d-sm-block d-md-block">
                        <img src="https://my.mixtape.moe/iwxgkq.PNG"
                         class="img img-fluid"/>
                     </div>
@@ -56,5 +64,12 @@ export default {
 }
 .help-text {
     border-bottom: 1px solid;
+}
+li a {
+    text-decoration: none;
+    color: white;
+}
+li a:hover {
+    background: black;
 }
 </style>

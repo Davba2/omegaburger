@@ -1,12 +1,14 @@
 <template>
     <div class="registraion">
-        {{currentPath}}
         <div class="under-form">
         </div>
         <div class="form-input">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-5 info-body">
+                    <div class="col-12 d-block d-sm-none facts-text">
+                        Войти в аккаунт
+                    </div>
+                    <div class="col-md-5 col-sm-5 col-5 d-none d-sm-block info-body">
                         <div>
                             <img src="@/assets/891389.svg">
                             <h1 class="lead message facts-text">
@@ -20,7 +22,7 @@
                             <router-link class="redirection" to="/registration">Проблемы с паролем.</router-link> 
                         </p>
                     </div>
-                    <div class="col-md-7 inputs-body">
+                    <div class="col-md-7 col-sm-7 col-12 inputs-body">
                         <form @submit="checkForm">
                             <div class="section-input">
                                 <label for="email">Почта</label>

@@ -116,14 +116,14 @@
                     <div class="col-lg col-md align-items-center">
                         <div class="container" style="text-align: -webkit-right;
                                                             margin-top: 240px">
-                            <h1 class="display-2" style="border-bottom: 1px solid gray;
+                            <h1 class="display-2 facts-text" style="border-bottom: 3px solid white;
                                 width: 75%;
                                 font-weight: bold;
                                 font-size: 4.5rem;
-                                font-family: Georgia">
+                                font-family: Georgia" >
                                 Аппетитные булочки
                             </h1>
-                            <p class="lead">Попробуйте, пока горячие</p>
+                            <p style="font-size: 24px;">Попробуйте, пока горячие</p>
                         </div>
                     </div>
                 </div>
@@ -260,19 +260,19 @@ export default {
                name: 'Олечка',
                age: 23,
                text: 'Невероятно вкусно! После того, как попробовала двойной гамбургер от шефа Пуарди, слюнки аж потекли.',
-               url: 'https://static-cdn.jtvnw.net/emoticons/v1/128391/3.0'
+               url: 'https://static-cdn.jtvnw.net/emoticons/v1/1651240/3.0'
            },
            commentSecond: {
                name: 'Габриэль',
                age: 17,
                text: 'Очень вкусно!',
-               url: 'https://static-cdn.jtvnw.net/emoticons/v1/147833/3.0'
+               url: 'https://static-cdn.jtvnw.net/emoticons/v1/1589348/3.0'
            },
            commentThird: {
                name: 'Жора',
                age: 23,
                text: 'Че гамбургер не такой как на пичке?',
-               url: 'https://static-cdn.jtvnw.net/emoticons/v1/195855/3.0'
+               url: 'https://static-cdn.jtvnw.net/emoticons/v1/1794029/3.0'
            }
         }
     },
@@ -357,7 +357,7 @@ export default {
         },
         f: function () {
             console.log('hello')
-            if (!this.statToggle && window.scrollY > 1200) {
+            if (!this.statToggle && window.scrollY > 1600) {
                 let duration = 4;
                 let end = 4000;
                 let self = this;
@@ -390,13 +390,13 @@ export default {
                     name: 'Олечка',
                     age: 23,
                     text: 'Невероятно вкусно! После того, как попробовала двойной гамбургер от шефа Пуарди, слюнки аж потекли.',
-                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/128391/3.0'
+                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1651240/3.0'
                 },
                 {
                     name: 'Габриэль',
                     age: 17,
                     text: 'Очень вкусно!',
-                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/147833/3.0'
+                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1589348/3.0' 
                 },
                 {
                     name: 'Жора',
