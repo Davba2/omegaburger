@@ -3,8 +3,8 @@
         <footer id="mainFooter" class="footer fixed text-white">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
-                        <p class="help-text">
+                    <div class="col-md-3 col-sm-3 col-6">
+                        <p class="help-text" style="margin-top: 30%">
                             Магазин
                         </p>
                         <ul>
@@ -22,8 +22,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-4">
-                        <p class="help-text">
+                    <div class="col-md-3 col-sm-3 col-6">
+                        <p class="help-text" style="margin-top: 30%">
                             Доставка
                         </p>
                         <ul>
@@ -32,9 +32,9 @@
                             <li>Долгая доставка?</li>
                         </ul>
                     </div>
-                    <div class="col-md-4 d-none d-sm-block d-md-block">
-                       <img src="https://my.mixtape.moe/iwxgkq.PNG"
-                        class="img img-fluid"/>
+                    <div class="col-md-6 col-sm-6 col-6 d-none d-sm-block d-md-block">
+                       <img src="@/assets/Label_04 (0-00-05-07).png"
+                        class="img img-fluid" style="width: 140%"/>
                     </div>
                 </div>
             </div>

@@ -8,8 +8,8 @@
                     <div class="col-12 d-block d-sm-none facts-text">
                         Войти в аккаунт
                     </div>
-                    <div class="col-md-5 col-sm-5 col-5 d-none d-sm-block info-body">
-                        <div>
+                    <div class="col-md-5 info-body">
+                        <div class="d-none d-sm-block">
                             <img src="@/assets/891389.svg">
                             <h1 class="lead message facts-text">
                                 Войти в аккаунт

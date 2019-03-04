@@ -5,15 +5,18 @@
         <div class="form-input">
             <div class="container">
                 <div class="row">
+                    <div class="col-12 d-block d-sm-none facts-text">
+                        Регистрация
+                    </div>
                     <div class="col-md-5 info-body">
-                        <div>
+                        <div class="d-none d-sm-block">
                             <img src="@/assets/1265427.svg">
                             <h1 class="lead message facts-text">
                                 Регистрация
                             </h1>
                         </div>
                         <p class="login-help">
-                            Уже есть аккаунт? <router-link class="redirection" to="/registration">Войти</router-link> 
+                            Уже есть аккаунт? <router-link class="redirection" to="/registration">Войти в аккаунт</router-link> 
                         </p>
                         <p class="password-help">
                             <router-link class="redirection" to="/registration">Проблемы с паролем?</router-link> 
