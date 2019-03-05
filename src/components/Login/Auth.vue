@@ -8,7 +8,7 @@
                     <div class="col-12 d-block d-sm-none facts-text">
                         Регистрация
                     </div>
-                    <div class="col-md-5 info-body">
+                    <div class="col-md-5 pb-1 info-body">
                         <div class="d-none d-sm-block">
                             <img src="@/assets/1265427.svg">
                             <h1 class="lead message facts-text">

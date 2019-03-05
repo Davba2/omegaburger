@@ -2,10 +2,10 @@
     <div>
         <div class="container-fluid" id="userBackground">
         </div>
-        <falling-obj/>
+        <falling-obj v-if='showFallingObj'/>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 col-12 col-lg-4">
                     <div class="card profile">
                         <div class="card-header">
                             <img class="card-img-top" 
@@ -45,6 +45,9 @@
                                 </div>
                             </transition>
                         </div>
+                        <div class="card-footer">
+                            <button class="btn bg-button-info" v-on:click="showFallingObj = !showFallingObj">Пад. объекты</button>
+                        </div>
                     </div>
                     <div class="card">
                         <div class="card-body text-white">
@@ -65,7 +68,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 col-12 col-lg-8">
                     <div class="contaniner">
                         <div class="row" v-if=" getOrderHistory !==null">
                             <div class="col-12 orders-info"  v-bind:key ="order.title" v-for="order in getOrderHistory">
@@ -105,7 +108,9 @@ export default {
            show: true,
            phoneHide: false,
            streetHide: false,
-           date: this.getOrderHistory
+           date: this.getOrderHistory,
+           showFallingObj: true
+
         }
     },
     components: {

@@ -8,7 +8,7 @@
                     <div class="col-12 d-block d-sm-none facts-text">
                         Войти в аккаунт
                     </div>
-                    <div class="col-md-5 info-body">
+                    <div class="col-md-5 info-body pb-1">
                         <div class="d-none d-sm-block">
                             <img src="@/assets/891389.svg">
                             <h1 class="lead message facts-text">
@@ -22,7 +22,7 @@
                             <router-link class="redirection" to="/registration">Проблемы с паролем.</router-link> 
                         </p>
                     </div>
-                    <div class="col-md-7 col-sm-7 col-12 inputs-body">
+                    <div class="col-md-7 col-sm-12 col-12 inputs-body">
                         <form @submit="checkForm">
                             <div class="section-input">
                                 <label for="email">Почта</label>

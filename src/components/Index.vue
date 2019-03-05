@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="">
-            <video autoplay muted loop id="myVideo" class=" d-sm-none d-md-block" style="width: 100%;z-index:1">
+            <video autoplay muted loop id="myVideo" class="d-none d-sm-none d-md-block" style="width: 100%;z-index:1">
                 <source src="https://my.mixtape.moe/rsxpmr.webm" type="video/webm">
             </video>
             <div class="content" style="    z-index: 100;
@@ -9,8 +9,13 @@
                 right: 16px;
                 position: absolute;
                 width: 32%">
-                <h1 style="font-size: 36px; font-weight:bold;color: white;font-family: Georgia;background:black;border-bottom: 2px solid;" class="lead">Магазин гамбургеров</h1>
+                <h1 class="d-none d-sm-none d-md-block"
+                style="font-size: 36px; font-weight:bold;color: white;font-family: Georgia;background:black;border-bottom: 2px solid;">Магазин гамбургеров</h1>
                 <hr style="border-top: 3px double #8c8b8b;"/>
+            </div>
+            <div class="content">
+                <h1 class="d-block d-sm-none"
+                style="font-size: 36px; font-weight:bold;color: white;font-family: Georgia;background:black;border-bottom: 2px solid;">Магазин гамбургеров</h1>
             </div>
         </div>
        
@@ -18,10 +23,10 @@
             <div id="overlay-fixed">
                 <div class="row" style="margin-right: 0px;">
                     <div class="col-lg col-md align-items-center">
-                        <div class="container" style="text-align: -webkit-right;
+                        <div class="container d-none d-sm-none d-md-block" style="text-align: -webkit-right;
                             margin-top: 350px">
                         
-                            <h1 class="display-4" style="border-bottom: 3px solid white;
+                            <h1 class="display-4 d-none d-sm-none d-md-block " style="border-bottom: 3px solid white;
                             width: 59%;
                             font-weight: bold;
                             font-size: 3.5rem;
@@ -42,18 +47,18 @@
         <section>
             <div class="overlay-fact container-fluid">
                 <div class="row">
-                    <div class="col-lg col-md align-items-center">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 align-items-center">
                         <div class="container" style="text-align: -webkit-right;
-                                                            margin-top: 240px">
+                                                            margin-top: 24px">
                             <h1 class="display-2" style="border-bottom: 3px solid white;
                                 width: 76%;
                                 font-weight: bold;
-                                font-size: 3.5rem;
+                                font-size: 2.5rem;
                                 font-family: Georgia;
                                 background: black">
                                 По секретным технологиям
                             </h1>
-                            <p style="font-size: 26px"> С любовью к покупателям</p>
+                            <p style="font-size: 1.2rem"> С любовью к покупателям</p>
                         </div>
                     </div>
                 </div>
@@ -142,7 +147,7 @@
         <div class="container comment-element">
                 <transition name="slide-fade" > 
                     <div class="row" v-if="show">
-                        <div class="col-md-4" >
+                        <div class="col-md-4 col-4 col-sm-4 col-lg-4" >
                                 <div class="card">
                                 <img class="card-img-top"  :src="commentFirst.url"/>
                                 <div class="card-body">
@@ -151,7 +156,7 @@
                             </div>
                            
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-8 col-8 col-sm-8 col-lg-8">
                             <div class="comment-body text-left">
                                 {{commentFirst.text}}
                             </div>

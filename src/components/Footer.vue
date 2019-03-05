@@ -3,7 +3,7 @@
         <footer id="mainFooter" class="footer fixed text-white">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3 col-sm-3 col-6">
+                    <div class="col-md-3 col-sm-6 col-6">
                         <p class="help-text" style="margin-top: 30%">
                             Магазин
                         </p>
@@ -22,7 +22,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-3 col-sm-3 col-6">
+                    <div class="col-md-3 col-sm-6 col-6">
                         <p class="help-text" style="margin-top: 30%">
                             Доставка
                         </p>
@@ -32,9 +32,9 @@
                             <li>Долгая доставка?</li>
                         </ul>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-6 d-none d-sm-block d-md-block">
+                    <div class="col-md-6 col-sm-12 col-12">
                        <img src="@/assets/Label_04 (0-00-05-07).png"
-                        class="img img-fluid" style="width: 140%"/>
+                        class="img img-fluid mb-2" style="width: 40%"/>
                     </div>
                 </div>
             </div>

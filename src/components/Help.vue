@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container-fluid" style="padding: 0">
+        <div class="container-fluid helper" style="padding: 0">
             <div>
                 <p class="help-header-text" style="min-width: 22%;margin: 0 auto"> 
                     Как происходит доставка?
@@ -27,7 +27,7 @@
                 </p>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class='col-md-6 mt-5 d-none d-sm-block d-md-block' style="text-align: center">
+                        <div class='col-md-6 d-none d-sm-block d-md-block' style="text-align: center">
                             <p style="color: white; font-size: 26px;">
                                 В случае если, приобретаемый товар выглядел неподобающе, 
                                 вы нашли посторонние предметы в нем, курьер вам нагрубил - 
@@ -36,7 +36,7 @@
                             </p>
                         </div>
                         <div class='col-md-6'>
-                            <img src="@/assets/Badge_15 (0-00-07-05).png" class="img img-fluid"/>
+                            <img src="@/assets/Badge_15 (0-00-07-05).png" class="img img-fluid" style="width: 70%"/>
                         </div>
                     </div>
                 </div>
@@ -48,10 +48,10 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class='col-md-6 col-lg-6'>
-                            <img src="@/assets/Ribbon_01 (0-00-04-02).png" style="width: 80%"/>
+                            <img src="@/assets/Ribbon_01 (0-00-04-02).png" style="width: 70%"/>
                         </div>
                         <div class='col-md-6 col-lg-6 col-12 d-sm-none d-none d-sm-block d-md-block'>
-                            <p style="color: white; font-size: 26px">
+                            <p style="color: white; font-size: 26px; margin-top: 10%; margin-bottom: 10%" >
                                 Наш магазин принимает оплату как за безналичный расчет, так и 
                                 с помощью пластиковых карт.
                             </p>
@@ -68,7 +68,7 @@
                         <div class='col-md-6'>
                             <p style="color: white; font-size: 26px">
                                 Если за ваш заказ взялся курьер, но длительное время
-                                он нету, то мы приносим глубочайшие извинения.
+                                его нету, то мы приносим глубочайшие извинения.
                             </p>
                         </div>
                     </div>
@@ -84,5 +84,15 @@
     background: black;
     color: white;
     border-bottom: 2px solid white;
+}
+.helper p {
+    margin-top: 10%;
+    margin-bottom: 10%
+}
+.col-md-6 {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 </style>
