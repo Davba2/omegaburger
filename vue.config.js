@@ -1,3 +1,5 @@
 module.exports = {
-    filenameHashing: false
+    filenameHashing: false,
+    outputDir: '../main/resources/',
+    assetsDir: '../assets/',
 }
