@@ -136,18 +136,14 @@
 		</section>
         <header/>
         <section id="comments" class="text-white">
-            <div class="container" style="text-align: center;font-size: 26px">
-            <div class="container" 
-            style="margin-top: 20px;
-            border-bottom: 3px double #8c8b8b;font-size: 32px; font-weight: bold; background: black">
+            <div class="container comments-capition ">
                 Вот что думают он нас:
-            </div>
             </div>
             <div class="container">
         <div class="container comment-element">
                 <transition name="slide-fade" > 
                     <div class="row" v-if="show">
-                        <div class="col-md-4 col-4 col-sm-4 col-lg-4" >
+                        <div class="col-md-4 col-12 col-sm-4 col-lg-4" >
                                 <div class="card">
                                 <img class="card-img-top"  :src="commentFirst.url"/>
                                 <div class="card-body">
@@ -156,7 +152,7 @@
                             </div>
                            
                         </div>
-                        <div class="col-md-8 col-8 col-sm-8 col-lg-8">
+                        <div class="col-md-8 col-12 col-sm-8 col-lg-8">
                             <div class="comment-body text-left">
                                 {{commentFirst.text}}
                             </div>
@@ -165,15 +161,15 @@
                 </transition>
             </div>
             
-            <div class="container comment-element">
+            <div class="container comment-element d-none d-sm-block">
                 <transition name="slide-fade">
                 <div class="row" v-if="showSecond">
-                    <div class="col-md-8">
+                    <div class="col-md-8 col-12 col-sm-8 col-lg-8">
                         <div class="comment-body text-right">
                            {{commentSecond.text}}
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-12 col-sm-4 col-lg-4">
                         <div class="card">
                             <img class="card-img-top" :src="commentSecond.url"/>
                             <div class="card-body">
@@ -187,7 +183,7 @@
             <div class="container comment-element">
                 <transition name="slide-fade">
                 <div class="row" v-if="showThird">
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-12 col-sm-4 col-lg-4">
                         <div class="card">
                             <img class="card-img-top" :src="commentThird.url"/>
                             <div class="card-body">
@@ -195,7 +191,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-8 col-12 col-sm-8 col-lg-8">
                         <div class="comment-body text-left">
                             {{commentThird.text}}
                         </div>
@@ -206,14 +202,7 @@
     </div>
         </section>
         <section id="map">
-            <div class="container" 
-                style="margin-bottom: 20px;
-                border-bottom: 3px double rgb(140, 139, 139);
-                font-size: 32px;
-                font-weight: bold;
-                background: black;
-                color: white;
-                width: 30%">
+            <div class="container available-shop">
                 Доступные магазины
             </div>
             <div class="container-fluid">
@@ -225,13 +214,7 @@
                         <button class="btn" style="    background: #E0FF4F"  v-on:click="getUserCoord">
                             Отправить координаты
                         </button>
-                        <div class="container" 
-                            style="margin-top: 20px;
-                            font-size: 32px;
-                            font-weight: bold;
-                            background: black;
-                            color: white;
-                            width: 63%" v-if="userDistance">
+                        <div class="container user-distance" v-if="userDistance">
                             {{distanceMessage}}
                         </div>
                     </div>
@@ -461,7 +444,7 @@ export default {
             setTimeout(function() {
                  self.intervalComment(objArray, arrayItem);
             }, 500)
-        }, 5000)
+        }, 5000000)
     },
     mounted () {
         this.$nextTick(() => {
@@ -540,8 +523,7 @@ export default {
     color:#fff;
 }
 #comments {
-    width: 800px;
-    height: 920px;
+    height: 980px;
     margin: 0 auto;
     border-bottom: 1px black;
     margin-bottom: 10px;
@@ -554,10 +536,11 @@ export default {
     height: 250px;
     border-radius: 15px;
     background: inherit;
+    margin: 0 auto;
 }
 .comment-body {
     margin: 50px 0 0 0;
-    font-size: 25px;
+    font-size: 1.6rem;
 }
 .autho-body {
     border: 1px solid gray;
@@ -566,6 +549,30 @@ export default {
     height: 100px;
     text-align: center;
     padding: 30%;
+}
+.comments-capition {
+    margin-top: 20px;
+    border-bottom: 3px double #8c8b8b;
+    font-size: 2.6rem;; 
+    font-weight: bold;
+     background: black;
+}
+.available-shop {
+    margin-bottom: 20px;
+    border-bottom: 3px double rgb(140, 139, 139);
+    font-size: 2.6rem;
+    font-weight: bold;
+    background: black;
+    color: white;
+    width: 30%;
+}
+.user-distance {
+    margin-top: 20px;
+    font-size: 2.6rem;
+    font-weight: bold;
+    background: black;
+    color: white;
+    width: 63%;
 }
 #mainFooter {
     background: #EFC88B;
@@ -601,5 +608,37 @@ export default {
   transform: translateX(10px);
   opacity: 0;
 }
-
+@media (min-width: 200px) {
+        body .comment-body {
+            font-size: 1rem;
+        }
+        body .available-shop, .user-distance, .comments-capition {
+            font-size: 1.4rem;
+            width: 100%;
+        }
+    }
+    @media (min-width: 400px) {
+        body .comment-body {
+            font-size: 1.3rem;
+        }
+        body .available-shop, .user-distance, .comments-capition {
+            font-size: 1.4rem;
+            width: 45%;
+        }
+         .card img {
+            width: 100%;
+        }
+    }
+    @media (min-width: 1000px) {
+        body .comment-body {
+            font-size: 1.6rem;
+        }
+        body .available-shop, .user-distance, .comments-capition  {
+            font-size: 2rem;
+            width: 40%;
+        }
+         .card img {
+            width: 100%;
+        }
+    }
 </style>

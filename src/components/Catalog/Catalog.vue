@@ -1,6 +1,6 @@
 <template>
     <div class="catalog-body">
-        <div class="sticky" style="    position: sticky;
+        <div class="sticky d-none d-sm-block" style="    position: sticky;
         top: -165px;
         z-index: 2;"
         id="stickyCounter"
@@ -14,35 +14,35 @@
         </div>
         <div class="container-fluid" style="padding: 0;">
             <div class="row" id="catalogPicks" style="margin-right: 0px">
-                <div class="col-md-3 option">
+                <div class="col-md-3 col-4 option">
                     <div class="option-element">
                         <a href="#demo" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="burger">
                             Бургеры
                         </a>
                     </div>
                 </div>
-                <div class="col-md-2 option">
+                <div class="col-md-2 col-4 option">
                     <div class="option-element">
                         <a href="#demo2" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="salad">
                             Салаты
                         </a>
                     </div>
                 </div>
-                <div class="col-md-3 option">
+                <div class="col-md-3 col-4 option">
                     <div class="option-element">
                         <a href="#demo3" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="sweat">
                             Десерты
                         </a>
                     </div>
                 </div>
-                <div class="col-md-2 option">
+                <div class="col-md-2 col-6 option">
                     <div class="option-element">
                         <a href="#demo4" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="drinks">
                             Напитки
                         </a>
                     </div>
                 </div>
-                <div class="col-md-2 option">
+                <div class="col-md-2 col-6 option">
                     <div class="option-element">
                         <a href="#demo5" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="dishes">
                             Закуски
@@ -191,7 +191,6 @@ export default {
 }
 </script>
 <style scoped>
-
 .equal {
     display: table;
 }
@@ -244,6 +243,9 @@ export default {
 }
 .option-element a:hover {
     text-decoration: none;
+}
+#catalogPicks {
+    margin: 0;
 }
 .collapse {
     width: 100%;
@@ -312,4 +314,19 @@ export default {
 .sticky-active {
     background: rgb(255, 255, 255);
 }
+    @media (min-width: 200px) {
+        body .info-text {
+            font-size: 1rem;
+        }
+    }
+    @media (min-width: 800px) {
+        body .info-text {
+            font-size: 1.2rem;
+        }
+    }
+    @media (min-width: 1000px) {
+        body .info-text {
+            font-size: 1.2rem;
+        }
+    }
 </style>

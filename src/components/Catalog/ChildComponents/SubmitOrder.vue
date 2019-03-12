@@ -7,7 +7,7 @@
         </div>
         <div class="container" v-show="getOrder.length > 0">
             <div class="row">
-                <div class="col-md-12 text-left">
+                <div class="col-md-12 col-12 col-lg-12 text-left">
                     <span class="lead facts-text">Вы заказали:</span>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                 <div style="    width: 100%; height: 3px;padding: 25px 0px 0px">
 
                 </div>
-                <div class="col-md-2" v-for="order in getOrder">
+                <div class="col-md-2 col-12 col-lg-2 mt-2" v-for="order in getOrder">
                     <div class="card">
                         <div class="title card-header">
                             <img 
@@ -35,6 +35,7 @@
                          aria-expanded="false" 
                          aria-controls="multiCollapseExample1"
                          @click="rotateImage"
+                         class="rotate-image"
                          />
                          <div class="collapse" :id="order.title">
                             <div class="card-content lead" style="font-size: 18px" 
@@ -46,10 +47,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <input class="form-control" type="number" value="1" min="1" max="20" style="padding-right: 8px;
-                            padding-left: 24px;
-                            margin: 0 auto;
-                            font-size: 20px;border-radius: 4.25rem"/>
+                            <input class="form-control" type="number" value="1" min="1" max="20"/>
                         </div>
                     </div>
                 </div>
@@ -71,7 +69,7 @@
         <div class="container" style="border-top: 2px solid white;
             margin-top: 20px" v-show="getOrder.length > 0">
             <div class="row mt-2">
-                <div class="col-md-6">
+                <div class="col-md-6 col-12 col-lg-6">
                     <div>
                         <kbd class="user-info" v-if="userInfo.location">Ваш <span style="font-weight: bold">адресс</span> </kbd><br/>
                         <kbd style="background: #FF4136;
@@ -86,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-12">
                     <div>
                         <kbd class="user-info" v-if="userInfo.phone">Ваш <span style="font-weight: bold">телефон</span></kbd> 
                         <br/>
@@ -98,8 +96,8 @@
                                 Укажите <span style="font-weight: bold">телефон</span>
                             </kbd>
                             <div>
-                            <input type="text" class="form-control mt-2 mb-2" style="width: 30%;display:inline-block" 
-                            value="+375"placeholder="Телефон" v-model="phone">
+                            <input type="text" class="form-control mt-2 mb-2" style="display:inline-block" 
+                            value="+375" placeholder="Телефон" v-model="phone">
                             <button class="btn bg-button-info ml-2" v-on:click="addPhone">Ok</button>
                             </div>
                         </div>
@@ -110,13 +108,7 @@
                 {{messageError}}
             </div>
             <div class="loader text-center" style="margin:0 auto" v-show="spinner"></div>
-            <div class="alert alert-success mt-2" 
-            style="background: black;
-                width: 55%;
-                font-weight: bold;
-                font-size: 27px;
-                color: white;
-                margin: 0px auto;"
+            <div class="alert alert-success mt-2 success" 
             role="alert" v-show="successSubmit">
                 Ваш заказ был принят, наши ребята уже приступили к нему<br/> <span style="border-bottom: 2px solid white;font-size: 28px">{{orderText}}</span>
             </div>
@@ -126,9 +118,9 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-10 col-12">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 col-12">
                     <div class="order-price facts-text">
                         {{priceOrder.toFixed(2)}} BYN
                     </div>
@@ -275,6 +267,7 @@ export default {
 }
 </script>
 <style scoped>
+
     .order-price {
         border: 0;
         border-bottom: 2px solid gray;  
@@ -346,11 +339,59 @@ export default {
     .spin {
         animation: spinner 1s linear infinite;
     }
-
+    input[type=number] {
+        padding: 5px auto;
+        margin: 0 auto;
+        font-size: 20px;border-radius: 4.25rem;
+    }
+    .success {
+        background: black;
+        width: 55%;
+        font-weight: bold;
+        font-size: 27px;
+        color: white;
+        margin: 0px auto;
+    }
     @keyframes spinner {
         0% { transform: rotate(0deg); }
         20% {transform: rotate(50deg)}
         70% {transform: rotate(290deg)}
         100% { transform: rotate(360deg); }
+    }
+    @media (min-width: 200px) {
+        .empty-order p, .success {
+            font-size: 1.2rem;
+        }
+        .success {
+            width: 90%;
+        }
+        div .remove, div .rotate-image-back, .rotate-image {
+            width: 10%;
+        }
+        div input[type=number] {
+            text-align: center;
+        }
+    }
+    @media (min-width: 800px) {
+        .empty-order p, .success {
+            font-size: 1.8rem;
+        }
+        .success {
+            width: 75%;
+        }
+        div .remove, div .rotate-image-back, .rotate-image {
+            width: 20%;
+        }
+    }
+    @media (min-width: 1000px) {
+        .empty-order p, .success {
+            font-size: 2.1rem;
+        }
+        .success {
+            width: 55%;
+        }
+        div .remove, div .rotate-image-back, .rotate-image {
+            width: 25%;
+        }
     }
 </style>

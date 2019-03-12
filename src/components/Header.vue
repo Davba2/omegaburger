@@ -3,9 +3,8 @@
         <nav class="navbar navbar-expand-sm header-navigation">
             <div class="container">
                 <button class="navbar-toggler" data-toggle="collapse"
-                data-target="#navCollapse">
-                    <span class="navbar-toggler-icon">
-                    </span>
+                data-target="#navCollapse" style="width: 25%">
+                     <img src="https://image.flaticon.com/icons/svg/148/148784.svg" style="width: 40%"/>
                 </button>
                 <a id="logo">OMEGA Burger</a>
                 <div class="collapse navbar-collapse" id="navCollapse">
@@ -74,6 +73,9 @@ export default {
 #logo {
     color: white;
     font-size: 24px;
+}
+button:focus {
+    outline: 0;
 }
 .row img {
     width: 10%;

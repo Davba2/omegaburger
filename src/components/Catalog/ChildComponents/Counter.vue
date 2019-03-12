@@ -1,15 +1,17 @@
 <template>
-    <div class="col-md-3 food-body">
-        <img :src="counterData.url"/>
+    <div class="col-md-3 col-3 food-body">
+        <div class="d-none d-sm-block">
+            <img :src="counterData.url"/>
+        </div>
         <div class="container sticky">
             <div class="row">
-                <div class="col-md-12 counter">
-                        <p>
-                            {{counterData.first}}
-                        </p>
-                        <p>
-                            {{counterData.second}}
-                        </p>
+                <div class="col-md-12 col-3 d-none d-sm-block counter">
+                    <p>
+                        {{counterData.first}}
+                    </p>
+                    <p>
+                        {{counterData.second}}
+                    </p>
                 </div>
             </div>
         </div>

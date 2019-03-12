@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row" style="margin-right: 0px">
-            <div class="col-md-4" v-bind:key="item.id" v-for="item in burgersArray">
+            <div class="col-md-4 col-12" v-bind:key="item.id" v-for="item in burgersArray">
                 <div class="items-body">
                      <p class="desc-title">
                         {{item.title}}
@@ -13,7 +13,7 @@
             </div>
         </div>
     <!--Отдельный компонент для просмотра бургера и с возможностью добавлять начинки-->
-        <div class="" >
+        <div ref='item-body'>
            <C :current="current" @addToOrder='addToOrder'/>
         </div>
     </div>
@@ -52,7 +52,9 @@ export default {
                 return item.title === event.target.closest('a').getAttribute("href").substring(1);
             });
             this.current = item[0];
-
+            var element = this.$refs['item-body'];
+            var top = element.offsetTop;
+            window.scrollTo(0, top);
             console.log(event.target.closest('a').getAttribute("href"));
             //$('.vg').collapse('hide');
         },
@@ -74,6 +76,9 @@ export default {
 }
 </script>
 <style scoped>
+html {
+    scroll-behavior: smooth;
+}
 .equal {
     display: table;
 }

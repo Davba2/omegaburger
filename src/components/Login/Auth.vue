@@ -153,7 +153,7 @@ export default {
 }
 .form-input {
     margin-top: 150px;
-    border-radius: 7px;
+    border-radius: 15px;
     background: #A6B1E1;
     margin: 0 auto;
     width: 60%;
@@ -214,6 +214,12 @@ export default {
 .error-text {
     color: #FCE70C;
     font-size: 18px;
+}
+@media screen and (max-width: 400px) {
+    .form-input {
+       width: 90%;
+       border-radius: 15px;
+    }
 }
 </style>
 

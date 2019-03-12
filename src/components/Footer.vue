@@ -27,14 +27,16 @@
                             Доставка
                         </p>
                         <ul>
-                            <li>Способ доставки</li>
+                            <li>
+                                <router-link to="/help">Способ доставки</router-link>
+                            </li>
                             <li>Как оплатить</li>
                             <li>Долгая доставка?</li>
                         </ul>
                     </div>
                     <div class="col-md-6 col-sm-12 col-12">
                        <img src="@/assets/Label_04 (0-00-05-07).png"
-                        class="img img-fluid mb-2" style="width: 40%"/>
+                        class="img img-fluid mb-2" style="width: 50%"/>
                     </div>
                 </div>
             </div>

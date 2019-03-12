@@ -49,7 +49,7 @@
                             <button class="btn bg-button-info" v-on:click="showFallingObj = !showFallingObj">Пад. объекты</button>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card d-none d-sm-block">
                         <div class="card-body text-white">
                             <p class="coord-info">
                                 Ваше местоположение:
@@ -78,13 +78,13 @@
                                 </p>
                                 <div class="container order-prop">
                                     <div class="row mt-2 text-white">
-                                        <div class="col-md-6 text-left">
+                                        <div class="col-md-6 col-12 text-left">
                                            {{order.date2}}
                                         </div>
-                                        <div class="col-md-6 text-right price">
+                                        <div class="col-md-6 col-12  price">
                                             Цена - <kbd>{{order.price.toFixed(2)}} BYN</kbd>
                                         </div>
-                                        <div class="col-md-12 text-center mb-2">
+                                        <div class="col-md-12 col-12 text-center mb-2">
                                             <button class="btn bg-button-info" v-on:click="show2"> Заказать такой же</button>
                                         </div> 
                                     </div>
@@ -218,6 +218,7 @@ time, .price {
 }
 .bg-button-info {
     background: #E0FF4F;
+    font-size: 1.2rem;
 }
 .bg-button-info:hover {
     background: rgb(208, 240, 68);

@@ -6,7 +6,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 d-block d-sm-none facts-text">
-                        Войти в аккаунт
+                        Войти
                     </div>
                     <div class="col-md-5 info-body pb-1">
                         <div class="d-none d-sm-block">
@@ -223,6 +223,12 @@ export default {
 .error-text {
     color: #FCE70C;
     font-size: 18px;
+}
+@media screen and (max-width: 400px) {
+    .form-input {
+       width: 90%;
+       border-radius: 15px;
+    }
 }
 </style>
 

@@ -6,7 +6,7 @@
             <div class="burg">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-8 col-12">
                             <h3>Таблица с характеристиками</h3>
                             <table class="table table-striped table-hover">
                                 <thead>
@@ -35,57 +35,39 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <table class="table table-striped table-hover">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class='custom-labels'>
-                                                <input type="checkbox" :id='current.id + "1"' v-model="checkedPicks" value="Кетчуп">
-                                                <label :for='current.id + "1"' v-on:click="calcCalculation" class="ketchupLabel">
-                                                
-                                                </label>
-                                            </div>
-                                            <kbd>
-                                                Кетчуп
-                                            </kbd>
-                                        </td>
-                                        <td>
-                                            <div class='custom-labels'>
-                                                <input type="checkbox" :id='current.id + "2"' v-model="checkedPicks" value="Майонез">
-                                                <label class="mayoLabel" :for='current.id + "2"' v-on:click="calcCalculation">
-                                                </label>
-                                            </div>
-                                            <kbd>
-                                                Майонез
-                                            </kbd>
-                                        </td>
-                                        <td>
-                                            <div class='custom-labels'>
-                                                <input type="checkbox" :id='current.id + "3"' v-model="checkedPicks" value="Специи">
-                                                <label class="spiceLabel" :for='current.id + "3"' v-on:click="calcCalculation"> 
-                                                </label>
-                                            </div>
-                                            <kbd>
-                                                Специи
-                                            </kbd>
-
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="container" 
-                                style="margin-bottom: 20px;
-                                border-bottom: 3px double rgb(140, 139, 139);
-                                font-size: 32px;
-                                font-weight: bold;
-                                background: black;
-                                color: white;
-                                width: 100%">
+                            <div class="row">
+                                <div class='custom-labels col-4 '>
+                                    <input type="checkbox" :id='current.id + "1"' v-model="checkedPicks" value="Кетчуп">
+                                    <label :for='current.id + "1"' v-on:click="calcCalculation" class="ketchupLabel">
+                                    
+                                    </label>
+                                </div>
+                                <kbd class="d-none d-sm-block">
+                                    Кетчуп
+                                </kbd>
+                                <div class='custom-labels col-4'>
+                                    <input type="checkbox" :id='current.id + "2"' v-model="checkedPicks" value="Майонез">
+                                    <label class="mayoLabel" :for='current.id + "2"' v-on:click="calcCalculation">
+                                    </label>
+                                </div>
+                                <kbd class="d-none d-sm-block">
+                                    Майонез
+                                </kbd>
+                                <div class='custom-labels col-4'>
+                                    <input type="checkbox" :id='current.id + "3"' v-model="checkedPicks" value="Специи">
+                                    <label class="spiceLabel" :for='current.id + "3"' v-on:click="calcCalculation"> 
+                                    </label>
+                                </div>
+                                <kbd class="d-none d-sm-block">
+                                    Специи
+                                </kbd>
+                            </div>
+                            <div class="container desc-item">
                                 {{current.desc}}
                             </div>
                         </div>
-                        <div class="col-md-4 mb-2">
-                            <p class="plead" style="font-size: 26px; border-bottom: 2px solid;font-weight: bold" >
+                        <div class="col-md-4 col-12 mb-2">
+                            <p class="plead title-item">
                                 {{current.title}}
                             </p>
                             <img :src="current.url"
@@ -216,6 +198,20 @@ label::after {
 	border-radius: 30px;
 	transition: 0.3s;
 }
+.desc-item {
+    margin-bottom: 20px;
+    border-bottom: 3px double rgb(140, 139, 139);
+    font-size: 32px;
+    font-weight: bold;
+    background: black;
+    color: white;
+    width: 100%;
+}
+.title-item {
+    font-size: 26px;
+    border-bottom: 2px solid;
+    font-weight: bold;
+}
 .spiceLabel:after {
 	content: 'С';
 }
@@ -242,8 +238,22 @@ input:checked + label:after {
 	left: calc(100% - 5px);
 	transform: translateX(-100%);
 }
-
 label:active:after {
 	width: 45px;
 }
+    @media (min-width: 200px) {
+        div .desc-item {
+            font-size: 1.2rem;
+        }
+    }
+    @media (min-width: 800px) {
+        div .desc-item {
+            font-size: 1.8rem;
+        }
+    }
+    @media (min-width: 1000px) {
+        div .desc-item {
+            font-size: 2.6rem;
+        }
+    }
 </style>
