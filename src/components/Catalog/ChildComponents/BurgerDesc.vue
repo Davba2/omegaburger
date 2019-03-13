@@ -37,30 +37,29 @@
                             </table>
                             <div class="row">
                                 <div class='custom-labels col-4 '>
-                                    <input type="checkbox" :id='current.id + "1"' v-model="checkedPicks" value="Кетчуп">
+                                    <input type="checkbox" :id='current.id + "1"' v-model="checkedPicks" title='Кетчуп' value="Кетчуп">
                                     <label :for='current.id + "1"' v-on:click="calcCalculation" class="ketchupLabel">
-                                    
                                     </label>
                                 </div>
-                                <kbd class="d-none d-sm-block">
+                                <!-- <kbd class="d-none d-sm-block">
                                     Кетчуп
-                                </kbd>
+                                </kbd> -->
                                 <div class='custom-labels col-4'>
                                     <input type="checkbox" :id='current.id + "2"' v-model="checkedPicks" value="Майонез">
                                     <label class="mayoLabel" :for='current.id + "2"' v-on:click="calcCalculation">
                                     </label>
                                 </div>
-                                <kbd class="d-none d-sm-block">
+                                <!-- <kbd class="d-none d-sm-block">
                                     Майонез
-                                </kbd>
+                                </kbd> -->
                                 <div class='custom-labels col-4'>
                                     <input type="checkbox" :id='current.id + "3"' v-model="checkedPicks" value="Специи">
                                     <label class="spiceLabel" :for='current.id + "3"' v-on:click="calcCalculation"> 
                                     </label>
                                 </div>
-                                <kbd class="d-none d-sm-block">
+                                <!-- <kbd class="d-none d-sm-block">
                                     Специи
-                                </kbd>
+                                </kbd> -->
                             </div>
                             <div class="container desc-item">
                                 {{current.desc}}
@@ -253,7 +252,7 @@ label:active:after {
     }
     @media (min-width: 1000px) {
         div .desc-item {
-            font-size: 2.6rem;
+            font-size: 2rem;
         }
     }
 </style>

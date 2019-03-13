@@ -4,39 +4,26 @@
             <video autoplay muted loop id="myVideo" class="d-none d-sm-none d-md-block" style="width: 100%;z-index:1">
                 <source src="https://my.mixtape.moe/rsxpmr.webm" type="video/webm">
             </video>
-            <div class="content" style="    z-index: 100;
-                bottom: -80px;
-                right: 16px;
-                position: absolute;
-                width: 32%">
-                <h1 class="d-none d-sm-none d-md-block"
-                style="font-size: 36px; font-weight:bold;color: white;font-family: Georgia;background:black;border-bottom: 2px solid;">Магазин гамбургеров</h1>
+        </div>
+        <div class="content d-none d-sm-none d-md-block gam-shop">
+                <h1 class="magazine">Магазин гамбургеров</h1>
                 <hr style="border-top: 3px double #8c8b8b;"/>
             </div>
             <div class="content">
                 <h1 class="d-block d-sm-none"
                 style="font-size: 36px; font-weight:bold;color: white;font-family: Georgia;background:black;border-bottom: 2px solid;">Магазин гамбургеров</h1>
-            </div>
         </div>
-       
         <div id="demo" class=" slide">
             <div id="overlay-fixed">
                 <div class="row" style="margin-right: 0px;">
                     <div class="col-lg col-md align-items-center">
-                        <div class="container d-none d-sm-none d-md-block" style="text-align: -webkit-right;
-                            margin-top: 350px">
+                        <div class="container your-choise">
                         
-                            <h1 class="display-4 d-none d-sm-none d-md-block " style="border-bottom: 3px solid white;
-                            width: 59%;
-                            font-weight: bold;
-                            font-size: 3.5rem;
-                            font-family: Georgia;
-                            background: black;
-                            ">Берите то, что хотите</h1>
-                            <p class="lead" style="font-size: 24px">
+                            <h1 class="display-4 secret">Берите то, что хотите</h1>
+                            <p class="lead help-text">
                                 Просматривайте тысячи блюд и выбирайте то, что вам по-душе
                             </p>
-                            <router-link to="/authentication" class="btn btn-lg">
+                            <router-link to="/authentication" class="btn btn-lg text-center">
                                 Регистрация
                             </router-link>
                         </div>
@@ -49,16 +36,11 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-12 align-items-center">
                         <div class="container" style="text-align: -webkit-right;
-                                                            margin-top: 24px">
-                            <h1 class="display-2" style="border-bottom: 3px solid white;
-                                width: 76%;
-                                font-weight: bold;
-                                font-size: 2.5rem;
-                                font-family: Georgia;
-                                background: black">
-                                По секретным технологиям
+                                                            margin-top: 240px">
+                            <h1 class="display-2 secret">
+                                Секретные технологии
                             </h1>
-                            <p style="font-size: 1.2rem"> С любовью к покупателям</p>
+                            <p class="help-text"> С любовью к покупателям</p>
                         </div>
                     </div>
                 </div>
@@ -66,18 +48,18 @@
 		</section>
         <section id="facts" @mouseover="f">
 			<div class="container">
-				<div class="d-flex d-flex align-items-center">
-					<div class="mb-4 text-center merits">
+				<div class="row align-items-center">
+					<div class="mb-4 col-12 col-md-4 col-lg-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
 						<img src="@/assets/1162486.svg" class="img-fluid">
 						<p class="lead facts-text">Большой ассортиент</p>
 					</div>
-                    <div class="col-md-4 mb-4 text-center merits">
+                    <div class="col-12 col-md-4 col-lg-4 mb-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
 						<img src="@/assets/726455.svg" class="img-fluid">
 						<p class="lead facts-text">Быстрая доставка</p>
 					</div>
-                    <div class="col-md-4 mb-4 text-center merits">
+                    <div class="col-12 col-md-4 col-lg-4 mb-4 text-center merits">
 						<i class="fa fa-cog mb-2"/>
 						<img src="@/assets//1408430.svg" class="img-fluid">
 						<p class="lead facts-text">Вкусно</p>
@@ -121,14 +103,10 @@
                     <div class="col-lg col-md align-items-center">
                         <div class="container" style="text-align: -webkit-right;
                                                             margin-top: 240px">
-                            <h1 class="display-2 facts-text" style="border-bottom: 3px solid white;
-                                width: 75%;
-                                font-weight: bold;
-                                font-size: 4.5rem;
-                                font-family: Georgia" >
+                            <h1 class="display-2 facts-text tasty">
                                 Аппетитные булочки
                             </h1>
-                            <p style="font-size: 24px;">Попробуйте, пока горячие</p>
+                            <p class="help-text">Попробуйте, пока горячие</p>
                         </div>
                     </div>
                 </div>
@@ -458,6 +436,12 @@ export default {
 </script>
 <style scoped>
 @import "~leaflet/dist/leaflet.css";
+.magazine {
+    font-size: 36px;
+    font-weight:bold;color: white;
+    font-family: Georgia;background:black;
+    border-bottom: 2px solid;
+}
 #overlay-fixed
 {
     clear: both;
@@ -557,6 +541,17 @@ export default {
     font-weight: bold;
      background: black;
 }
+.gam-shop {
+    z-index: 100;
+    bottom: -80px;
+    right: 16px;
+    position: absolute;
+    width: 32%;
+}
+.your-choise {
+    text-align: right;
+    margin-top: 350px
+}
 .available-shop {
     margin-bottom: 20px;
     border-bottom: 3px double rgb(140, 139, 139);
@@ -574,6 +569,24 @@ export default {
     color: white;
     width: 63%;
 }
+.tasty {
+    border-bottom: 3px solid white;
+    width: 75%;
+    font-weight: bold;
+    font-size: 4.5rem;
+    font-family: Georgia;
+}
+.secret {
+    border-bottom: 3px solid white;
+    width: 76%;
+    font-weight: bold;
+    font-size: 2.5rem;
+    font-family: Georgia;
+    background: black
+}
+.help-text {
+    font-size: 1.2rem;
+}
 #mainFooter {
     background: #EFC88B;
     padding: 40px 20px 15px 20px;
@@ -584,9 +597,6 @@ export default {
 }
 #mainFooter img {
     width: 35%;
-}
-.help-text {
-    border-bottom: 1px solid;
 }
 #map {
     border-top: 2px black;
@@ -612,33 +622,80 @@ export default {
         body .comment-body {
             font-size: 1rem;
         }
-        body .available-shop, .user-distance, .comments-capition {
+        body .available-shop, .user-distance, .comments-capition, .tasty, .secret {
             font-size: 1.4rem;
             width: 100%;
+            text-align: center;
+        }
+        .help-text {
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .your-choise {
+            text-align: center;
+        }
+        #comments {
+            height: 800px;
         }
     }
     @media (min-width: 400px) {
         body .comment-body {
             font-size: 1.3rem;
         }
-        body .available-shop, .user-distance, .comments-capition {
+        body .available-shop, .user-distance, .comments-capition, .tasty {
             font-size: 1.4rem;
             width: 45%;
         }
+        body .tasty, body .secret {
+            font-size: 2rem;
+            width: 80%;
+            text-align: right;
+        }
+        .secret {
+            text-align: right;
+        }
          .card img {
             width: 100%;
+        }
+        .help-text {
+            text-align: right;
+            font-size: 1.2rem;
+        }
+        html body div .your-choise {
+            text-align: -webkit-right;
+        }
+        #comments {
+            height: 900px;
         }
     }
     @media (min-width: 1000px) {
         body .comment-body {
             font-size: 1.6rem;
         }
-        body .available-shop, .user-distance, .comments-capition  {
-            font-size: 2rem;
+        body .available-shop, .user-distance, .comments-capition {
+            font-size: 2.4rem;
             width: 40%;
+        }
+        body .tasty, body .secret {
+            font-size: 2.8rem;
+            width: 48%;
+        }
+        body .secret {
+            width: 54%;
         }
          .card img {
             width: 100%;
+        }
+        .help-text {
+            font-size: 1.3rem;
+        }
+        html body div .your-choise {
+            text-align: -webkit-right;
+        }
+    }
+    @media (max-width: 1100px) {
+        html body div.gam-shop {
+            display: none !important;
         }
     }
 </style>
