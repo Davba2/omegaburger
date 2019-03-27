@@ -49,8 +49,11 @@
                     </div>
                 </div>
             </div>
-            <form>
-            </form>
+            <div class="container mt-1">
+                <p class="lead">
+                    {{authMessage}}
+                </p>
+            </div>
         </div>
     </div>
 </template>
@@ -64,7 +67,8 @@ export default {
             remember: false,
             errorsEmail: [],
             passwordError: [],
-            currentPath: this.$route.path
+            currentPath: this.$route.path,
+            authMessage: ''
         }
     },
     methods: {
@@ -77,7 +81,6 @@ export default {
 
             var userEmail = this.email;
             var userPassword = this.password;
-            var rememberUser = this.remember;
             /**
              * Отправляет запрос к контр. Account - Action Login.
              * Вид объекта:
@@ -90,29 +93,42 @@ export default {
              * */
 
 
-            axios.post({
+            var tokenKey = "accessToken";
+            var loginData = {
+                grant_type: 'password',
+                Email: this.email,
+                Password: this.password
+            };
+            console.log(loginData)
+            var self = this;
+            axios({
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                url: "http://localhost:64349/Account/Login",
-                data: {
-                    userEmail,
-                    userPassword,
-                    rememberUser
-                }
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                url: "https://localhost:44302/api/token",
+                data: JSON.stringify(loginData)
             })
             .then((response) => {
             // Ответ был получен
+            if (response.status === 200) {
+                console.log(response)
                 var payload = {
-                    email: userEmail,
-                    accessToken: response.AccessToken,
-                    refresToken: response.RefreshToken,
-                    expiredIn: response.accessJwt.ValidTo
+                    email: response.data.Username,
+                    accessToken: response.data.AccessToken,
+                    refreshToken: response.data.RefreshToken,
+                    expiredIn: response.data.ExpiredIn
                 };
-
-                this.$store.dispatch('registerUser', payload)
-                .then(() =>{
-                    this.$router.push('/catalog')
-                })
+                this.$store.dispatch('registerUser', payload);
+                this.$router.push('/catalog');
+                // console.log(response)
+            } else {
+                self.authMessage = response.data.message;
+            }
+                // .then(() =>{
+                //     this.$router.push('/catalog')
+                // })
             }).catch((error) => {
                 console.log(error);
             })

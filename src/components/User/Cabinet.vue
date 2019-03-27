@@ -5,7 +5,7 @@
         <falling-obj v-if='showFallingObj'/>
         <div class="container">
             <div class="row">
-                <div class="col-md-4 col-12 col-lg-4">
+                <div class="col-md-6 col-12 col-lg-4">
                     <div class="card profile">
                         <div class="card-header">
                             <img class="card-img-top" 
@@ -40,8 +40,9 @@
                             v-on:click="phoneHide = !phoneHide">Указать телефон</button>
                             <transition name="fade">
                                 <div v-if="phoneHide">
-                                    <input type="text" class="street-name" placeholder="Введите телефон"/>
-                                    <span class="user-confirmed">Ok</span>
+                                    <input type="text" class="street-name" 
+                                    v-model="phone" placeholder="Введите телефон"/>
+                                    <span class="user-confirmed" v-on:click="setUserPhone">Ok</span>
                                 </div>
                             </transition>
                         </div>
@@ -49,32 +50,41 @@
                             <button class="btn bg-button-info" v-on:click="showFallingObj = !showFallingObj">Пад. объекты</button>
                         </div>
                     </div>
-                    <div class="card d-none d-sm-block">
+                    <div class="card">
                         <div class="card-body text-white">
                             <p class="coord-info">
                                 Ваше местоположение:
                             </p>
-                            <div id="mapid" ref="mapElement">
+                            <div id="mapid" ref="mapElement" class="d-none d-sm-block">
 
                             </div>
                             <button class="btn bg-button-info" 
                             v-on:click="streetHide = !streetHide">Указать местоположение</button>
                             <transition name="fade">
                                 <div v-if="streetHide">
-                                    <input class="street-name" type="text" placeholder="Название улицы"/>
-                                    <span class="user-confirmed">Ok</span>
+                                    <input class="street-name" type="text" 
+                                    v-model="location" placeholder="Название улицы"/>
+                                    <span class="user-confirmed" v-on:click="setUserLocation">Ok</span>
                                 </div>
                             </transition>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 col-12 col-lg-8">
+                <div class="col-md-6 col-12 col-lg-8">
+                    <div class="container m-2">
+                        <!-- <p class="lead">
+                            4.80 BYN
+                        </p>
+                        <p>
+                            Всего заказов - 2
+                        </p> -->
+                    </div>
                     <div class="contaniner">
                         <div class="row" v-if=" getOrderHistory !==null">
                             <div class="col-12 orders-info"  v-bind:key ="order.title" v-for="order in getOrderHistory">
                                 <h3>Вы заказали:</h3>
                                 <p>
-                                    
+                                    {{order.title[0]}}
                                 </p>
                                 <div class="container order-prop">
                                     <div class="row mt-2 text-white">
@@ -92,6 +102,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -101,6 +112,7 @@
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import FallingObj from './FallingObj'
 import L from 'leaflet';
+import axios from 'axios';
 export default {
     data () {
         return {
@@ -109,7 +121,9 @@ export default {
            phoneHide: false,
            streetHide: false,
            date: this.getOrderHistory,
-           showFallingObj: true
+           showFallingObj: true,
+           location: null,
+           phone: null
 
         }
     },
@@ -122,11 +136,51 @@ export default {
     methods: {
         show2: function () {
             console.log(this.date)
+        },
+        setUserPhone: function (event) {
+            var refresh = this.getToken;
+            var access = this.userInfo.accessToken;
+            var data = {
+                Email: this.email,
+                RefreshToken: refresh,
+                Phone: this.phone
+            };
+            var token = 'Bearer ' + refresh; 
+            console.log(token)
+            console.log(data)
+            axios({
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                url: "https://localhost:44302/api/add/phone",
+                data: JSON.stringify(data)
+            })
+            .then(function(response) {
+                console.log(response);
+                // this.$store.dispatch('addPhone', this.phone);
+                // this.phoneHide = false;
+            })
+        },
+        setUserLocation: function () {
+            this.$store.dispatch('addLocation', this.location);
+            this.streetHide = false;
         }
     },
     computed: {
+        getToken () {
+            return this.$store.getters.getRefreshToken;
+        },
         getOrderHistory() {
             return this.$store.getters.getOrderHistory;
+        },
+        getFullPrice() {
+            var array = this.$store.getters.getOrderHistory;
+            var price = array.reduce(function(acc, item) {
+                return acc + item.price.toFixed(2)
+            })
+            return price;
         },
         order2() {
             return this.$store.getters.getOrder;
@@ -159,6 +213,8 @@ body {
     background: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-448540.png');
     background-attachment: fixed;
     background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     color: #fff;
 }
 .card {

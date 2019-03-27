@@ -40,24 +40,10 @@ export default {
     },
     watch: {
         '$route' () {
-            if (this.$route.path === '/registration') {
-                this.isActiveReg = true;
-                return;
-            } else {
-                this.isActiveReg = false;
-            }
-            if (this.$route.path === '/index') {
-                this.isActiveCat = true;
-                return;
-            } else {
-                this.isActiveCat = false;
-            }
-            if (this.$route.path === '/catalog') {
-                this.isActiveMag = true;
-                return;
-            } else {
-                this.isActiveMag = false;
-            }
+            if (this.$route.path === '/log_out') {
+                this.$store.dispatch('logOut');
+                this.$router.push('/');
+            } 
             
         }
     }

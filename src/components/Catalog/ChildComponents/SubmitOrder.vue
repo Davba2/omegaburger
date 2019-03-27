@@ -71,13 +71,13 @@
             <div class="row mt-2">
                 <div class="col-md-6 col-12 col-lg-6">
                     <div>
-                        <kbd class="user-info" v-if="userInfo.location">Ваш <span style="font-weight: bold">адресс</span> </kbd><br/>
+                        <kbd class="user-info" v-if="userInfo.location">Ваш <span style="font-weight: bold">адрес</span> </kbd><br/>
                         <kbd style="background: #FF4136;
                         border-radius: 1.2rem;
                         font-size: 24px" v-if="userInfo.location !== null">{{userInfo.location}}</kbd>
                         <div v-else>
                             <kbd class="user-info">
-                                Укажите <span style="font-weight: bold">адресс</span>
+                                Укажите <span style="font-weight: bold">адрес</span>
                             </kbd>
                             <input type="text" class="form-control mt-2 mb-2" placeholder="Адрес" v-model="location">
                             <button class="btn bg-button-info ml-2" v-on:click="addLocation">Ok</button>
@@ -111,6 +111,17 @@
             <div class="alert alert-success mt-2 success" 
             role="alert" v-show="successSubmit">
                 Ваш заказ был принят, наши ребята уже приступили к нему<br/> <span style="border-bottom: 2px solid white;font-size: 28px">{{orderText}}</span>
+            </div>
+            <div class="alert alert-success mt-2 success" 
+            role="alert" v-show="successSubmit">
+                <span style="border-bottom: 2px solid white;font-size: 28px">
+                    {{getDate.slice(0, 25)}}<br/>
+                    На сумму {{priceOrder.toFixed(2)}} BYN<br/>
+                    По адресу {{userInfo.location}}<br/>
+                    Товаров 1<br/>
+                    Товары: Бургер с сыром<br/>
+                    Номер заказа 37693CFC748049E45D87B8
+                </span>
             </div>
             <div class="container-fluid">
                 <div id="mapid" ref="mapElement"></div>
@@ -243,6 +254,9 @@ export default {
         }
      },
     computed: {
+        getDate() {
+            return Date()
+        },
         getCurrentTime() {
             return new Date().toLocaleTimeString();
         },

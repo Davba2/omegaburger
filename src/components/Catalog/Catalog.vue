@@ -1,106 +1,117 @@
 <template>
-    <div class="catalog-body">
-        <div class="sticky d-none d-sm-block" style="    position: sticky;
-        top: -165px;
-        z-index: 2;"
-        id="stickyCounter"
-        >
-            <div class="row omega" style="margin-right: 0px">
-                <Counter v-bind:counterData="counterData.drinks"/>
-                <Counter v-bind:counterData="counterData.burger"/>
-                <Counter v-bind:counterData="counterData.sweat"/>   
-                <Counter v-bind:counterData="counterData.dishes"/> 
+    <div>
+        <transition  name="fade">
+        <div class="load-data" v-show="loading">
+            <div class="loader text-center" style="margin:0 auto" v-show="spinner">
             </div>
+            <h3 class="facts-text mt-2 display-3" v-show="spinner">Загрузка каталога</h3>
         </div>
-        <div class="container-fluid" style="padding: 0;">
-            <div class="row" id="catalogPicks" style="margin-right: 0px">
-                <div class="col-md-3 col-4 option">
-                    <div class="option-element">
-                        <a href="#demo" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="burger">
-                            Бургеры
-                        </a>
+        </transition>
+        <transition  name="fade">
+            <div class="catalog-body">
+                <div class="sticky d-none d-sm-block" style="    position: sticky;
+                top: -165px;
+                z-index: 2;"
+                id="stickyCounter"
+                >
+                    <div class="row omega" style="margin-right: 0px">
+                        <Counter v-bind:counterData="counterData.drinks"/>
+                        <Counter v-bind:counterData="counterData.burger"/>
+                        <Counter v-bind:counterData="counterData.sweat"/>   
+                        <Counter v-bind:counterData="counterData.dishes"/> 
                     </div>
                 </div>
-                <div class="col-md-2 col-4 option">
-                    <div class="option-element">
-                        <a href="#demo2" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="salad">
-                            Салаты
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-4 option">
-                    <div class="option-element">
-                        <a href="#demo3" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="sweat">
-                            Десерты
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6 option">
-                    <div class="option-element">
-                        <a href="#demo4" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="drinks">
-                            Напитки
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6 option">
-                    <div class="option-element">
-                        <a href="#demo5" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="dishes">
-                            Закуски
-                        </a>
-                    </div>
-                </div>
-                </div>
-            
-        </div>
-        <div class="container-fluid catalog bg-primary">
-            <div class="collapse burger" id="demo">
-                <div class="catalog-items text-center">
-                    <burger 
-                    v-bind:burgersArray="burgersArray"
-                    @addToOrder='addToOrder'/>
-                </div>
-            </div>
-            <div class="collapse salad" id="demo2">
-                <div class="container text-center">
-                    <div class="carousel-item row equal catalog-items active" style="margin-right: 0px">
-                        <burger 
-                        v-bind:drinksArray="drinksArray"
-                        @addToOrder='addToOrder'/>
-                    </div>
-                </div>
-            </div>
-                <div class="collapse sweat" id="demo3">
+                <div class="container-fluid" style="padding: 0;">
+                    <div class="row" id="catalogPicks" style="margin-right: 0px">
+                        <div class="col-md-3 col-4 option">
+                            <div class="option-element">
+                                <a href="#demo" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="burger">
+                                    Бургеры
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-4 option">
+                            <div class="option-element">
+                                <a href="#demo2" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="salad">
+                                    Салаты
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-4 option">
+                            <div class="option-element">
+                                <a href="#demo3" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="sweat">
+                                    Десерты
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-6 option">
+                            <div class="option-element">
+                                <a href="#demo4" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="drinks">
+                                    Напитки
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-6 option">
+                            <div class="option-element">
+                                <a href="#demo5" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="dishes">
+                                    Закуски
+                                </a>
+                            </div>
+                        </div>
+                        </div>
                     
-            <div class="card">
-                <div class="card-header">здесь изображение </div>
-                <div class="card-body">Бургер лососевый</div> 
-                <div class="card-footer">цена</div>
-            </div>
                 </div>
-            <div class="collapse drinks" id="demo4">
-                <div class="container text-center">
-            
-                    <div class="row" style="margin-right: 0px">
-                        <div class="carousel-item row equal catalog-items active " style="margin-right: 0px">
-                            <drinks 
-                            v-bind:drinksArray="drinksArray"
+                <div class="container-fluid catalog bg-primary">
+                    <div class="collapse burger" id="demo">
+                        <div class="catalog-items text-center">
+                            <burger 
+                            v-bind:catalog="catalog"
                             @addToOrder='addToOrder'/>
                         </div>
                     </div>
-                </div>  
-            </div>
-            <div class="collapse dishes" id="demo5">
-                <div class="card">
-                    <div class="card-header">здесь изображение </div>
-                    <div class="card-body">Бургер лососевый</div> 
-                    <div class="card-footer">цена</div>
+                    <div class="collapse salad" id="demo2">
+                        <div class="container text-center">
+                            <div class="carousel-item row equal catalog-items active" style="margin-right: 0px">
+                                <burger 
+                                v-bind:drinksArray="drinksArray"
+                                @addToOrder='addToOrder'/>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="collapse sweat" id="demo3">
+                            
+                    <div class="card">
+                        <div class="card-header">здесь изображение </div>
+                        <div class="card-body">Бургер лососевый</div> 
+                        <div class="card-footer">цена</div>
+                    </div>
+                        </div>
+                    <div class="collapse drinks" id="demo4">
+                        <div class="container text-center">
+                    
+                            <div class="row" style="margin-right: 0px">
+                                <div class="carousel-item row equal catalog-items active " style="margin-right: 0px">
+                                    <drinks 
+                                    v-bind:drinksArray="drinksArray"
+                                    @addToOrder='addToOrder'/>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="collapse dishes" id="demo5">
+                        <div class="card">
+                            <div class="card-header">здесь изображение </div>
+                            <div class="card-body">Бургер лососевый</div> 
+                            <div class="card-footer">цена</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <hr/>
-        <transition name="fade">
-            <div style="container continue-order" v-if="order.length > 0">
-                <button class="btn bg-button-info" v-on:click="submitOrder" >Оформить заказ</button>
+                <hr/>
+                <transition name="fade">
+                    <div style="container continue-order" v-if="order.length > 0">
+                        <button class="btn bg-button-info" v-on:click="submitOrder" >Оформить заказ</button>
+                    </div>
+                </transition>
             </div>
         </transition>
     </div>
@@ -108,7 +119,8 @@
 <script>
 import Burger from './ChildComponents/Burger.vue'
 import Drinks from './ChildComponents/Drinks.vue'
-import Counter from './ChildComponents/Counter.vue'
+import Counter from './ChildComponents/Counter.vue';
+import axios from 'axios';
 export default {
     data() {
         return {
@@ -117,6 +129,9 @@ export default {
             hello: null,
             showConOrder: false,
             array: [],
+            isChanged: false,
+            spinner: false,
+            loading: true
            
     }},
     components: {
@@ -132,14 +147,28 @@ export default {
             for (var i = 0; i < parent.children.length; i++) {
                 parent.children[i].children[0].className = 'option-element'; //second console output
             }
-
             var className = target.dataset.type;
-            divParent.classList = target.dataset.type + ' option-element';
-            this.pick = {
-                type: target.dataset.type
+
+            divParent.classList = className + ' option-element';
+            if (this.isChanged) {
+                if (this.pick === className) {
+                    divParent.classList = 'option-element';
+                    this.isChanged = false;
+                    this.pick = '';
+                    $('.collapse').collapse('hide');
+                    return;
+                }
             }
-            //из документации bootstrap
+            this.pick = className;
+            this.isChanged = true;
             $('.collapse').collapse('hide');
+            function sum(a) {
+                return function(b) {
+                    return function (c) {
+                        console.log('hello')
+                    }
+                }
+            }
 
         },
         addToOrder: function (data) {
@@ -163,6 +192,9 @@ export default {
         },
         submitOrder: function () {
             this.$router.push('submit_order'); 
+        },
+        loadCatalog: function () {
+
         }
     },
     computed: {
@@ -180,17 +212,65 @@ export default {
         },
         order () {
             return this.$store.getters.getOrder;
+        },
+        catalog () {
+            return this.$store.getters.getCatalog;
         }
     },
     mounted () {
-        this.array.push(this.burgersArray);
+        var array = this.catalog;
+        if (array.length === 0) {
+            this.spinner = true;
+            var spinner = document.querySelector('.loader');
+            spinner.classList.add('spin');
+            var self = this;
+            axios({
+                    method: "GET",
+                    headers: { 
+                        "Content-Type": "application/json",
+                    },
+                    url: "https://localhost:44302/api/catalog",
+                })
+                .then(function(response) {
+                    console.log(response);
+                    if (response.status === 200) {
+                            setTimeout(function() {
+                            self.loading = false;
+                            var data = response.data;
+                            self.$store.dispatch('addCatalog', data);
+                            console.log(data);
+                            setTimeout(function() {
+                                spinner.classList.remove('spin');
+                            }, 500)
+                            setTimeout(function() {
+                                $('.catalog-body').slideToggle('fast');
+                            }, 480)
+                        }, 2000)
+                    }
+                    //this.array.push(this.burgersArray);
+                    // this.$store.dispatch('addPhone', this.phone);
+                    // this.phoneHide = false;
+                })
+        } else {
+            this.spinner = false;
+            this.loading = false;
+            $('.catalog-body').toggle();
+        }
     },
     created () {
+        this.loadCatalog()
         window.addEventListener('scroll', this.changeStickyBG);
     }
 }
 </script>
 <style scoped>
+.catalog-body {
+    display: none;
+    transition: display, opacity 1s;
+}
+.opac {
+    opacity: 1;
+}
 .equal {
     display: table;
 }
@@ -297,19 +377,33 @@ export default {
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active до версии 2.1.8 */ {
-  transform: translateX(10px);
-  opacity: 0;
+  transform: translateY(10px);
+  opacity: 0
 }
 .fade-enter-active, .fade-leave-active {
-    transition: opacity 1s;
+    transition: opacity 2s;
 }
-.fade-enter, .fade-leave-to {
-    opacity: 0;
+.loader {
+    width: 320px;
+    height: 320px;
+    border: 9px solid white;
+    border-top: 4px solid rgb(2, 184, 240);
+    border-radius: 50%;
+}
+.spin {
+    animation: spinner 1s linear infinite;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
 }
 .sticky {
    transition: background-color 1s ease-in-out;
    border-radius: 0 10px 10px 10px;
    margin: 0 0 5px 0;
+   transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
 .sticky-active {
     background: rgb(255, 255, 255);
@@ -329,4 +423,13 @@ export default {
             font-size: 1.2rem;
         }
     }
+.option-element {
+    transition: all 1s;
+}
+@keyframes spinner {
+    0% { transform: rotate(0deg); }
+    20% {transform: rotate(50deg)}
+    70% {transform: rotate(290deg)}
+    100% { transform: rotate(360deg); }
+}
 </style>

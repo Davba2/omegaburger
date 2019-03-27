@@ -99,7 +99,8 @@ export const store = new Vuex.Store({
                 url: require('@/assets/1408052.svg')
             }
         },
-        orderHistory: []
+        orderHistory: [],
+        catalog: []
     },
     mutations: {
         setUser (state, payload) {
@@ -107,7 +108,7 @@ export const store = new Vuex.Store({
             state.user.logged = true;
             state.user.accessToken = payload.accessToken;
             state.user.refreshToken = payload.refreshToken;
-            state.user.expired = payload.accessJwt.ValidTo;
+            state.user.expired = payload.ExpiredIn;
         },
         ToOrder (state, payload) {
             state.userOrder.push(payload)
@@ -156,9 +157,23 @@ export const store = new Vuex.Store({
         },
         loadHistory (state, payload) {
             state.orderHistory.push(payload);
+        },
+        logOut (state) {
+            state.user.accessToken = null;
+            state.user.refreshToken = null;
+            state.user.expired = null;
+            state.user.logged = false;
+            state.user.phone = 'Не указан';
+            state.user.location = 'Не указан';
+        },
+        addCatalog (state, payload) {
+            state.catalog = payload;
         }
     },
     actions: {
+        logOut({ commit }) {
+            commit('logOut');
+        },
         registerUser({ commit }, payload) {
             commit('setUser', payload);
         },
@@ -183,10 +198,19 @@ export const store = new Vuex.Store({
         },
         loadHistory ({commit}, payload) {
             commit('loadHistory', payload);
+        },
+        addCatalog ({commit}, payload) {
+            commit('addCatalog', payload);
         }
 
     },
     getters: {
+        getCatalog (state) {
+            return state.catalog;
+        },
+        getRefreshToken (state) {
+            return state.user.refreshToken;
+        },
         getOrderHistory (state) {
             return state.orderHistory;
         },

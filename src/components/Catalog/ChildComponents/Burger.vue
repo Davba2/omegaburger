@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="row" style="margin-right: 0px">
-            <div class="col-md-4 col-12" v-bind:key="item.id" v-for="item in burgersArray">
+            <div class="col-md-4 col-12"  v-for="item in catalog">
                 <div class="items-body">
                      <p class="desc-title">
-                        {{item.title}}
+                        {{item.name}}
                     </p>
-                    <a :href="'#'+item.title"  @click="fuckYou" class="plead" data-toggle="collapse">
-                        <img :src="item.url" style="width: 75%"/>
+                    <a :href="'#'+item.name"  @click="fuckYou" class="plead" data-toggle="collapse">
+                        <img src="http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png" style="width: 75%"/>
                     </a>
                 </div>
             </div>
@@ -38,25 +38,47 @@ export default {
                     fat: 10,
                     calc: 300
                 }
-            }
+            },
+            state: ''
         }
     },
-    props: ['burgersArray'],
+    props: ['catalog'],
     components: {
         comp: DescComponent,
         C
     },
     methods: {
         fuckYou: function (event) {
-            var item = this.burgersArray.filter(function (item) {
-                return item.title === event.target.closest('a').getAttribute("href").substring(1);
-            });
-            this.current = item[0];
-            var element = this.$refs['item-body'];
-            var top = element.offsetTop;
-            window.scrollTo(0, top);
-            console.log(event.target.closest('a').getAttribute("href"));
-            //$('.vg').collapse('hide');
+            console.log('1')
+            var name = event.target.closest('a').getAttribute("href").substring(1);
+            if (this.state === name) {
+                $('.vg').collapse('hide');
+                $('html, body').animate({scrollTop: 300},'50');
+                this.state = '';
+            } else {
+                var item = this.catalog.filter(function (item) {
+                    return item.name === name;
+                });
+                console.log('1');
+                this.state = name;
+                this.current = item[0];
+                var compoment = item[0].components;
+                this.current.price = this.calculate('cost', compoment);
+                this.current.cal = this.calculate('calories', compoment);
+                this.current.fat = this.calculate('fat', compoment);
+                this.current.carbo = this.calculate('сarbohydrates', compoment);
+                this.current.protein = this.calculate('proteint', compoment);
+                this.current.comNames = compoment.map(function(item) {
+                    return item.name
+                })
+                console.log(this.current.comNames)
+                console.log(item[0].components)
+                var element = this.$refs['item-body'];
+                var top = element.offsetTop;
+                var i = event.clientY;
+                $('html, body').animate({scrollTop: top - 100},'50');
+                //$('.vg').collapse('hide');
+            }
         },
         addToOrder: function (data) {
             //var element = event.target.id;
@@ -65,6 +87,13 @@ export default {
         showDesc: function (event) {
             console.log('helo')
             console.log(event.target.id);
+        },
+        calculate: function (type, array) {
+            return array.map(function(item) {
+                return item[type];
+            }).reduce(function(acc, item) {
+                return acc + item;
+            })
         }
     },
     computed: {

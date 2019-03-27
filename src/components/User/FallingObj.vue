@@ -38,7 +38,7 @@ export default {
             $(".game").append(thisBox);
             setTimeout(function () {
                 thisBox.addClass("move");
-            }, this.randomValue(0, 1000));
+            }, this.randomValue(0, 9000));
             thisBox.one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
                 function (event) {
                     $(this).fadeOut(400).remove();
@@ -47,7 +47,7 @@ export default {
     },
     created() {
         this.interval = setInterval(() => {
-            for (var i = 0; i < 10; i++) {
+            for (var i = 0; i < 9; i++) {
                 this.dropBox();
             }
         }, 12000);

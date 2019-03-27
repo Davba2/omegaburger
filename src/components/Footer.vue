@@ -15,7 +15,7 @@
                                 <router-link to="/help">Помощь</router-link>
                             </li>
                             <li>
-                                <router-link to="/registration">Войти</router-link>
+                                <router-link to="/registration" >Войти</router-link>
                             </li>
                             <li>
                                 <router-link to="/cabinet">Кабинет</router-link>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div  
-        :id="current.title"
+        :id="current.name"
         class="bg-white col-12 collapse burger show vg" style="padding: 0">
             <div class="burg">
                 <div class="container">
@@ -19,61 +19,68 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <p class="nutritional-text">{{nutritional.protein}}</p>
+                                            <p class="nutritional-text">{{current.protein}}</p>
                                         </td>
                                         <td>
-                                            <p class="nutritional-text">{{nutritional.carbo}}</p>
+                                            <p class="nutritional-text">{{current.carbo}}</p>
                                         </td>
                                         <td>
-                                            <p class="nutritional-text">{{nutritional.fat}}</p>
+                                            <p class="nutritional-text">{{current.fat}}</p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">
-                                            <p class="nutritional-text">{{nutritional.calc}} кКал</p>
+                                            <p class="nutritional-text">{{current.cal}} кКал</p>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="row">
-                                <div class='custom-labels col-4 '>
-                                    <input type="checkbox" :id='current.id + "1"' v-model="checkedPicks" title='Кетчуп' value="Кетчуп">
-                                    <label :for='current.id + "1"' v-on:click="calcCalculation" class="ketchupLabel">
+                                <div class="col-12">
+                                    <p style="font-size: 1.6rem; font-weight: bold; border-bottom: 1px solid gray;">
+                                        Сюда входит
+                                    </p>
+                                </div>
+                                <div class='custom-labels col-6 mt-1 mb-1' v-for="name in current.comNames">
+                                    <input type="checkbox" :id='name'>
+                                    <label :for='name' v-on:click="calcCalculation">
+                                        {{name}}
                                     </label>
                                 </div>
-                                <!-- <kbd class="d-none d-sm-block">
-                                    Кетчуп
-                                </kbd> -->
-                                <div class='custom-labels col-4'>
-                                    <input type="checkbox" :id='current.id + "2"' v-model="checkedPicks" value="Майонез">
-                                    <label class="mayoLabel" :for='current.id + "2"' v-on:click="calcCalculation">
-                                    </label>
-                                </div>
-                                <!-- <kbd class="d-none d-sm-block">
-                                    Майонез
-                                </kbd> -->
-                                <div class='custom-labels col-4'>
-                                    <input type="checkbox" :id='current.id + "3"' v-model="checkedPicks" value="Специи">
-                                    <label class="spiceLabel" :for='current.id + "3"' v-on:click="calcCalculation"> 
-                                    </label>
-                                </div>
-                                <!-- <kbd class="d-none d-sm-block">
-                                    Специи
-                                </kbd> -->
+                                        <!-- <kbd class="d-none d-sm-block">
+                                            Кетчуп
+                                        </kbd>
+                                        <div class='custom-labels col-4'>
+                                            <input type="checkbox" :id='current.id + "2"' v-model="checkedPicks" value="Майонез">
+                                            <label class="mayoLabel" :for='current.id + "2"' v-on:click="calcCalculation">
+                                            </label>
+                                        </div>
+                                        <!-- <kbd class="d-none d-sm-block">
+                                            Майонез
+                                        </kbd>
+                                        <div class='custom-labels col-4'>
+                                            <input type="checkbox" :id='current.id + "3"' v-model="checkedPicks" value="Специи">
+                                            <label class="spiceLabel" :for='current.id + "3"' v-on:click="calcCalculation"> 
+                                            </label>
+                                        </div>
+                                        <!-- <kbd class="d-none d-sm-block">
+                                            Специи
+                                        </kbd> -->
+                                        
                             </div>
                             <div class="container desc-item">
-                                {{current.desc}}
+                                
                             </div>
                         </div>
                         <div class="col-md-4 col-12 mb-2">
                             <p class="plead title-item">
-                                {{current.title}}
+                                {{current.name}}
                             </p>
-                            <img :src="current.url"
+                            <img src="http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png"
                             class="img img-fluid" alt="Гамбургер"/>
                             <div class="facts-text">
                                 <p class="current-price" >
-                                    Цена - {{curPrice.toFixed(2)}} BYN
+                                    Цена - {{current.price}} BYN
                                 </p>
                             </div>
                             <div>
@@ -92,9 +99,6 @@ export default {
     data() { return {
       order: '',
       checkedPicks: [],
-      title: this.current.title,
-      curPrice: this.current.price,
-      nutritional: JSON.parse(JSON.stringify(this.current.nutritional)),
       togglerPicks: []
     }},
     methods: {
@@ -168,13 +172,15 @@ visibility: hidden;
 label {
 	cursor: pointer;
     margin: 2px 2px 2px 11px;
-	text-indent: 2px;
-	width: 100px;
-	height: 38px;
-	background: grey;
+	text-indent: 1px;
+	width: 170px;
+	height: 40px;
+	background: #9ec716;
 	display: block;
 	border-radius: 20px;
 	position: relative;
+    padding: 6px 2px;
+    font-weight: bold;
 }
 .facts-text {
     font-size: 28px;
@@ -189,11 +195,11 @@ label {
 label::after {
     position: absolute;
     padding-top: 4px;
-	top: 5px;
+	top: 10px;
 	left: 5px;
 	width: 30px;
 	height: 30px;
-	background: #fff;
+	background: #9ec716;;
 	border-radius: 30px;
 	transition: 0.3s;
 }
@@ -221,7 +227,7 @@ label::after {
 	content: 'К';
 }
 input:checked + label {
-	background: #9ec716;
+	background: #94ac90;
 }
 
 input:checked + .ketchupLabel {

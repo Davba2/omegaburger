@@ -57,8 +57,11 @@
                     </div>
                 </div>
             </div>
-            <form>
-            </form>
+            <div class="container mt-1">
+                <p class="lead">
+                    {{authMessage}}
+                </p>
+            </div>
         </div>
     </div>
 </template>
@@ -72,7 +75,8 @@ export default {
             passwordCheck: '',
             errorsEmail: [],
             passwordError: [],
-            passwordCheckError: []
+            passwordCheckError: [],
+            authMessage: ''
         }
     },
     methods: {
@@ -95,22 +99,34 @@ export default {
              * }
              * 
              * */
-
-            axios.post({
+            var obj = {
+                userEmail,
+                userPassword
+            }
+            var self = this;
+            console.log(obj);
+            axios({
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                url: "http://localhost:64349/Account/Auth",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                url: "https://localhost:44302/api/registration",
                 data: {
-                    userEmail,
-                    userPassword
+                    userEmail: userEmail,
+                    userPassword: userPassword
                 }
             })
             .then((response) => {
             // Ответ был получен
-            console.log(response);
+                console.log(response);
+                if (response.status === 200) {
+                    self.authMessage = response.data.message;
+                }
             })
             .catch(function (error) {
             //если ошибка
+                console.log(error);
             })
             
         },

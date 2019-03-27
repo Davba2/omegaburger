@@ -45,9 +45,13 @@ export default {
           }
         ];
       }
+      this.$router.push('/');
       return [
         {
           title: 'Главная', url: '/'
+        },
+        {
+          title: 'Каталог', url: '/catalog'
         },
         {
           title: 'Войти', url: '/registration'

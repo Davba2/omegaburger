@@ -2,7 +2,7 @@
     <div>
         <div class="">
             <video autoplay muted loop id="myVideo" class="d-none d-sm-none d-md-block" style="width: 100%;z-index:1">
-                <source src="https://my.mixtape.moe/rsxpmr.webm" type="video/webm">
+                <source src="@/assets/FatherlySilkyGemsbok.webm" type="video/webm">
             </video>
         </div>
         <div class="content d-none d-sm-none d-md-block gam-shop">
@@ -322,8 +322,8 @@ export default {
             return Math.random() - 0.5;
         },
         f: function () {
-            console.log('hello')
-            if (!this.statToggle && window.scrollY > 1600) {
+            if (this.$route.path === '/') {
+                if (!this.statToggle && window.scrollY > 1600) {
                 let duration = 4;
                 let end = 4000;
                 let self = this;
@@ -337,6 +337,7 @@ export default {
                     };
                     duration += 0.3;
                 }, duration) 
+            }
             }
         }
     },
