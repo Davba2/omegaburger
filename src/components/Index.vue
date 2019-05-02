@@ -192,7 +192,7 @@
                         <button class="btn" style="    background: #E0FF4F"  v-on:click="getUserCoord">
                             Отправить координаты
                         </button>
-                        <div class="container user-distance" v-if="userDistance">
+                        <div class="container user-distance" name="userCoord" v-if="userDistance">
                             {{distanceMessage}}
                         </div>
                     </div>

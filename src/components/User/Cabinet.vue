@@ -18,31 +18,36 @@
                                 <p>
                                     Ваша почта <br/>
                                     <kbd v-if="userInfo.email === null" class="phone-number">Неизвестно</kbd>
-                                    <kbd v-else class="phone-number">{{userInfo.email}}</kbd>
+                                    <kbd v-else class="phone-number" name="email">{{userInfo.email}}</kbd>
                                 </p>
                                 <p>
                                     Ваш телефон <br/>
                                     <kbd v-if="userInfo.phone === null" class="phone-number">Неизвестно</kbd>
-                                    <kbd v-else class="phone-number">{{userInfo.phone}}</kbd>
+                                    <kbd v-else class="phone-number" name="phone">{{userInfo.phone}}</kbd>
                                 </p>
                                 <p>
                                     Ваш адрес  <br/>
                                     <kbd v-if="userInfo.location === null" class="street">Неизвестно</kbd>
-                                    <kbd v-else class="street">{{userInfo.location}}</kbd>
+                                    <kbd v-else class="street" name="location">{{userInfo.location}}</kbd>
                                 </p>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn bg-button-info">Сбросить пароль</button>
+                            <button class="btn bg-button-info" name="resetPassword">Сбросить пароль</button>
                         </div>
                         <div class="card-footer">
                             <button class="btn bg-button-info" 
                             v-on:click="phoneHide = !phoneHide">Указать телефон</button>
                             <transition name="fade">
                                 <div v-if="phoneHide">
-                                    <input type="text" class="street-name" 
+                                    <input type="text" class="street-name" name="newPhone"
                                     v-model="phone" placeholder="Введите телефон"/>
                                     <span class="user-confirmed" v-on:click="setUserPhone">Ok</span>
+                                    <div v-if="phoneError">
+                                        <p>
+                                            {{phoneErrorMessage}}
+                                        </p>
+                                    </div>
                                 </div>
                             </transition>
                         </div>
@@ -63,8 +68,13 @@
                             <transition name="fade">
                                 <div v-if="streetHide">
                                     <input class="street-name" type="text" 
-                                    v-model="location" placeholder="Название улицы"/>
+                                    v-model="location" placeholder="Название улицы" name="newLocation"/>
                                     <span class="user-confirmed" v-on:click="setUserLocation">Ok</span>
+                                    <div v-if="locationError">
+                                        <p>
+                                            {{locationErrorMessage}}
+                                        </p>
+                                    </div>
                                 </div>
                             </transition>
                         </div>
@@ -72,27 +82,25 @@
                 </div>
                 <div class="col-md-6 col-12 col-lg-8">
                     <div class="container m-2">
-                        <!-- <p class="lead">
-                            4.80 BYN
-                        </p>
-                        <p>
-                            Всего заказов - 2
-                        </p> -->
                     </div>
                     <div class="contaniner">
-                        <div class="row" v-if=" getOrderHistory !==null">
-                            <div class="col-12 orders-info"  v-bind:key ="order.title" v-for="order in getOrderHistory">
+                        {{summaryPrice}} {{summaryCountProduct}}
+                        <div class="row">
+                            {{summaryCountProduct}}
+                            <div class="col-12 orders-info" v-for="item in order" v-bind:key="item.orderId">
                                 <h3>Вы заказали:</h3>
                                 <p>
-                                    {{order.title[0]}}
+                                    <span v-for="element in item.goods">
+                                        {{element.productName}};
+                                    </span>
                                 </p>
                                 <div class="container order-prop">
                                     <div class="row mt-2 text-white">
                                         <div class="col-md-6 col-12 text-left">
-                                           {{order.date2}}
+                                           <time class="order-date">{{item.orderDate}}</time>
                                         </div>
                                         <div class="col-md-6 col-12  price">
-                                            Цена - <kbd>{{order.price.toFixed(2)}} BYN</kbd>
+                                            Цена - <kbd>{{item.orderAmount}} BYN</kbd>
                                         </div>
                                         <div class="col-md-12 col-12 text-center mb-2">
                                             <button class="btn bg-button-info" v-on:click="show2"> Заказать такой же</button>
@@ -123,8 +131,15 @@ export default {
            date: this.getOrderHistory,
            showFallingObj: true,
            location: null,
-           phone: null
-
+           phone: null,
+           locationError: false,
+           locationErrorMessage: '',
+           phoneErrorMessage: '',
+           phoneError: false,
+           order: null,
+           summaryCountProduct: 0,
+           summaryPrice: 0,
+           showOrder: false
         }
     },
     components: {
@@ -138,6 +153,9 @@ export default {
             console.log(this.date)
         },
         setUserPhone: function (event) {
+            if (this.phone === null) {
+                return;
+            }
             var refresh = this.getToken;
             var access = this.userInfo.accessToken;
             var data = {
@@ -145,27 +163,110 @@ export default {
                 RefreshToken: refresh,
                 Phone: this.phone
             };
-            var token = 'Bearer ' + refresh; 
+            var token = 'Bearer ' + access; 
             console.log(token)
             console.log(data)
+            var self = this;
             axios({
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
                     "Authorization": token
                 },
-                url: "https://localhost:44302/api/add/phone",
+                url: "https://localhost:44302/api/phone",
                 data: JSON.stringify(data)
             })
             .then(function(response) {
-                console.log(response);
-                // this.$store.dispatch('addPhone', this.phone);
-                // this.phoneHide = false;
+                console.log(response)
+                if (response.data.statusCode.statusCode === 200) {
+                    self.$store.dispatch('addPhone', self.phone);
+                    self.phoneHide = false;
+                    self.phoneError = false;
+                } else {
+                    self.phoneErrorMessage = response.data.message;
+                    self.phoneError = true;
+                }
+            })
+            .catch(function(error) {
+                self.phoneError = true;
+                self.phoneErrorMessage = 'Ошибка при отправке запроса';
             })
         },
         setUserLocation: function () {
-            this.$store.dispatch('addLocation', this.location);
-            this.streetHide = false;
+            if (this.location === null) {
+                return;
+            }
+            var refresh = this.getToken;
+            var access = this.userInfo.accessToken;
+            var data = {
+                Email: this.email,
+                RefreshToken: refresh,
+                Address: this.location
+            };
+            var token = 'Bearer ' + access; 
+            console.log(token)
+            console.log(data)
+            var self = this;
+
+            axios({
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                url: "https://localhost:44302/api/address",
+                data: JSON.stringify(data)
+            })
+            .then(function(response) {
+                if (response.data.statusCode.statusCode === 200) {
+                    self.$store.dispatch('addLocation', self.location);
+                    self.streetHide = false;
+                    self.locationError = false;
+                } else {
+                    self.locationErrorMessage = response.data.message;
+                    self.locationError = true;
+                }
+                
+            })
+            .catch(function(error) {
+                self.locationError = true;
+                self.locationErrorMessage = 'Ошибка при отправке запроса';
+            })
+        },
+        loadInfo: function () {
+            var refresh = this.getToken;
+            var access = this.userInfo.accessToken;
+            var token = 'Bearer ' + access; 
+            var self = this;
+            var id = this.userInfo.Id;
+            
+            axios({
+                method: "GET",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                url: `https://localhost:44302/api/orders/${id}`,
+            })
+            .then(function(response) {
+                var data = response.data;
+                console.log('Загружен');
+                console.log(data)
+                self.order = data;
+                self.showOrder = true;
+                console.log(self.order)
+                self.summaryPrice = data.map(function(item) {
+                    return item.orderAmount
+                }).reduce(function(acc, item) {
+                    return acc + item;
+                });
+                self.summaryCountProduct = data.goods.map(function(item) {
+                    return item.productName
+                }).length
+            })
+            .catch(function(error) {
+                self.errorText = 'Ошибка при загрузке ваших данных. Повторите попытку';
+            });
         }
     },
     computed: {
@@ -200,7 +301,8 @@ export default {
             this.map = L.map(this.$refs['mapElement']).setView([53.902237, 30.335839], 14);
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
             new L.Marker([53.902237, 30.335839]).bindPopup('OMEGA Burger').addTo(this.map);
-        })
+        });
+        this.loadInfo();
     }
 }
 </script>
@@ -287,6 +389,10 @@ time, .price {
 }
 .fade-enter, .fade-leave-to {
   opacity: 0 .5s;
+}
+div .order-date {
+    color: black;
+    font-size: 16px;
 }
 .user-confirmed {
     display: inline-block;

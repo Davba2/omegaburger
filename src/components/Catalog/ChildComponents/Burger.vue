@@ -14,7 +14,7 @@
         </div>
     <!--Отдельный компонент для просмотра бургера и с возможностью добавлять начинки-->
         <div ref='item-body'>
-           <C :current="current" @addToOrder='addToOrder'/>
+           <C :current="current" @addToOrder='addToOrder' :compNames="compNames"/>
         </div>
     </div>
 </template>
@@ -25,6 +25,8 @@ import C from './BurgerDesc.vue'
 export default {
     data () {
         return {
+            compNames: [],
+            co: 0,
             currentIt: 'comp',
             current: {
                 id: 1,
@@ -50,16 +52,17 @@ export default {
     methods: {
         fuckYou: function (event) {
             console.log('1')
+            console.log('Нажад');
             var name = event.target.closest('a').getAttribute("href").substring(1);
             if (this.state === name) {
                 $('.vg').collapse('hide');
                 $('html, body').animate({scrollTop: 300},'50');
                 this.state = '';
-            } else {
+            } else if (this.state !== name) {
+                console.log('не совпало')
                 var item = this.catalog.filter(function (item) {
                     return item.name === name;
                 });
-                console.log('1');
                 this.state = name;
                 this.current = item[0];
                 var compoment = item[0].components;
@@ -70,18 +73,27 @@ export default {
                 this.current.protein = this.calculate('proteint', compoment);
                 this.current.comNames = compoment.map(function(item) {
                     return item.name
-                })
+                });
+                this.compNames = compoment.map(function(item) {
+                    return item.name
+                });
                 console.log(this.current.comNames)
                 console.log(item[0].components)
                 var element = this.$refs['item-body'];
                 var top = element.offsetTop;
                 var i = event.clientY;
-                $('html, body').animate({scrollTop: top - 100},'50');
+                if (this.co === 1) {
+                    $('.vg').collapse('toggle');
+                    this.co = 0;
+                    return;
+                }
+                this.co++;
+                $('.vg').collapse('show');
+                $('html, body').animate({scrollTop: top - 100}, '50');
                 //$('.vg').collapse('hide');
             }
         },
         addToOrder: function (data) {
-            //var element = event.target.id;
             this.$emit('addToOrder', data);
         },
         showDesc: function (event) {

@@ -109,7 +109,7 @@
                 <hr/>
                 <transition name="fade">
                     <div style="container continue-order" v-if="order.length > 0">
-                        <button class="btn bg-button-info" v-on:click="submitOrder" >Оформить заказ</button>
+                        <button class="btn bg-button-info" v-on:click="submitOrder" name="succeedOrder">Оформить заказ</button>
                     </div>
                 </transition>
             </div>
@@ -175,6 +175,8 @@ export default {
             this.$store.dispatch('addToOrder', data);
             this.toggleNumber(data.type);
             this.showConOrder = true;
+            console.log(this.$store.state.userOrder)
+            console.log(typeof this.$store.state.userOrder)
         },
         toggleNumber: function (type) {
             this.$store.dispatch('updateCounter', type);
@@ -219,9 +221,9 @@ export default {
     },
     mounted () {
         var array = this.catalog;
+        var spinner = document.querySelector('.loader');
         if (array.length === 0) {
             this.spinner = true;
-            var spinner = document.querySelector('.loader');
             spinner.classList.add('spin');
             var self = this;
             axios({
@@ -246,6 +248,8 @@ export default {
                                 $('.catalog-body').slideToggle('fast');
                             }, 480)
                         }, 2000)
+                    } else {
+                        spinner.classList.remove('spin');
                     }
                     //this.array.push(this.burgersArray);
                     // this.$store.dispatch('addPhone', this.phone);
@@ -254,6 +258,7 @@ export default {
         } else {
             this.spinner = false;
             this.loading = false;
+            spinner.classList.remove('spin');
             $('.catalog-body').toggle();
         }
     },

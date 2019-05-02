@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
             refreshToken: null,
             expired: null,
             phone: null,
-            location: null
+            location: null,
+            Id: null
         },
         commnets: [],
         burgerArray: [
@@ -109,6 +110,7 @@ export const store = new Vuex.Store({
             state.user.accessToken = payload.accessToken;
             state.user.refreshToken = payload.refreshToken;
             state.user.expired = payload.ExpiredIn;
+            state.user.Id = payload.Id;
         },
         ToOrder (state, payload) {
             state.userOrder.push(payload)
@@ -165,6 +167,7 @@ export const store = new Vuex.Store({
             state.user.logged = false;
             state.user.phone = 'Не указан';
             state.user.location = 'Не указан';
+            state.userOrder = [];
         },
         addCatalog (state, payload) {
             state.catalog = payload;

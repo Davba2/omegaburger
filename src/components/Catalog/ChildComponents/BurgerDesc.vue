@@ -8,7 +8,7 @@
                     <div class="row">
                         <div class="col-md-8 col-12">
                             <h3>Таблица с характеристиками</h3>
-                            <table class="table table-striped table-hover">
+                            <table class="table table-striped table-hover" name="productSummary">
                                 <thead>
                                     <tr>
                                         <th>Белки</th>
@@ -41,32 +41,12 @@
                                         Сюда входит
                                     </p>
                                 </div>
-                                <div class='custom-labels col-6 mt-1 mb-1' v-for="name in current.comNames">
+                                <div class='custom-labels col-6 mt-1 mb-1' v-for="name in compNames">
                                     <input type="checkbox" :id='name'>
                                     <label :for='name' v-on:click="calcCalculation">
                                         {{name}}
                                     </label>
-                                </div>
-                                        <!-- <kbd class="d-none d-sm-block">
-                                            Кетчуп
-                                        </kbd>
-                                        <div class='custom-labels col-4'>
-                                            <input type="checkbox" :id='current.id + "2"' v-model="checkedPicks" value="Майонез">
-                                            <label class="mayoLabel" :for='current.id + "2"' v-on:click="calcCalculation">
-                                            </label>
-                                        </div>
-                                        <!-- <kbd class="d-none d-sm-block">
-                                            Майонез
-                                        </kbd>
-                                        <div class='custom-labels col-4'>
-                                            <input type="checkbox" :id='current.id + "3"' v-model="checkedPicks" value="Специи">
-                                            <label class="spiceLabel" :for='current.id + "3"' v-on:click="calcCalculation"> 
-                                            </label>
-                                        </div>
-                                        <!-- <kbd class="d-none d-sm-block">
-                                            Специи
-                                        </kbd> -->
-                                        
+                                </div>      
                             </div>
                             <div class="container desc-item">
                                 
@@ -77,14 +57,15 @@
                                 {{current.name}}
                             </p>
                             <img src="http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png"
-                            class="img img-fluid" alt="Гамбургер"/>
+                            class="img img-fluid" alt="Гамбургер" name="productImg"/>
                             <div class="facts-text">
-                                <p class="current-price" >
+                                <p class="current-price">
                                     Цена - {{current.price}} BYN
                                 </p>
                             </div>
                             <div>
-                                <button class="btn btn-danger" :id="current.id"  v-on:click="addToOrder">Добавить</button>
+                                <button class="btn btn-danger" name="addProduct"
+                                :id="current.id"  v-on:click="addToOrder">Добавить</button>
                             </div>
                         </div>
                     </div>
@@ -95,58 +76,76 @@
 </template>
 <script>
 export default {
-    props: ['current'],
+    props: ['current', 'compNames'],
     data() { return {
+        count: 0,
       order: '',
       checkedPicks: [],
-      togglerPicks: []
     }},
     methods: {
         addToOrder: function (event) {
-            var element = event.target.id;
-            var id = element;
+            var element = this.current;
             this.order = element;
-            console.log(this.curPrice)
-            console.log(this.title)
+            this.count++;
             this.$emit('addToOrder', {
-                element: element,
-                price: this.curPrice,
-                title: this.title,
-                picks: this.checkedPicks,
+                id: this.count,
+                price: element.price,
+                title: element.name,
+                picks: this.togglerPicks,
                 type: 'burger'
             });
         },
         calcCalculation: function (event) {
+            console.log(this.togglerPicks);
             let id = event.target.previousSibling.id;
             if (this.togglerPicks.indexOf(id) > -1) {
-                for (var prop in this.nutritional) {
-                    this.nutritional[prop] = +this.nutritional[prop] - 7 -id;
-                }
                 this.togglerPicks.splice(this.togglerPicks.indexOf(id), 1);
-                this.curPrice -= 0.4;
+                var item = this.current.components.filter(function(item) {
+                    return item.name === id;
+                })[0];
+                // this.current.cal += item.сalories;
+                // this.current.protein += item.protein;
+                // this.current.fat += item.fat;
+                // this.current.carbo += item.сarbohydrates;
+                // this.current.price += item.cost;
+                console.log('____')
+                console.log(this.current)
+                console.log(this.togglerPicks)
             } else {
                 this.togglerPicks.push(id)
+                var item = this.current.components.filter(function(item) {
+                    return item.name === id;
+                })[0];
+                // this.current.cal -= item.calories;
+                // this.current.protein -= item.proteint;
+                // this.current.fat -= item.fat;
+                // this.current.carbo -= item.сarbohydrates;
+                // this.current.price -= item.cost;
+                console.log('++++')
+                console.log(this.current)
+                console.log(item);
                 console.log(this.togglerPicks)
-                this.curPrice += 0.4;
-                for (var prop in this.nutritional) {
-                    this.nutritional[prop] = +this.nutritional[prop] + 7 + +id;
-                }
             }
+
         }
     },
     watch: {
         current: function({id}) {
             this.checkedPicks = [];
-            this.title = this.current.title;
+            this.title = this.current.name;
             this.curPrice = this.current.price;
-            this.nutritional = JSON.parse(JSON.stringify(this.current.nutritional));
-            this.togglerPicks = [];
+            this.nutritional = this.current.nutritional;
+            //this.togglerPicks = this.compNames
         },
         checkedPicks: function () {
             console.log('Изменилось')
         }
+    },
+    computed: {
+        togglerPicks () {
+            return this.compNames.slice()
+        }
     }
-   
 }
 </script>
 <style scoped>

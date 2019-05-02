@@ -41,7 +41,7 @@
                                 </span>
                             </div>
                             <div class="section-input">
-                                <button 
+                                <button name="login"
                                 type="submit" class="btn btn-lg button"
                                 v-on:click="sendUserData">Войти</button>
                             </div>
@@ -73,11 +73,11 @@ export default {
     },
     methods: {
         sendUserData: function (event) {
-            var isValid = this.checkForm(event);
+            //var isValid = this.checkForm(event);
             event.preventDefault();
-            if (!isValid) {
-                return false;
-            }
+            // if (!isValid) {
+            //     return false;
+            // }
 
             var userEmail = this.email;
             var userPassword = this.password;
@@ -118,7 +118,8 @@ export default {
                     email: response.data.Username,
                     accessToken: response.data.AccessToken,
                     refreshToken: response.data.RefreshToken,
-                    expiredIn: response.data.ExpiredIn
+                    expiredIn: response.data.ExpiredIn,
+                    Id: response.data.Id
                 };
                 this.$store.dispatch('registerUser', payload);
                 this.$router.push('/catalog');

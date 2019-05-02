@@ -49,9 +49,9 @@
                                 </span>
                             </div>
                             <div class="section-input">
-                                <button 
+                                <button name="createAccount"
                                 type="submit" class="btn btn-lg button"
-                                v-on:click="sendUserData">Войти</button>
+                                v-on:click="sendUserData">Создать</button>
                             </div>
                         </form>
                     </div>
