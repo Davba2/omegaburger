@@ -389,9 +389,9 @@ export default {
     transition: opacity 2s;
 }
 .loader {
-    width: 320px;
-    height: 320px;
-    border: 9px solid white;
+    width: 220px;
+    height: 220px;
+    border: 4px solid white;
     border-top: 4px solid rgb(2, 184, 240);
     border-radius: 50%;
 }

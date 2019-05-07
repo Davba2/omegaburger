@@ -41,7 +41,8 @@ export default {
                     calc: 300
                 }
             },
-            state: ''
+            state: '',
+            component: {}
         }
     },
     props: ['catalog'],
@@ -65,18 +66,16 @@ export default {
                 });
                 this.state = name;
                 this.current = item[0];
-                var compoment = item[0].components;
-                this.current.price = this.calculate('cost', compoment);
-                this.current.cal = this.calculate('calories', compoment);
-                this.current.fat = this.calculate('fat', compoment);
-                this.current.carbo = this.calculate('сarbohydrates', compoment);
-                this.current.protein = this.calculate('proteint', compoment);
-                this.current.comNames = compoment.map(function(item) {
-                    return item.name
-                });
-                this.compNames = compoment.map(function(item) {
-                    return item.name
-                });
+                this.compoment = item[0].components;
+                this.current.price = this.calculate('cost', this.compoment);
+                this.current.cal = this.calculate('calories', this.compoment);
+                this.current.fat = this.calculate('fat', this.compoment);
+                this.current.carbo = this.calculate('сarbohydrates', this.compoment);
+                this.current.protein = this.calculate('proteint', this.compoment);
+                this.compNames = this.compoment.slice();
+                this.compNames.forEach(function(item) {
+                    item.notInOrder = false;
+                })
                 console.log(this.current.comNames)
                 console.log(item[0].components)
                 var element = this.$refs['item-body'];
@@ -95,6 +94,12 @@ export default {
         },
         addToOrder: function (data) {
             this.$emit('addToOrder', data);
+            let clone = JSON.parse(JSON.stringify(this.current));
+            let cloneComponent = JSON.parse(JSON.stringify(this.compoment));
+            this.current = null;
+            this.compNames = null;
+            this.current = clone;
+            this.compNames = cloneComponent;
         },
         showDesc: function (event) {
             console.log('helo')

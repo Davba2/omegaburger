@@ -42,9 +42,9 @@
                                     </p>
                                 </div>
                                 <div class='custom-labels col-6 mt-1 mb-1' v-for="name in compNames">
-                                    <input type="checkbox" :id='name'>
-                                    <label :for='name' v-on:click="calcCalculation">
-                                        {{name}}
+                                    <input type="checkbox" :id='name.id'>
+                                    <label :for='name.id' v-on:click="calcCalculation">
+                                        {{name.name}}
                                     </label>
                                 </div>      
                             </div>
@@ -75,58 +75,62 @@
     </div>
 </template>
 <script>
+
+
 export default {
     props: ['current', 'compNames'],
     data() { return {
-        count: 0,
+      count: 0,
       order: '',
       checkedPicks: [],
+      togglerPicks: this.compNames.slice(),
+      changed: false
     }},
     methods: {
         addToOrder: function (event) {
             var element = this.current;
             this.order = element;
             this.count++;
+            console.log(element);
+            let fuckme = [];
+            for (var i = 0; i < this.togglerPicks.length; i++) {
+                fuckme[i] = this.togglerPicks[i]
+            }
+            // let picks = this.togglerPicks.map(function(item) {
+            //     return item;
+            // }).slice();
             this.$emit('addToOrder', {
                 id: this.count,
+                typeId: element.typeId,
                 price: element.price,
                 title: element.name,
-                picks: this.togglerPicks,
+                picks: fuckme,
                 type: 'burger'
             });
+            this.changed = !this.changed;
+            this.togglerPicks = null;
+            console.log(this.togglerPicks)
+            this.togglerPicks = this.compNames.slice();
+            this.$forceUpdate();
+            this.$forceUpdate();
         },
         calcCalculation: function (event) {
             console.log(this.togglerPicks);
+            let componentId;
             let id = event.target.previousSibling.id;
-            if (this.togglerPicks.indexOf(id) > -1) {
-                this.togglerPicks.splice(this.togglerPicks.indexOf(id), 1);
-                var item = this.current.components.filter(function(item) {
-                    return item.name === id;
-                })[0];
-                // this.current.cal += item.сalories;
-                // this.current.protein += item.protein;
-                // this.current.fat += item.fat;
-                // this.current.carbo += item.сarbohydrates;
-                // this.current.price += item.cost;
-                console.log('____')
-                console.log(this.current)
-                console.log(this.togglerPicks)
-            } else {
-                this.togglerPicks.push(id)
-                var item = this.current.components.filter(function(item) {
-                    return item.name === id;
-                })[0];
-                // this.current.cal -= item.calories;
-                // this.current.protein -= item.proteint;
-                // this.current.fat -= item.fat;
-                // this.current.carbo -= item.сarbohydrates;
-                // this.current.price -= item.cost;
-                console.log('++++')
-                console.log(this.current)
-                console.log(item);
-                console.log(this.togglerPicks)
-            }
-
+            console.log(id);
+            this.togglerPicks.forEach(function (item, index) {
+                console.log(`Айди равена ${item.id}`)
+                if (item.id === +id && item.notInOrder === false) {
+                    console.log(item)
+                    item.notInOrder = true;
+                    return;
+                } else if (item.id === +id && item.notInOrder) {
+                    item.notInOrder = false;
+                    return;
+                }
+            });
+            
         }
     },
     watch: {
@@ -135,16 +139,21 @@ export default {
             this.title = this.current.name;
             this.curPrice = this.current.price;
             this.nutritional = this.current.nutritional;
-            //this.togglerPicks = this.compNames
+            this.$forceUpdate();
+            this.togglerPicks = this.compNames.slice();
+        },
+        changed: function() {
+            console.log(`Значение теперь ${this.changed}`);
+            this.togglerPicks = this.compNames.slice();
         },
         checkedPicks: function () {
             console.log('Изменилось')
         }
     },
     computed: {
-        togglerPicks () {
-            return this.compNames.slice()
-        }
+        // togglerPicks () {
+        //     return this.compNames.slice()
+        // }
     }
 }
 </script>

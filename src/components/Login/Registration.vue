@@ -45,12 +45,19 @@
                                 type="submit" class="btn btn-lg button"
                                 v-on:click="sendUserData">Войти</button>
                             </div>
+                            <transition  name="fade">
+                                <div class="load-data" v-show="loading">
+                                    <div class="loader text-center" style="margin:0 auto" v-show="spinner">
+                                    </div>
+                                    <h3 class="facts-text mt-2 display-3" v-show="spinner">Загрузка..</h3>
+                                </div>
+                            </transition>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="container mt-1">
-                <p class="lead">
+            <div class="container mt-1 auth-message">
+                <p class="lead facts-text">
                     {{authMessage}}
                 </p>
             </div>
@@ -68,7 +75,9 @@ export default {
             errorsEmail: [],
             passwordError: [],
             currentPath: this.$route.path,
-            authMessage: ''
+            authMessage: '',
+            spinner: false,
+            loading: false
         }
     },
     methods: {
@@ -78,7 +87,7 @@ export default {
             // if (!isValid) {
             //     return false;
             // }
-
+            this.authMessage = '';
             var userEmail = this.email;
             var userPassword = this.password;
             /**
@@ -91,15 +100,16 @@ export default {
              * }
              * 
              * */
-
-
             var tokenKey = "accessToken";
             var loginData = {
                 grant_type: 'password',
                 Email: this.email,
                 Password: this.password
             };
-            console.log(loginData)
+            var spinner = document.querySelector('.loader');
+            this.spinner = true;
+            this.loading = true;
+            spinner.classList.add('spin');
             var self = this;
             axios({
                 method: "POST",
@@ -112,8 +122,17 @@ export default {
             })
             .then((response) => {
             // Ответ был получен
-            if (response.status === 200) {
-                console.log(response)
+            console.log(response)
+            if (response.data.StatusCode.StatusCode === 200) {
+                setTimeout(function() {
+                    spinner.classList.remove('spin');
+                    self.spinner = false;
+                    self.authMessage = 'Добро пожаловать!';
+                    setTimeout(function() {
+                        //self.$router.push('/catalog');
+                    }, 1900);
+                    //self.$router.push('/catalog');
+                }, 1300)
                 var payload = {
                     email: response.data.Username,
                     accessToken: response.data.AccessToken,
@@ -122,16 +141,25 @@ export default {
                     Id: response.data.Id
                 };
                 this.$store.dispatch('registerUser', payload);
-                this.$router.push('/catalog');
                 // console.log(response)
             } else {
-                self.authMessage = response.data.message;
+                 setTimeout(function() {
+                    spinner.classList.remove('spin');
+                    self.spinner = false;
+                    self.authMessage = response.data.Message;
+                    //self.$router.push('/catalog');
+                }, 900)
             }
                 // .then(() =>{
                 //     this.$router.push('/catalog')
                 // })
             }).catch((error) => {
                 console.log(error);
+                 setTimeout(function() {
+                    spinner.classList.remove('spin');
+                    self.spinner = false;
+                    //self.$router.push('/catalog');
+                }, 900)
             })
             //если ошибка, связянная с проблемой пароля/почты
             // var payload = {
@@ -241,11 +269,31 @@ export default {
     color: #FCE70C;
     font-size: 18px;
 }
+div.auth-message {
+    padding-right: 0px;
+    padding-left: 0px;
+}
 @media screen and (max-width: 400px) {
     .form-input {
        width: 90%;
        border-radius: 15px;
     }
+}
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 4px solid white;
+    border-top: 4px solid rgb(2, 184, 240);
+    border-radius: 50%;
+}
+.spin {
+    animation: spinner 1s linear infinite;
+}
+@keyframes spinner {
+    0% { transform: rotate(0deg); }
+    20% {transform: rotate(50deg)}
+    70% {transform: rotate(290deg)}
+    100% { transform: rotate(360deg); }
 }
 </style>
 

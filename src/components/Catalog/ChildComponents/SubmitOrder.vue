@@ -40,13 +40,15 @@
                          />
                          <div class="collapse" :id="order.id">
                             <div class="card-content lead" style="font-size: 18px"
-                                v-for="pick in order.picks">
-                                &#8728;{{pick}}
-                                <img src="https://image.flaticon.com/icons/svg/148/148766.svg"
-                                v-on:click="removePick"
-                                :data-name="pick"
-                                style="width: 8%;
-                                margin: 0 auto"/>
+                                v-for="pick in order.picks" v-if="pick.notInOrder === false">
+                                <div v-if="pick.notInOrder === false">
+                                    &#8728;{{pick.name}}
+                                    <img src="https://image.flaticon.com/icons/svg/148/148766.svg"
+                                    v-on:click="removePick"
+                                    :data-name="pick.id"
+                                    style="width: 8%;
+                                    margin: 0 auto"/>
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -61,7 +63,7 @@
                 style="width: 14%" class="img fluid-img mb-1"/>
                 <div class="empty-order">
                     <p>
-                        Предметов для заказа нету...
+                        Товаров для заказа нету...
                     </p>
                 </div>
                  <button class="btn bg-button-info mt-2" 
@@ -167,15 +169,23 @@ export default {
     methods: {
         removePick: function(event) {
             var id = event.target.closest('.collapse').getAttribute('id');
-            var element = event.target.dataset.name;
+            var element = +event.target.dataset.name;
             var idItem;
+            console.log(id)
+            console.log(element)
+            console.log(this.$store.state.userOrder);
+            console.log('сверху закзаы')
             this.$store.state.userOrder.forEach(function(item) {
                 if (item.id === +id) {
+                    console.log(item)
                     item.picks.forEach(function(el, index) {
-                        if (el === element) {
-                            item.picks.splice(index, 1);
+                        if (el.id === +element) {
+                            console.log(el)
+                            item.picks[index].notInOrder = true;
+                            return;
                         }
                     })
+                    return;
                 }
             });
         },
@@ -190,10 +200,12 @@ export default {
             this.$router.push('catalog');
         },
         submitOrder: function (event) {
-            if (this.userInfo.phone === null || this.userInfo.location === null) {
-                this.showHelp = true;
-                return;
-            } 
+            // if (this.userInfo.phone === null || this.userInfo.location === null) {
+            //     this.showHelp = true;
+            //     return;
+            // } 
+            console.log(this.getOrder);
+            return;
             this.showHelp = false;
             this.spinner = true;
             var spinner = document.querySelector('.loader');

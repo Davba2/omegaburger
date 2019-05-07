@@ -80,11 +80,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-12 col-lg-8">
+                <div class="col-md-6 col-12 col-lg-8" name="printArea">
                     <div class="container m-2">
                     </div>
                     <div class="contaniner">
-                        {{summaryPrice}} {{summaryCountProduct}}
+                        <span class="summary">
+                            Общая стоимость всех заказов - <span name="summaryPrice">{{summaryPrice}}</span> BYN
+                        </span>
+                        <br/>
+                        <span class="summary" >
+                            Общее количество зак. продуктов - <span name="summaryCountProduct">{{summaryCountProduct}}</span>
+                        </span>
+                        <br/>
+                        <button v-on:click="printOrder" name="printOrder"
+                        class="btn bg-button-info">
+                            Печать
+                        </button>
                         <div class="row">
                             {{summaryCountProduct}}
                             <div class="col-12 orders-info" v-for="item in order" v-bind:key="item.orderId">
@@ -129,7 +140,7 @@ export default {
            phoneHide: false,
            streetHide: false,
            date: this.getOrderHistory,
-           showFallingObj: true,
+           showFallingObj: false,
            location: null,
            phone: null,
            locationError: false,
@@ -149,6 +160,86 @@ export default {
         FallingObj
     },
     methods: {
+        printOrder: function() {
+            var mainDiv = document.querySelector('[name=printArea]');
+            var summaryCountProduct = document.querySelector('[name=summaryCountProduct]').textContent;
+            var summaryPrice = document.querySelector('[name=summaryPrice]').textContent;
+            var print = document.createElement("div");
+            var mainRow = mainDiv.querySelector('.row');
+            var mywindow = window.open('', 'PRINT', 'height=800,width=800');
+            mywindow.document.write(`<html>
+                <head>
+                <title>Отчет о заказах</title>
+                <style>
+                    * {
+                        text-align: center;
+                        color: black;
+                        font-family: Fira Code, monospace;
+                        font-size: 1.2rem;
+                    }
+                    body {
+                        width: 600px;
+                        margin: 0 auto;
+                    }
+                    hr {
+                        border-top: 2px dotted black;
+                    }
+                    .content * {
+                        text-align: left;
+                    }
+                </style>`);
+            mywindow.document.write('</head><body>');
+            mywindow.document.write('<h1>' + `
+                <h1>OMEGA Burger</h1>
+                <p>История заказов аккаунта ${this.userInfo.email}</p>
+                ` + 
+                '</h1>');
+            //mywindow.document.write(document.querySelector('.cat-info').innerHTML);
+            
+            for (var i = 0; i < mainRow.children.length; i++) {
+                let div = document.createElement('div');
+                div.classList.add('content');
+                var child = mainRow.children[i];
+                let timeAndPrice = document.createElement('p');
+                timeAndPrice.textContent = 'Дата заказа ' + child.querySelector('time').textContent +
+                ' на сумму ' + child.querySelector('kbd').textContent;
+                let ul = document.createElement('ol');
+                let prodText = document.createElement('p');
+                prodText.textContent = 'Товары:';
+                let spans = child.querySelectorAll('span');
+                for (let o = 0; o < spans.length; o++) {
+                    let li = document.createElement('li');
+                    li.textContent = spans[o].textContent;
+                    ul.appendChild(li);
+                }
+                div.appendChild(timeAndPrice);
+                div.appendChild(prodText);
+                div.appendChild(ul);
+                mywindow.document.body.appendChild(div);
+                if (i === mainRow.children.length - 1) {
+                    let hr = document.createElement('hr');
+                    hr.style.border = '3px dotted black';
+                    mywindow.document.body.appendChild(hr);
+                } else {
+                    mywindow.document.body.appendChild(document.createElement('hr'));
+                }
+                //console.log(mainRow.children[i])
+            }
+            let summary = document.createElement('div');
+            summary.classList.add('content');
+            let countProd = document.createElement('p');
+            let priceProd = document.createElement('p');
+            countProd.textContent = `Всего было заказано ${summaryCountProduct} товаров`;
+            priceProd.textContent = `На сумму ${summaryPrice} BYN`;
+            summary.appendChild(countProd);
+            summary.appendChild(priceProd);
+            mywindow.document.body.appendChild(summary);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            mywindow.focus();
+            mywindow.print();
+            //mywindow.close();
+        },
         show2: function () {
             console.log(this.date)
         },
@@ -198,16 +289,18 @@ export default {
             }
             var refresh = this.getToken;
             var access = this.userInfo.accessToken;
+            refresh = refresh.slice(0, -1);
             var data = {
-                Email: this.email,
+                Email: this.userInfo.email,
                 RefreshToken: refresh,
                 Address: this.location
             };
             var token = 'Bearer ' + access; 
+            console.log(refresh)
+            console.log('___')
             console.log(token)
             console.log(data)
             var self = this;
-
             axios({
                 method: "POST",
                 headers: { 
@@ -218,6 +311,7 @@ export default {
                 data: JSON.stringify(data)
             })
             .then(function(response) {
+                console.log(response)
                 if (response.data.statusCode.statusCode === 200) {
                     self.$store.dispatch('addLocation', self.location);
                     self.streetHide = false;
@@ -230,7 +324,7 @@ export default {
             })
             .catch(function(error) {
                 self.locationError = true;
-                self.locationErrorMessage = 'Ошибка при отправке запроса';
+                self.locationErrorMessage = error;
             })
         },
         loadInfo: function () {
@@ -239,7 +333,9 @@ export default {
             var token = 'Bearer ' + access; 
             var self = this;
             var id = this.userInfo.Id;
-            
+            var email = this.userInfo.email;
+            console.log(email)
+            console.log(token)
             axios({
                 method: "GET",
                 headers: { 
@@ -260,13 +356,51 @@ export default {
                 }).reduce(function(acc, item) {
                     return acc + item;
                 });
-                self.summaryCountProduct = data.goods.map(function(item) {
-                    return item.productName
-                }).length
+                self.summaryCountProduct = data.map(function(item) {
+                    return item.goods.length
+                }).reduce(function(acc, item) {
+                    return acc + item;
+                });
             })
             .catch(function(error) {
                 self.errorText = 'Ошибка при загрузке ваших данных. Повторите попытку';
             });
+            if (this.userInfo.phone === null || this.userInfo.location === null) {
+                console.log('Загрузка номаера и адреса')
+                axios({
+                method: "GET",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                url: `https://localhost:44302/api/phone/?email=${email}`
+                })
+                .then(function(response) {
+                    if (response.status === 200) {
+                        self.$store.dispatch('addPhone', response.data);
+                    }
+                })
+                .catch(function(error) {
+                    self.errorText = 'Ошибка при загрузке ваших данных. Повторите попытку';
+                });
+                axios({
+                    method: "GET",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": token
+                    },
+                    url: `https://localhost:44302/api/address/?email=${email}`
+                })
+                .then(function(response) {
+                    if (response.status === 200) {
+                        self.$store.dispatch('addLocation', response.data);
+                    }                    
+                })
+                .catch(function(error) {
+                    self.errorText = 'Ошибка при загрузке ваших данных. Повторите попытку';
+                });
+            }
+            
         }
     },
     computed: {
@@ -337,6 +471,11 @@ body {
 }
 .phone p {
     font-size: 20px;
+}
+.summary {
+    font-size: 22px;
+    background-color: black;
+    color: white;
 }
 #mapid {
     height: 300px;
