@@ -222,10 +222,22 @@ export default {
     mounted () {
         var array = this.catalog;
         var spinner = document.querySelector('.loader');
+        
         if (array.length === 0) {
             this.spinner = true;
             spinner.classList.add('spin');
             var self = this;
+            axios({
+                method: "GET",
+                headers: { 
+                    "Content-Type": "application/json",
+                },
+                url: "https://localhost:44302/api/delivery"
+            }).then(function(response) {
+                if (response.status === 200) {
+                    self.$store.dispatch('addDelivery', response.data);
+                }
+            });
             axios({
                     method: "GET",
                     headers: { 

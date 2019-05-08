@@ -56,11 +56,13 @@
                     </div>
                 </div>
             </div>
-            <div class="container mt-1 auth-message">
-                <p class="lead facts-text">
-                    {{authMessage}}
-                </p>
-            </div>
+            <transition  name="fade">
+                <div class="container mt-1 auth-message">
+                    <p class="lead facts-text">
+                        {{authMessage}}
+                    </p>
+                </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -129,7 +131,7 @@ export default {
                     self.spinner = false;
                     self.authMessage = 'Добро пожаловать!';
                     setTimeout(function() {
-                        //self.$router.push('/catalog');
+                        self.$router.push('/catalog');
                     }, 1900);
                     //self.$router.push('/catalog');
                 }, 1300)
@@ -294,6 +296,12 @@ div.auth-message {
     20% {transform: rotate(50deg)}
     70% {transform: rotate(290deg)}
     100% { transform: rotate(360deg); }
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
 }
 </style>
 

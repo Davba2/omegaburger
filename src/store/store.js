@@ -101,7 +101,8 @@ export const store = new Vuex.Store({
             }
         },
         orderHistory: [],
-        catalog: []
+        catalog: [],
+        delivery: []
     },
     mutations: {
         setUser (state, payload) {
@@ -171,6 +172,9 @@ export const store = new Vuex.Store({
         },
         addCatalog (state, payload) {
             state.catalog = payload;
+        },
+        addDelivery (state, payload) {
+            state.delivery = payload;
         }
     },
     actions: {
@@ -204,10 +208,16 @@ export const store = new Vuex.Store({
         },
         addCatalog ({commit}, payload) {
             commit('addCatalog', payload);
+        },
+        addDelivery ({commit}, payload) {
+            commit('addDelivery', payload)
         }
 
     },
     getters: {
+        getDelivery (state) {
+            return state.delivery;
+        },
         getCatalog (state) {
             return state.catalog;
         },

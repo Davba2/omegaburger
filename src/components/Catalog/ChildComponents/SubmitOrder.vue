@@ -108,6 +108,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12 col-12">
+                    <transition name="fade">
+                        <div v-if="responseMessage">
+                            {{responseMessageContent}}
+                        </div>
+                    </transition>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 col-12">
+                    <kbd class="user-info" v-if="userInfo.location">Укажите <span style="font-weight: bold">способ</span> доставки </kbd><br/>
+                    <label v-for="item in getDelivery" >
+                        <input type="radio" v-model="pickedDelivery" :value="item.id"/>
+                        {{item.name}}
+                    </label>
+                </div>
+                {{pickedDelivery}}
             </div>
             <div class="alert alert-danger mt-2" role="alert" v-show="showHelp">
                 {{messageError}}
@@ -115,17 +132,32 @@
             <div class="loader text-center" style="margin:0 auto" v-show="spinner"></div>
             <div class="alert alert-success mt-2 success" 
             role="alert" v-show="successSubmit">
-                Ваш заказ был принят, наши ребята уже приступили к нему<br/> <span style="border-bottom: 2px solid white;font-size: 28px">{{orderText}}</span>
+                Ваш заказ был принят.<br/> <span style="border-bottom: 2px solid white;font-size: 24px">Распечатайте чек. Ждите звонка</span>
             </div>
             <div class="alert alert-success mt-2 success" 
             role="alert" v-show="successSubmit">
-                <span style="border-bottom: 2px solid white;font-size: 28px">
-                    <!-- {{orderDate}}<br/>
-                    На сумму  BYN<br/>
-                    По адресу {{location}}<br/>
-                    Товаров {{productCount}}<br/>
-                    Товары:{{productInfo}}<br/> -->
-                </span>
+                <div style="border-bottom: 2px solid white;
+                    border-top: 2px solid white;font-size: 28px;text-align: center">
+                    <span>OMEGA Burger</span>
+                    <br/>
+                    <span>Чек о заказе</span> 
+                    <hr/>
+                    <ol>
+                        <li v-for="el in goods">
+                            {{el.ProductName}} {{el.ProductCost}} BYN
+                        </li>
+                    </ol>
+                    <div class="order-summary-body">
+                        <hr class="order-summary-under"/>
+                        <time>{{new Date().toLocaleString()}}</time><br/>
+                        <span>Доставка {{pickedDeliveryName.toLowerCase()}}</span><br/>
+                        <span>Товаров всего {{goods.length}}</span><br/>
+                        <span>Сумма заказа {{priceOrder}} BYN</span>
+                    </div>
+                </div>
+                <button class="btn bg-button-info"
+                v-on:click="printOrder" 
+                name="printOrder">Печать</button>
             </div>
             <div class="container-fluid">
                 <div id="mapid" ref="mapElement" name="map"></div>
@@ -149,6 +181,7 @@
 <script>
 import { LMap, LTileLayer, LMarker, LControlAttribution } from 'vue2-leaflet';
 import L from 'leaflet';
+import axios from 'axios';
 export default {
     data() {
         return {
@@ -163,10 +196,84 @@ export default {
             order: null,
             popup: '',
             orderText: 'Ждите доставки',
-            errorText: ''
+            errorText: '',
+            responseMessage: false,
+            responseMessageContent: '',
+            pickedDelivery: '',
+            pickedDeliveryName: '', 
+            goods: []
         }
     },
     methods: {
+        printOrder: function(event) {
+            event.preventDefault();
+            var mywindow = window.open('', 'PRINT', 'height=800,width=800');
+            
+            mywindow.document.write(`<html>
+                <head>
+                <title>Чек о заказе</title>
+                <style>
+                    * {
+                        text-align: center;
+                        color: black;
+                        font-family: Fira Code, monospace;
+                        font-size: 1.2rem;
+                    }
+                    body {
+                        width: 600px;
+                        margin: 0 auto;
+                    }
+                    hr {
+                        border-top: 2px dotted black;
+                    }
+                    .content * {
+                        text-align: left;
+                    }
+                    time {
+                        text-align: left;
+                    }
+            </style>`);
+            mywindow.document.write('</head><body>');
+            mywindow.document.write(
+                '<h1>' + `
+                <h1>OMEGA Burger</h1>
+                <p>Чек о заказе</p>
+                ` + 
+                '</h1>'
+            );
+            let div = document.createElement('div');
+            div.classList.add('content');
+            let ol = document.createElement('ol');
+            this.goods.forEach(function(item) {
+                let li = document.createElement('li');
+                li.textContent = item.ProductName + ' ' + item.ProductCost + ' BYN'; 
+                ol.appendChild(li);
+            });
+            div.appendChild(ol);
+            let hr = document.createElement('hr');
+            div.appendChild(hr);
+            let time = document.createElement('p');
+            time.textContent = 'Дата заказа ' + new Date().toLocaleString();
+            let pickDelivery = document.createElement('p');
+            pickDelivery.textContent = 'Доставка ' + this.pickedDeliveryName.toLowerCase();
+            let productCount =  document.createElement('p');
+            productCount.textContent = 'Товаров всего ' + this.goods.length + ' шт.';
+            let orderCost = document.createElement('p');
+            orderCost.textContent = 'Сумма заказа ' + this.priceOrder + ' BYN';
+            div.appendChild(time);
+            div.appendChild(pickDelivery);
+            div.appendChild(productCount);
+            div.appendChild(orderCost);
+            mywindow.document.body.appendChild(div);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            mywindow.focus();
+            mywindow.print();
+        
+        },
+        savePickedDelivery: function(event) {
+            console.log(this.pickedDelivery)
+        },
         removePick: function(event) {
             var id = event.target.closest('.collapse').getAttribute('id');
             var element = +event.target.dataset.name;
@@ -204,35 +311,60 @@ export default {
             //     this.showHelp = true;
             //     return;
             // } 
+            var self = this;
             console.log(this.getOrder);
-            return;
+            this.getDelivery.forEach(function(item) {
+                if (item.id === self.pickedDelivery) {
+                    self.pickedDeliveryName = item.name;
+                    return;
+                }
+            })
+            var refresh = this.getToken;
+            var access = this.userInfo.accessToken;
+            var token = 'Bearer ' + access; 
             this.showHelp = false;
             this.spinner = true;
             var spinner = document.querySelector('.loader');
             var fun = this.turnOffAnimation;
             spinner.classList.add('spin');
-            var titleArray = this.getOrder.map(function (item) {
-                return item.title;
+            console.log(this.getOrder);
+            this.getOrder.forEach(function(item) {
+                let obj = {};
+                let components = [];
+                obj.ProductName = item.title;
+                obj.ProductId = item.typeId;
+                obj.ProductCost = item.price;
+                obj.ProductComponents = [];
+                item.picks.forEach(function(elem, index) {
+                    if (elem.notInOrder === false) {
+                        obj.ProductComponents.push({
+                        Name: elem.name,
+                        Id: elem.id
+                    });
+                    }
+                });
+                self.goods.push(obj);
             });
-            let time = new Date().toString();
-            var token = this.getToken();
-            this.order = {
-                title: titleArray,
-                price: this.priceOrder,
-                date2: time
+            console.log(this.goods);
+            var data = {
+                UserId: this.userInfo.Id,
+                OrderId: 10,
+                DeliveryId: this.pickedDelivery,
+                Goods: this.goods
             }
-            var self = this;
+            console.log(data);
             axios({
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
                     "Authorization": token
                 },
-                url: "https://localhost:44302/api/order",
+                url: "https://localhost:44302/api/orders",
                 data: JSON.stringify(data)
             })
             .then(function(response) {
-                if (response.data.StatusData === 200) {
+                console.log(response);
+                if (response.data.statusCode.statusCode === 200) {
                     spinner.classList.remove('spin');
                     fun();
                     self.$store.dispatch('addToOrder', response);
@@ -247,13 +379,91 @@ export default {
                 self.errorText = 'Проблема с отправкой запроса. Повторите попытку'
             });
         },
+        resetResponseMessage: function () {
+            let self = this;
+            setTimeout(function (){
+                self.responseMessage = false;
+                self.responseMessageContent = '';
+            }, 2000);
+        },
         addPhone: function (event) {
             if (this.phone.length === 13) {
-                this.$store.dispatch('addPhone', this.phone);
+                var refresh = this.getToken;
+                var access = this.userInfo.accessToken;
+                var data = {
+                    Email: this.userInfo.email,
+                    RefreshToken: refresh,
+                    Phone: this.phone
+                };
+                var self = this;
+                var token = 'Bearer ' + access; 
+                axios({
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": token
+                    },
+                    url: "https://localhost:44302/api/phone",
+                    data: JSON.stringify(data)
+                })
+                .then(function(response) {
+                    if (response.data.statusCode.statusCode === 200) {
+                        self.responseMessage = true;
+                        self.responseMessageContent = 'Телефон был добавлен';
+                        self.resetResponseMessage();
+                        self.$store.dispatch('addPhone', self.phone);
+
+                    } else {
+                        self.responseMessage = true;
+                        self.responseMessageContent = response.data.message;
+                        self.resetResponseMessage();
+                    }
+                })
+                .catch(function(error) {
+                    self.responseMessage = true;
+                    self.responseMessageContent = 'Ошибка при отправке запроса';
+                    self.resetResponseMessage();
+                })
             }
         },
         addLocation: function (event) {
-            this.$store.dispatch('addLocation', this.location);
+            var refresh = this.getToken;
+            var access = this.userInfo.accessToken;
+            refresh = refresh.slice(0, -1);
+            var data = {
+                Email: this.userInfo.email,
+                RefreshToken: refresh,
+                Address: this.location
+            };
+            var token = 'Bearer ' + access; 
+            var self = this;
+            axios({
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                url: "https://localhost:44302/api/address",
+                data: JSON.stringify(data)
+            })
+            .then(function(response) {
+                if (response.data.statusCode.statusCode === 200) {
+                    self.responseMessage = true;
+                    self.responseMessageContent = 'Адрес был добавлен';
+                    self.resetResponseMessage();
+                    self.$store.dispatch('addLocation', self.location);
+
+                } else {
+                    self.responseMessage = true;
+                    self.responseMessageContent = response.data.message;
+                    self.resetResponseMessage();
+                }
+            })
+            .catch(function(error) {
+                self.responseMessage = true;
+                self.responseMessageContent = 'Ошибка при отправке запроса';
+                self.resetResponseMessage();
+            })
         },
         turnOffAnimation: function () {
             this.spinner = false;
@@ -305,6 +515,9 @@ export default {
         // });
     },
     computed: {
+        getDelivery () {
+            return this.$store.getters.getDelivery;
+        },
         getToken () {
             return this.$store.getters.getRefreshToken;
         },
@@ -406,11 +619,17 @@ export default {
     }
     .success {
         background: black;
-        width: 55%;
+        width: 68%;
         font-weight: bold;
         font-size: 27px;
         color: white;
         margin: 0px auto;
+    }
+    .success ol li {
+        text-align: left;
+    }
+    .success .order-summary-body {
+        text-align: left;
     }
     @keyframes spinner {
         0% { transform: rotate(0deg); }
@@ -453,5 +672,11 @@ export default {
         div .remove, div .rotate-image-back, .rotate-image {
             width: 25%;
         }
+    }
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+        opacity: 0;
     }
 </style>
