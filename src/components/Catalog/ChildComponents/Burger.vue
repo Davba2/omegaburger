@@ -14,7 +14,7 @@
         </div>
     <!--Отдельный компонент для просмотра бургера и с возможностью добавлять начинки-->
         <div ref='item-body'>
-           <C :current="current" @addToOrder='addToOrder' :compNames="compNames"/>
+           <C :current="current" @addToOrder='addToOrder' @updateCurrentNut='updateCurrentNut' :compNames="compNames"/>
         </div>
     </div>
 </template>
@@ -28,19 +28,7 @@ export default {
             compNames: [],
             co: 0,
             currentIt: 'comp',
-            current: {
-                id: 1,
-                title: 'Бургер с сыром',
-                price: 1.5,
-                desc: 'Блаженная булочка наполнена котлеткой и облита сыром',
-                url: 'http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png',
-                nutritional: {
-                    protein: 4,
-                    carbo: 22,
-                    fat: 10,
-                    calc: 300
-                }
-            },
+            current: {},
             state: '',
             component: {}
         }
@@ -51,6 +39,28 @@ export default {
         C
     },
     methods: {
+        updateCurrentNut: function(data, toggle) {
+            console.log(data);
+            console.log(this.current)
+            if (toggle === 'up') {
+                this.current.cal += data.calories;
+                this.current.price += data.cost;
+                this.current.fat += data.fat ;
+                this.current.carbo += data.сarbohydrates;  
+                this.current.protein += data.proteint;
+            } else if (toggle === 'desc') {
+                this.current.cal -= data.calories;
+                this.current.price -= data.cost;
+                this.current.fat -= data.fat ;
+                this.current.carbo -= data.сarbohydrates;  
+                this.current.protein -= data.proteint;
+            }
+            let clone = JSON.parse(JSON.stringify(this.current));
+            this.current = null;
+            this.current = clone;
+            this.$forceUpdate();
+            console.log(toggle)
+        },
         fuckYou: function (event) {
             console.log('1')
             console.log('Нажад');
@@ -97,6 +107,7 @@ export default {
             let clone = JSON.parse(JSON.stringify(this.current));
             let cloneComponent = JSON.parse(JSON.stringify(this.compoment));
             this.current = null;
+            this.$forceUpdate();
             this.compNames = null;
             this.current = clone;
             this.compNames = cloneComponent;

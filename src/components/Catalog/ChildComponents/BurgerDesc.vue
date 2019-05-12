@@ -84,7 +84,8 @@ export default {
       order: '',
       checkedPicks: [],
       togglerPicks: this.compNames.slice(),
-      changed: false
+      changed: false,
+      nutritional: this.current
     }},
     methods: {
         addToOrder: function (event) {
@@ -101,7 +102,7 @@ export default {
             // }).slice();
             this.$emit('addToOrder', {
                 id: this.count,
-                typeId: element.typeId,
+                typeId: element.id,
                 price: element.price,
                 title: element.name,
                 picks: fuckme,
@@ -119,14 +120,19 @@ export default {
             let componentId;
             let id = event.target.previousSibling.id;
             console.log(id);
+            var self = this;
             this.togglerPicks.forEach(function (item, index) {
                 console.log(`Айди равена ${item.id}`)
                 if (item.id === +id && item.notInOrder === false) {
                     console.log(item)
+                    self.$emit('updateCurrentNut', item, 'desc');
+                    //self.current.cal -= item.calories;
+                    console.log(self.current)
                     item.notInOrder = true;
                     return;
                 } else if (item.id === +id && item.notInOrder) {
                     item.notInOrder = false;
+                    self.$emit('updateCurrentNut', item, 'up');
                     return;
                 }
             });

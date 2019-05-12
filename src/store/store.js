@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         user: {
-            email: 'youremail@mail.ru',
+            email: null,
             logged: false,
             accessToken: null,
             refreshToken: null,
@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
             location: null,
             Id: null
         },
+        loadScreen: true,
         commnets: [],
         burgerArray: [
             {

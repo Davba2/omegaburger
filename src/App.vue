@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <HeaderBody v-bind:links="links"/>
+    <HeaderBody v-bind:links="links" v-if="this.$store.state.loadScreen === false"/>
     <transition  name="page" mode="out-in">
-      <router-view></router-view>
+      <router-view ></router-view>
     </transition>
-    <footer-body/>
+    <footer-body v-if="this.$store.state.loadScreen === false" />
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
       if (this.isUserLogged) {
         return [
           {
-            title: 'Главная', url: '/'
+            title: 'Главная', url: '/main'
           },
           {
             title: 'Каталог', url: '/catalog'
@@ -45,10 +45,9 @@ export default {
           }
         ];
       }
-      this.$router.push('/');
       return [
         {
-          title: 'Главная', url: '/'
+          title: 'Главная', url: '/main'
         },
         {
           title: 'Каталог', url: '/catalog'
@@ -75,7 +74,7 @@ export default {
 <style>
 body {
   margin: 0;
-  background: #841424;
+  /*background: #841424;*/
 }
 body * {
   font-family: Georgia;
@@ -87,12 +86,11 @@ body * {
   text-align: center;
   color: #2c3e50;
 }
-
 .page-enter-active, .page-leave-active {
-  transition: opacity 0.8s, transform 1s;
+  transition: opacity 1.2s, transform 0.8s ease-out;
 }
 .page-enter, .page-leave-to {
   opacity: 0;
-  transform: translateX(-25%);
+  transform: translateX(-36%);
 }
 </style>

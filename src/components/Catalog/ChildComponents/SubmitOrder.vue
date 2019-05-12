@@ -2,7 +2,7 @@
     <div>
         <div class="container">
             <p class="lead">
-                <span class="facts-text" style="border-bottom: 2px solid">Сейчас</span>
+                <span class="facts-text" style="border-bottom: 2px solid">Сейчас {{new Date().toLocaleString()}}</span>
             </p>
         </div>
         <div class="container" v-show="getOrder.length > 0">
@@ -118,8 +118,10 @@
             </div>
             <div class="row mt-2">
                 <div class="col-md-12 col-12">
-                    <kbd class="user-info" v-if="userInfo.location">Укажите <span style="font-weight: bold">способ</span> доставки </kbd><br/>
-                    <label v-for="item in getDelivery" >
+                    <kbd class="user-info">Укажите <span style="font-weight: bold">способ</span> доставки </kbd><br/>
+                    <label v-for="item in getDelivery"  style="background: rgb(255, 65, 54);
+                        border-radius: 1.2rem;
+                        font-size: 24px">
                         <input type="radio" v-model="pickedDelivery" :value="item.id"/>
                         {{item.name}}
                     </label>
@@ -142,6 +144,7 @@
                     <br/>
                     <span>Чек о заказе</span> 
                     <hr/>
+                    <p class="text-left">Товары:</p>
                     <ol>
                         <li v-for="el in goods">
                             {{el.ProductName}} {{el.ProductCost}} BYN
@@ -149,7 +152,7 @@
                     </ol>
                     <div class="order-summary-body">
                         <hr class="order-summary-under"/>
-                        <time>{{new Date().toLocaleString()}}</time><br/>
+                        <time>Дата {{new Date().toLocaleString()}}</time><br/>
                         <span>Доставка {{pickedDeliveryName.toLowerCase()}}</span><br/>
                         <span>Товаров всего {{goods.length}}</span><br/>
                         <span>Сумма заказа {{priceOrder}} BYN</span>
@@ -188,7 +191,7 @@ export default {
             map: null,
             price: 20,
             showHelp: false,
-            messageError: 'Для продолжения, укажите свой адрес и телефон',
+            messageError: 'Для продолжения, проверьте, что вы указали: адрес, телефон, способ доставки',
             phone: '+375',
             location: '',
             successSubmit: false,
@@ -219,6 +222,34 @@ export default {
                         font-family: Fira Code, monospace;
                         font-size: 1.2rem;
                     }
+                    .text-style {
+                        font-size: 52px;
+                        letter-spacing: 6px;
+                        line-height: 1;
+                        margin: 0;
+                        position: relative;
+                    }
+                    .top {
+                        background: white;
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        position: absolute;
+                        z-index: 1;
+                        -webkit-text-fill-color: transparent;
+                        text-fill-color: transparent;
+                        margin-left: 93px;
+                        margin-top: 1px;
+                    }
+                    .bottom {
+                         text-shadow: 
+                            2px 1px rgb(0, 0, 0),
+                            4px 2px rgb(0, 0, 0), 
+                            6px 4px rgb(0, 0, 0),
+                            8px 5px rgb(0, 0, 0),
+                            10px 6px rgb(0, 0, 0),
+                            12px 7px rgb(0, 0, 0),
+                            14px 8px rgb(0, 0, 0);
+                    }
                     body {
                         width: 600px;
                         margin: 0 auto;
@@ -232,17 +263,24 @@ export default {
                     time {
                         text-align: left;
                     }
+                    img {
+                        width: 40%;
+                    }
             </style>`);
             mywindow.document.write('</head><body>');
             mywindow.document.write(
                 '<h1>' + `
-                <h1>OMEGA Burger</h1>
-                <p>Чек о заказе</p>
+                <div class="top text-style">Чек о заказе</div>
+                <div class="bottom text-style">Чек о заказе</div>
+                <p>Клиента ${this.userInfo.email}</p>
                 ` + 
                 '</h1>'
             );
             let div = document.createElement('div');
             div.classList.add('content');
+            let paragraph = document.createElement('p');
+            paragraph.textContent = 'Товары:';
+            div.appendChild(paragraph);
             let ol = document.createElement('ol');
             this.goods.forEach(function(item) {
                 let li = document.createElement('li');
@@ -264,11 +302,17 @@ export default {
             div.appendChild(pickDelivery);
             div.appendChild(productCount);
             div.appendChild(orderCost);
+            let img = document.createElement('img');
+            img.src = 'https://i.ibb.co/cwqw8tq/cut-logo-1.png';
+            img.style.cssFloat = 'right';
+            div.appendChild(img);
             mywindow.document.body.appendChild(div);
             mywindow.document.write('</body></html>');
             mywindow.document.close();
-            mywindow.focus();
-            mywindow.print();
+            setTimeout(function() {
+                mywindow.focus();
+                mywindow.print();
+            }, 1000)
         
         },
         savePickedDelivery: function(event) {
@@ -278,6 +322,7 @@ export default {
             var id = event.target.closest('.collapse').getAttribute('id');
             var element = +event.target.dataset.name;
             var idItem;
+            var self = this;
             console.log(id)
             console.log(element)
             console.log(this.$store.state.userOrder);
@@ -289,6 +334,7 @@ export default {
                         if (el.id === +element) {
                             console.log(el)
                             item.picks[index].notInOrder = true;
+                            self.$forceUpdate();
                             return;
                         }
                     })
@@ -307,7 +353,7 @@ export default {
             this.$router.push('catalog');
         },
         submitOrder: function (event) {
-            // if (this.userInfo.phone === null || this.userInfo.location === null) {
+            // if (this.userInfo.phone === null || this.userInfo.location === null || this.pickedDelivery === ' ') {
             //     this.showHelp = true;
             //     return;
             // } 
@@ -507,6 +553,10 @@ export default {
         }
      },
     mounted () {
+        if (this.userInfo.email === null) {
+            this.$router.push('main');
+            return;
+        }
         window.scrollTo(0, 60);
         // this.$nextTick(() => {
         //     this.map = L.map(this.$refs['mapElement']).setView([53.902237, 30.335839], 14);
@@ -598,7 +648,7 @@ export default {
         width: 120px;
         height: 120px;
         border: 4px solid white;
-        border-top: 4px solid rgb(91, 183, 211);
+        border-top: 4px solid rgb(57, 211, 91);
         border-radius: 50%;
     }
     .rotate-image {

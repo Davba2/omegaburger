@@ -97,9 +97,8 @@
                             Печать
                         </button>
                         <div class="row">
-                            {{summaryCountProduct}}
-                            <div class="col-12 orders-info" v-for="item in order" v-bind:key="item.orderId">
-                                <h3>Вы заказали:</h3>
+                            <div class="col-12 orders-info" v-for="(item, index) in order" v-bind:key="item.orderId">
+                                <h3>Вы заказывали:</h3>
                                 <p>
                                     <span v-for="element in item.goods">
                                         {{element.productName}};
@@ -107,19 +106,24 @@
                                 </p>
                                 <div class="container order-prop">
                                     <div class="row mt-2 text-white">
-                                        <div class="col-md-6 col-12 text-left">
-                                           <time class="order-date">{{item.orderDate}}</time>
+                                        <div class="col-md-6 col-12 price text-left">
+                                           Дата - <time class="order-date">{{new Date(Date.parse(item.orderDate)).toLocaleString()}}</time>
                                         </div>
                                         <div class="col-md-6 col-12  price">
                                             Цена - <kbd>{{item.orderAmount}} BYN</kbd>
                                         </div>
                                         <div class="col-md-12 col-12 text-center mb-2">
-                                            <button class="btn bg-button-info" v-on:click="show2"> Заказать такой же</button>
+                                            <button class="btn bg-button-info" v-on:click="printOr" :data-id="index">Печать</button>
                                         </div> 
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <button v-on:click="toggler" data-name="left" class="btn bg-button-info" 
+                        style="margin-right: 2px"
+                        >&#8592;</button>
+                        
+                        <button v-on:click="toggler" data-name="right" class="btn bg-button-info">&#8594;</button>
                     </div>
 
                 </div>
@@ -150,7 +154,8 @@ export default {
            order: null,
            summaryCountProduct: 0,
            summaryPrice: 0,
-           showOrder: false
+           showOrder: false,
+           togglerCount: 4
         }
     },
     components: {
@@ -160,6 +165,83 @@ export default {
         FallingObj
     },
     methods: {
+        toggler: function(event) {
+            let row = document.querySelectorAll('.orders-info');
+            let buttonValue = event.target.dataset.name;
+            let length = row.length;
+            var self = this;
+            if (buttonValue === 'right') {
+                if (this.togglerCount === length - 1) {
+                    return;
+                }
+                if (this.togglerCount + 3 <= length) {
+                    let breakC = this.togglerCount + 3;
+                    console.log(this.togglerCount)
+                    this.iterateBack(row, length - 1, 0);
+                    this.iterateTo(row, breakC, this.togglerCount);
+                    this.togglerCount += 3;
+                } else if (length - this.togglerCount <= 3) {
+                    console.log(this.togglerCount)
+                    this.iterateTo(row, length - 1, this.togglerCount);
+                    this.iterateBack(row, this.togglerCount, 0);
+                    this.togglerCount = length - 1;
+                }
+            }
+            if (buttonValue === 'left') {
+                if (this.togglerCount === 0) {
+                    return;
+                }
+                if (this.togglerCount - 7 >= 0) {
+                    this.iterateBack(row, this.togglerCount, this.togglerCount - 4);
+                    let breakC = this.togglerCount - 7;
+                    this.togglerCount -= 4; 
+                    if (breakC < 0) {
+                        breakC = 0;
+                    } else if (this.togglerCount < 0) {
+                        this.togglerCount = 3;
+                    }
+                    console.log('хватает');
+                    console.log(this.togglerCount)
+                    //this.iterateBack(row, length -1, 0);
+                    setTimeout(function(){
+                        self.iterateTo(row, self.togglerCount, breakC);
+                        console.log(row[0]);
+                        console.log(row[3]);
+                    }, 0)
+                } else if (this.togglerCount - 7 < 0) {
+                    console.log('Меньше 8')
+                    console.log(this.togglerCount)
+                    this.togglerCount = 3;
+                    this.iterateBack(row, length - 1 , 3);
+                    setTimeout(function(){
+                        self.iterateTo(row, 3, 0);
+                        console.log(row[0]);
+                        console.log(row[3]);
+                    }, 0)
+                }
+            }
+            // for (let i = self.togglerCount; i < row.length; i++) {
+            //     row[i].style.display = "none";
+            // }
+            
+            console.log(buttonValue);
+        },
+        iterateTo: function(array, breakC, start) {
+            for (let i = start; i <= breakC; i++) {
+                if (array[i] === undefined) {
+                    return;
+                }
+                array[i].style.display = 'block';
+            }
+        },
+        iterateBack: function(array, start, stop) {
+            for (let i = start; i >= stop; i--) {
+                if (array[i] === undefined) {
+                    return;
+                }
+                array[i].style.display = 'none';
+            }
+        },
         printOrder: function() {
             var mainDiv = document.querySelector('[name=printArea]');
             var summaryCountProduct = document.querySelector('[name=summaryCountProduct]').textContent;
@@ -187,10 +269,12 @@ export default {
                     .content * {
                         text-align: left;
                     }
+                    img {
+                        width: 40%;
+                    }
                 </style>`);
             mywindow.document.write('</head><body>');
             mywindow.document.write('<h1>' + `
-                <h1>OMEGA Burger</h1>
                 <p>История заказов аккаунта ${this.userInfo.email}</p>
                 ` + 
                 '</h1>');
@@ -234,14 +318,141 @@ export default {
             summary.appendChild(countProd);
             summary.appendChild(priceProd);
             mywindow.document.body.appendChild(summary);
+            let img = document.createElement('img');
+            img.src = 'https://i.ibb.co/cwqw8tq/cut-logo-1.png';
+            img.style.cssFloat = 'right';
+            mywindow.document.body.appendChild(img);
             mywindow.document.write('</body></html>');
             mywindow.document.close();
-            mywindow.focus();
-            mywindow.print();
+            setTimeout(function(){
+                mywindow.focus();
+                mywindow.print();
+            }, 1000);
             //mywindow.close();
         },
-        show2: function () {
-            console.log(this.date)
+        printOr: function (event) {
+            var id = +event.target.dataset.id;
+            var orderData = this.order[id];
+            event.preventDefault();
+            var mywindow = window.open('', 'PRINT', 'height=800,width=800');
+            console.log(orderData.orderDate)
+            var date = new Date(Date.parse(orderData.orderDate));
+            console.log(date)
+            mywindow.document.write(`<html>
+                <head>
+                <title>Чек о заказе</title>
+                <style>
+                    * {
+                        text-align: center;
+                        color: black;
+                        font-family: Fira Code, monospace;
+                        font-size: 1.2rem;
+                    }
+                    body {
+                        width: 600px;
+                        margin: 0 auto;
+                    }
+                    .text-style {
+                        font-size: 52px;
+                        letter-spacing: 6px;
+                        line-height: 1;
+                        margin: 0;
+                        position: relative;
+                    }
+                    .top {
+                        background: white;
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        position: absolute;
+                        z-index: 1;
+                        -webkit-text-fill-color: transparent;
+                        text-fill-color: transparent;
+                        margin-left: 93px;
+                        margin-top: 1px;
+                    }
+                    .bottom {
+                         text-shadow: 
+                            2px 1px rgb(0, 0, 0),
+                            4px 2px rgb(0, 0, 0), 
+                            6px 4px rgb(0, 0, 0),
+                            8px 5px rgb(0, 0, 0),
+                            10px 6px rgb(0, 0, 0),
+                            12px 7px rgb(0, 0, 0),
+                            14px 8px rgb(0, 0, 0);
+                    }
+                    hr {
+                        border-top: 2px dotted black;
+                    }
+                    .content * {
+                        text-align: left;
+                    }
+                    time {
+                        text-align: left;
+                    }
+                    img {
+                        width: 40%;
+                    }
+            </style>`);
+            mywindow.document.write('</head><body>');
+            mywindow.document.write(
+                '<h1>' + `
+                <div class="top text-style">Чек о заказе</div>
+                <div class="bottom text-style">Чек о заказе</div>
+                <p>Клиента ${this.userInfo.email}</p>
+                ` + 
+                '</h1>'
+            );
+            let div = document.createElement('div');
+            div.classList.add('content');
+            let paragraph = document.createElement('p');
+            paragraph.textContent = 'Товары:';
+            div.appendChild(paragraph);
+            let ol = document.createElement('ol');
+            orderData.goods.forEach(function(item) {
+                let li = document.createElement('li');
+                li.textContent = item.productName; 
+                ol.appendChild(li);
+            });
+            div.appendChild(ol);
+            let hr = document.createElement('hr');
+            div.appendChild(hr);
+            let time = document.createElement('p');
+            time.textContent = 'Дата заказа ' + new Date().toLocaleString();
+            let pickDelivery = document.createElement('p');
+            pickDelivery.textContent = 'Доставка ';
+            let productCount =  document.createElement('p');
+            productCount.textContent = 'Товаров всего ' + orderData.goods.length + ' шт.';
+            let orderCost = document.createElement('p');
+            orderCost.textContent = 'Сумма заказа ' + orderData.orderAmount + ' BYN';
+            div.appendChild(time);
+            div.appendChild(pickDelivery);
+            div.appendChild(productCount);
+            div.appendChild(orderCost);
+            let img = document.createElement('img');
+            img.src = 'https://i.ibb.co/cwqw8tq/cut-logo-1.png';
+            img.style.cssFloat = 'right';
+            div.appendChild(img);
+            mywindow.document.body.appendChild(div);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            setTimeout(function() {
+                mywindow.focus();
+                mywindow.print();
+            }, 1000)
+        
+            // var orderLength = orderData.goods.length;
+            // var self = this;
+            // orderData.goods.forEach(function(item, index) {
+            //     self.$store.dispatch('addToOrder', {
+            //     id: index,
+            //     typeId: 1,
+            //     price: item.orderAmount,
+            //     title: orderData.goods[],
+            //     picks: orderData.,
+            //     type: 'burger'
+            // });
+            // });
+            
         },
         setUserPhone: function (event) {
             if (this.phone === null) {
@@ -361,6 +572,15 @@ export default {
                 }).reduce(function(acc, item) {
                     return acc + item;
                 });
+                setTimeout(function(){
+                    let row = document.querySelectorAll('.orders-info');
+                    console.log(row)
+                    if (row.length > 5) {
+                        for (let i = self.togglerCount; i < row.length; i++) {
+                            row[i].style.display = "none";
+                        }
+                }
+                }, 300)
             })
             .catch(function(error) {
                 self.errorText = 'Ошибка при загрузке ваших данных. Повторите попытку';
@@ -431,6 +651,10 @@ export default {
         }
     },
     mounted () {
+        if (this.userInfo.email === null) {
+            this.$router.push('main');
+            return;
+        }
         this.$nextTick(() => {
             this.map = L.map(this.$refs['mapElement']).setView([53.902237, 30.335839], 14);
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
@@ -531,7 +755,7 @@ time, .price {
 }
 div .order-date {
     color: black;
-    font-size: 16px;
+    font-size: 20px;
 }
 .user-confirmed {
     display: inline-block;

@@ -7,10 +7,15 @@ import CatalogBody from './components/Catalog/Catalog.vue'
 import CabinetBody from './components/User/Cabinet.vue'
 import SumbitBody from './components/Catalog/ChildComponents/SubmitOrder.vue'
 import HelpBody from './components/Help.vue'
+import LoadScreen from './components/LoadScreen.vue'
 export default new VueRouter({
     routes: [
         {
             path: '/',
+            component: LoadScreen
+        },
+        {
+            path: '/main',
             component: MainBody
         },
         {

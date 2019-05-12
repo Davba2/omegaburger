@@ -322,7 +322,7 @@ export default {
             return Math.random() - 0.5;
         },
         f: function () {
-            if (this.$route.path === '/') {
+            if (this.$route.path === '/main') {
                 if (!this.statToggle && window.scrollY > 1600) {
                 let duration = 4;
                 let end = 4000;
@@ -426,6 +426,10 @@ export default {
         }, 5000000)
     },
     mounted () {
+        document.querySelector('body').style.backgroundColor = "#841424";
+        this.$store.state.loadScreen = false;
+        //document.querySelector('#facts').addEventListener('hover', this.f);
+        //this.f();
         this.$nextTick(() => {
             this.map = L.map(this.$refs['mapElement']).setView([53.902237, 30.335839], 14);
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
@@ -437,6 +441,10 @@ export default {
 </script>
 <style scoped>
 @import "~leaflet/dist/leaflet.css";
+html body {
+  margin: 0;
+  background: #841424;
+}
 .magazine {
     font-size: 36px;
     font-weight:bold;color: white;

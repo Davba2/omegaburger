@@ -222,7 +222,7 @@ export default {
     mounted () {
         var array = this.catalog;
         var spinner = document.querySelector('.loader');
-        
+        document.querySelector('body').style.backgroundColor = "#841424";
         if (array.length === 0) {
             this.spinner = true;
             spinner.classList.add('spin');
