@@ -9,6 +9,9 @@
                         </p>
                         <ul>
                             <li>
+                                <router-link to="/main">Главная</router-link>
+                            </li>
+                            <li>
                                 <router-link to="/catalog">Каталог</router-link>
                             </li>
                             <li>
@@ -16,6 +19,9 @@
                             </li>
                             <li>
                                 <router-link to="/registration" >Войти</router-link>
+                            </li>
+                            <li>
+                                <router-link to="/authentication" >Регистрация</router-link>
                             </li>
                             <li>
                                 <router-link to="/cabinet">Кабинет</router-link>
@@ -30,8 +36,13 @@
                             <li>
                                 <router-link to="/help">Способ доставки</router-link>
                             </li>
-                            <li>Как оплатить</li>
-                            <li>Долгая доставка?</li>
+                            <li>
+                                <router-link to="/help">Как оплатить</router-link>
+                            </li>
+                            <li>
+                                <router-link to="/help">Проблемы?</router-link>
+                            </li>
+
                         </ul>
                     </div>
                     <div class="col-md-6 col-sm-12 col-12">

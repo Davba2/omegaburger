@@ -10,15 +10,16 @@
         <transition  name="fade">
             <div class="catalog-body">
                 <div class="sticky d-none d-sm-block" style="    position: sticky;
-                top: -165px;
+                top: -100px;
                 z-index: 2;"
                 id="stickyCounter"
                 >
                     <div class="row omega" style="margin-right: 0px">
-                        <Counter v-bind:counterData="counterData.drinks"/>
                         <Counter v-bind:counterData="counterData.burger"/>
-                        <Counter v-bind:counterData="counterData.sweat"/>   
-                        <Counter v-bind:counterData="counterData.dishes"/> 
+                        <Counter v-bind:counterData="counterData.dishes"/>
+                        <Counter v-bind:counterData="counterData.sweat"/> 
+                        <Counter v-bind:counterData="counterData.drinks"/>  
+                        <Counter v-bind:counterData="counterData.snacks"/> 
                     </div>
                 </div>
                 <div class="container-fluid" style="padding: 0;">
@@ -37,7 +38,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-md-3 col-4 option">
+                        <div class="col-md-2 col-4 option">
                             <div class="option-element">
                                 <a href="#demo3" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="sweat">
                                     Десерты
@@ -51,7 +52,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-md-2 col-6 option">
+                        <div class="col-md-3 col-6 option">
                             <div class="option-element">
                                 <a href="#demo5" @click="toggle" class="plead info-text" data-toggle="collapse" data-type="dishes">
                                     Закуски
@@ -65,45 +66,43 @@
                     <div class="collapse burger" id="demo">
                         <div class="catalog-items text-center">
                             <burger 
-                            v-bind:catalog="catalog"
+                            v-bind:catalog="catalog['burger']"
                             @addToOrder='addToOrder'/>
                         </div>
                     </div>
                     <div class="collapse salad" id="demo2">
                         <div class="container text-center">
-                            <div class="carousel-item row equal catalog-items active" style="margin-right: 0px">
-                                <burger 
-                                v-bind:drinksArray="drinksArray"
+                            <div class="catalog-items text-center">
+                            <burger 
+                                v-bind:catalog="catalog['dishes']"
                                 @addToOrder='addToOrder'/>
                             </div>
                         </div>
                     </div>
-                        <div class="collapse sweat" id="demo3">
-                            
-                    <div class="card">
-                        <div class="card-header">здесь изображение </div>
-                        <div class="card-body">Бургер лососевый</div> 
-                        <div class="card-footer">цена</div>
-                    </div>
+                    <div class="collapse sweat" id="demo3">
+                            <div class="catalog-items text-center">
+                            <burger 
+                                v-bind:catalog="catalog['sweat']"
+                                @addToOrder='addToOrder'/>
+                            </div>
                         </div>
                     <div class="collapse drinks" id="demo4">
                         <div class="container text-center">
-                    
-                            <div class="row" style="margin-right: 0px">
-                                <div class="carousel-item row equal catalog-items active " style="margin-right: 0px">
-                                    <drinks 
-                                    v-bind:drinksArray="drinksArray"
+                            <div class="catalog-items text-center">
+                                    <burger 
+                                    v-bind:catalog="catalog['drinks']"
                                     @addToOrder='addToOrder'/>
                                 </div>
-                            </div>
                         </div>  
                     </div>
                     <div class="collapse dishes" id="demo5">
-                        <div class="card">
-                            <div class="card-header">здесь изображение </div>
-                            <div class="card-body">Бургер лососевый</div> 
-                            <div class="card-footer">цена</div>
-                        </div>
+                        <div class="container text-center">
+                            <div class="catalog-items text-center">
+                                    <burger 
+                                    v-bind:catalog="catalog['dishes']"
+                                    @addToOrder='addToOrder'/>
+                                </div>
+                        </div> 
                     </div>
                 </div>
                 <hr/>
@@ -162,14 +161,6 @@ export default {
             this.pick = className;
             this.isChanged = true;
             $('.collapse').collapse('hide');
-            function sum(a) {
-                return function(b) {
-                    return function (c) {
-                        console.log('hello')
-                    }
-                }
-            }
-
         },
         addToOrder: function (data) {
             this.$store.dispatch('addToOrder', data);
@@ -220,6 +211,7 @@ export default {
         }
     },
     mounted () {
+        console.log(this.$store.state.catalog)
         var array = this.catalog;
         var spinner = document.querySelector('.loader');
         document.querySelector('body').style.backgroundColor = "#841424";

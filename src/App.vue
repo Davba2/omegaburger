@@ -59,14 +59,6 @@ export default {
     }
   },
   methods: {
-    getApi: function (c) {
-      axios.get('http://localhost:2375/Home/GetAPI')
-      .then((response) => {
-      this.count = response;
-    })
-    .catch(function (error) {
-    })
-    }
   },
 }
 </script>

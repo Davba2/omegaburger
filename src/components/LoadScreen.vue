@@ -10,11 +10,11 @@
                     </div>
                     <div class="row ">
                         <div class="col-12 logo">
-                            <div class="second-circle">
-
-                            </div>
                             <div class="circle">
-                                <div class="logo-text-company">
+                                <div class="logo-text-company top-logo">
+                                    OMEGA
+                                </div>
+                                <div class="logo-text-company bottom-logo">
                                     OMEGA
                                 </div>
                                 <div class="line"> 
@@ -54,6 +54,21 @@ export default {
             return this.$store.getters.getUserInfo;
         }
     },
+    methods: {
+        getData: function(data, field) {
+            let array = data.filter(function(item) {
+                return +item.typeId === +field;
+            })
+            return array;
+        },
+        dispatchData: function(data, field) {
+            this.$store.dispatch('addCatalog', {
+                data: data,
+                type: field
+            });
+        }
+    },
+
     mounted () {
         var self = this;
         this.$store.state.loadScreen = true;
@@ -69,7 +84,6 @@ export default {
             }
         });
         if (this.$store.state.catalog.length > 0) {
-            console.log('hello')
             self.$router.push('main');
             return;
             //this.$store.state.loadScreen = false;
@@ -85,17 +99,33 @@ export default {
                 url: "https://localhost:44302/api/catalog",
             })
             .then(function(response) {
-                console.log(response);
                 if (response.status === 200) {
                         self.message = 'Все загружено...';
                         setTimeout(function(){
-                            self.showLoad = false;
+                            //self.showLoad = false;
                         }, 3400)
                         setTimeout(function() {
                             var data = response.data;
-                            self.$store.dispatch('addCatalog', data);
+                            var burgers = self.getData(data, 1);
+                            var drinks = self.getData(data, 2);
+                            var snacks = self.getData(data, 3);
+                            var sweat = self.getData(data, 4);
+                            self.dispatchData(burgers, 'burger');
+                            self.dispatchData(drinks, 'drinks');
+                            self.dispatchData(snacks, 'snacks');
+                            self.dispatchData(sweat, 'sweat');
                         }, 4400)
                         setTimeout(function() {
+                            //self.showLoad = false;
+                            //self.$router.push('main'); 
+                            
+                    }, 5400)
+                } else {
+                    self.message = 'Ошибка при загрузке...';
+                    setTimeout(function(){
+                        self.showLoad = false;
+                    }, 3400) 
+                    etTimeout(function() {
                             self.showLoad = false;
                             self.$router.push('main'); 
                             
@@ -121,7 +151,7 @@ html body {
 }
 .load-screen {
     width: 100%;
-    height: 110vh;
+    height: 150vh;
     margin: 0 auto;
     position: relative;
     z-index: -10;
@@ -146,17 +176,36 @@ div.logo {
 }
 .logo-text-company {
     padding-top: 20px;
-    font-size: 7rem;
-    letter-spacing: 5px;
-    line-height: 1;
-
+    font-size: 7.6rem;
+    letter-spacing: 14px;
+    line-height: 1.1;
     font-family: 'Six Caps', sans-serif;
     transform: rotate(-10deg);
     color: #ff7357;
 }
+.top-logo {
+    background: linear-gradient(rgb(233, 152, 71), rgb(230, 200, 160));
+    -webkit-background-clip: text;
+    background-clip: text;
+    position: absolute;
+    margin-left: 120px;
+    z-index: 5;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+}
+.bottom-logo {
+    z-index: 4;
+    text-shadow: 
+    2px 1px rgb(85, 10, 0),
+    4px 2px rgb(90, 15, 5),
+    6px 4px rgb(100, 20, 15),
+    8px 5px rgb(105, 25, 20),
+    10px 6px rgb(110, 30, 25),
+    12px 7px rgb(115, 30, 30);
+}
 .line {
-    width: 169px;
-    margin-left: 158px;
+    width: 197px;
+    margin-left: 141px;
     margin-bottom: 5px;
     border-top: 2px #ff7357 solid;
     transform: rotate(-10deg);

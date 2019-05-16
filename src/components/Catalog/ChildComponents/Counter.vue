@@ -1,11 +1,11 @@
 <template>
-    <div class="col-md-3 col-3 food-body">
+    <div class="col-md-2 col-2 food-body">
         <div class="d-none d-sm-block">
             <img :src="counterData.url"/>
         </div>
         <div class="container sticky">
             <div class="row">
-                <div class="col-md-12 col-3 d-none d-sm-block counter">
+                <div class="col-md-12 col-2 d-none d-sm-block counter">
                     <p>
                         {{counterData.first}}
                     </p>
@@ -29,6 +29,9 @@ export default {
 }
 </script>
 <style>
+.food-body {
+    margin: 0 auto;
+}
 .food-body img {
     width: 50%;
     margin-bottom: 3%; 

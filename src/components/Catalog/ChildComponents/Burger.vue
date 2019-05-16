@@ -6,7 +6,7 @@
                      <p class="desc-title">
                         {{item.name}}
                     </p>
-                    <a :href="'#'+item.name"  @click="fuckYou" class="plead" data-toggle="collapse">
+                    <a :href="'#'+item.name" :data-type="item.typeId" @click="fuckYou" class="plead" data-toggle="collapse">
                         <img src="http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png" style="width: 75%"/>
                     </a>
                 </div>
@@ -40,8 +40,6 @@ export default {
     },
     methods: {
         updateCurrentNut: function(data, toggle) {
-            console.log(data);
-            console.log(this.current)
             if (toggle === 'up') {
                 this.current.cal += data.calories;
                 this.current.price += data.cost;
@@ -64,9 +62,9 @@ export default {
         fuckYou: function (event) {
             console.log('1')
             console.log('Нажад');
+            let dataType = event.target.dataset.type;
             var name = event.target.closest('a').getAttribute("href").substring(1);
             if (this.state === name) {
-                $('.vg').collapse('hide');
                 $('html, body').animate({scrollTop: 300},'50');
                 this.state = '';
             } else if (this.state !== name) {
@@ -77,26 +75,20 @@ export default {
                 this.state = name;
                 this.current = item[0];
                 this.compoment = item[0].components;
-                this.current.price = this.calculate('cost', this.compoment);
-                this.current.cal = this.calculate('calories', this.compoment);
-                this.current.fat = this.calculate('fat', this.compoment);
-                this.current.carbo = this.calculate('сarbohydrates', this.compoment);
-                this.current.protein = this.calculate('proteint', this.compoment);
-                this.compNames = this.compoment.slice();
-                this.compNames.forEach(function(item) {
-                    item.notInOrder = false;
-                })
-                console.log(this.current.comNames)
-                console.log(item[0].components)
+                if (this.component.length !== 0) {
+                    this.current.price = this.calculate('cost', this.compoment);
+                    this.current.cal = this.calculate('calories', this.compoment);
+                    this.current.fat = this.calculate('fat', this.compoment);
+                    this.current.carbo = this.calculate('сarbohydrates', this.compoment);
+                    this.current.protein = this.calculate('proteint', this.compoment);
+                    this.compNames = this.compoment.slice();
+                    this.compNames.forEach(function(item) {
+                        item.notInOrder = false;
+                    })
+                }
                 var element = this.$refs['item-body'];
                 var top = element.offsetTop;
                 var i = event.clientY;
-                if (this.co === 1) {
-                    $('.vg').collapse('toggle');
-                    this.co = 0;
-                    return;
-                }
-                this.co++;
                 $('.vg').collapse('show');
                 $('html, body').animate({scrollTop: top - 100}, '50');
                 //$('.vg').collapse('hide');

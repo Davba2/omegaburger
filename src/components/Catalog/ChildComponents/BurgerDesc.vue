@@ -67,6 +67,11 @@
                                 <button class="btn btn-danger" name="addProduct"
                                 :id="current.id"  v-on:click="addToOrder">Добавить</button>
                             </div>
+                            <transition name="fade">
+                                <div v-if="componentExistingError" class="text-danger mt-1">
+                                    Добавьте хотя бы <kbd>1</kbd> компонент
+                                </div>
+                            </transition>
                         </div>
                     </div>
                 </div>
@@ -85,14 +90,27 @@ export default {
       checkedPicks: [],
       togglerPicks: this.compNames.slice(),
       changed: false,
-      nutritional: this.current
+      nutritional: this.current,
+      componentExistingError: false
     }},
     methods: {
         addToOrder: function (event) {
+            var self = this;
+
+            var checkExistingComponents = this.togglerPicks.every(function(item) {
+                return item.notInOrder === true;
+            })
+            console.log(checkExistingComponents)
+            if (checkExistingComponents) {
+                this.componentExistingError = true;
+                setTimeout(function(){
+                    self.componentExistingError = false;
+                }, 5000);
+                return;
+            }
             var element = this.current;
             this.order = element;
             this.count++;
-            console.log(element);
             let fuckme = [];
             for (var i = 0; i < this.togglerPicks.length; i++) {
                 fuckme[i] = this.togglerPicks[i]
@@ -275,4 +293,9 @@ label:active:after {
             font-size: 2rem;
         }
     }
+
+div.text-danger {
+    font-size: 1.4rem;
+    border-bottom: 1px black solid;
+}
 </style>

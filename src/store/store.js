@@ -99,10 +99,15 @@ export const store = new Vuex.Store({
                 first: 0,
                 second: 0,
                 url: require('@/assets/1408052.svg')
+            },
+            snacks: {
+                first: 0,
+                second: 0,
+                url: require('@/assets/135591.svg')
             }
         },
         orderHistory: [],
-        catalog: [],
+        catalog: {},
         delivery: []
     },
     mutations: {
@@ -172,7 +177,7 @@ export const store = new Vuex.Store({
             state.userOrder = [];
         },
         addCatalog (state, payload) {
-            state.catalog = payload;
+            state.catalog[payload.type] = payload.data;
         },
         addDelivery (state, payload) {
             state.delivery = payload;
@@ -229,11 +234,13 @@ export const store = new Vuex.Store({
             return state.orderHistory;
         },
         getPrice (state) {
-            return state.userOrder.map(function (element) {
-                return element.price
-            }).reduce(function (acc, current) {
-                return acc + current
-            }, 0);
+            let sumPrice = state.userOrder.map(function (item) {
+                return item.price
+            }).reduce(function(acc, element) {
+                return acc + element;
+            })
+            return sumPrice;
+
         },
         getCounterData (state) {
             return state.counterData;

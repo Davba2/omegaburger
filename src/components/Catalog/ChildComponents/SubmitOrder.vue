@@ -18,7 +18,7 @@
 
                 </div>
                 <div class="col-md-2 col-12 col-lg-2 mt-2" v-for="order in getOrder">
-                    <div class="card">
+                    <div class="card" style="width: 195px;">
                         <div class="title card-header">
                             <img 
                              src="https://image.flaticon.com/icons/svg/148/148766.svg" 
@@ -39,21 +39,19 @@
                          class="rotate-image"
                          />
                          <div class="collapse" :id="order.id">
-                            <div class="card-content lead" style="font-size: 18px"
+                            <div class="card-content lead" style="font-size: 18px;"
                                 v-for="pick in order.picks" v-if="pick.notInOrder === false">
-                                <div v-if="pick.notInOrder === false">
+                                <div v-if="pick.notInOrder === false" class="mt-2">
                                     &#8728;{{pick.name}}
                                     <img src="https://image.flaticon.com/icons/svg/148/148766.svg"
                                     v-on:click="removePick"
                                     :data-name="pick.id"
-                                    style="width: 8%;
+                                    style="width: 10%;
                                     margin: 0 auto"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <input class="form-control" type="number" value="1" min="1" max="20"/>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -108,10 +106,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 col-12">
+                <div class="col-md-12 col-12 mt-2 mb-2">
                     <transition name="fade">
                         <div v-if="responseMessage">
-                            {{responseMessageContent}}
+                            <kbd class="user-info">
+                                {{responseMessageContent}} 
+                            </kbd>
+                            
                         </div>
                     </transition>
                 </div>
@@ -119,9 +120,7 @@
             <div class="row mt-2">
                 <div class="col-md-12 col-12">
                     <kbd class="user-info">Укажите <span style="font-weight: bold">способ</span> доставки </kbd><br/>
-                    <label v-for="item in getDelivery"  style="background: rgb(255, 65, 54);
-                        border-radius: 1.2rem;
-                        font-size: 24px">
+                    <label v-for="item in getDelivery"  class="delivery-text" v-on:click="toggleDeliveryText">
                         <input type="radio" v-model="pickedDelivery" :value="item.id"/>
                         {{item.name}}
                     </label>
@@ -208,6 +207,17 @@ export default {
         }
     },
     methods: {
+        toggleDeliveryText: function (event) {
+            let labels = document.querySelectorAll('.delivery-text');
+            let label = event.target;
+            if (label.tagName === 'LABEL') {
+                for (let i = 0; i < labels.length; i++) {
+                    labels[i].classList.remove('check');
+                }
+                label.classList.add('check');
+                console.log('hhh')
+            }
+        },
         printOrder: function(event) {
             event.preventDefault();
             var mywindow = window.open('', 'PRINT', 'height=800,width=800');
@@ -353,12 +363,11 @@ export default {
             this.$router.push('catalog');
         },
         submitOrder: function (event) {
-            // if (this.userInfo.phone === null || this.userInfo.location === null || this.pickedDelivery === ' ') {
-            //     this.showHelp = true;
-            //     return;
-            // } 
+            if (this.userInfo.phone === null || this.userInfo.location === null || this.pickedDelivery === ' ') {
+                this.showHelp = true;
+                return;
+            } 
             var self = this;
-            console.log(this.getOrder);
             this.getDelivery.forEach(function(item) {
                 if (item.id === self.pickedDelivery) {
                     self.pickedDeliveryName = item.name;
@@ -371,9 +380,8 @@ export default {
             this.showHelp = false;
             this.spinner = true;
             var spinner = document.querySelector('.loader');
-            var fun = this.turnOffAnimation;
+            var animationToggler = this.turnOffAnimation;
             spinner.classList.add('spin');
-            console.log(this.getOrder);
             this.getOrder.forEach(function(item) {
                 let obj = {};
                 let components = [];
@@ -391,14 +399,12 @@ export default {
                 });
                 self.goods.push(obj);
             });
-            console.log(this.goods);
             var data = {
                 UserId: this.userInfo.Id,
                 OrderId: 10,
                 DeliveryId: this.pickedDelivery,
                 Goods: this.goods
             }
-            console.log(data);
             axios({
                 method: "POST",
                 headers: { 
@@ -409,17 +415,12 @@ export default {
                 data: JSON.stringify(data)
             })
             .then(function(response) {
-                console.log(response);
+                spinner.classList.remove('spin');
+                self.spinner = false;
                 if (response.data.statusCode.statusCode === 200) {
-                    spinner.classList.remove('spin');
-                    fun();
-                    self.$store.dispatch('addToOrder', response);
-                    // self.orderPrice = self.priceOrder;
-                    // self.orderDate = time;
-                    // self.productInfo = titleArray;
-                    // self.location = self.getLocation();
-                    // self.productCount = titleArray.length;
-                    // self.successSubmit = true;
+                    self.successSubmit = true;
+                } else {
+                    self.errorText = response.message;
                 }
             }).catch(function (error) {
                 self.errorText = 'Проблема с отправкой запроса. Повторите попытку'
@@ -553,6 +554,11 @@ export default {
         }
      },
     mounted () {
+        console.log(this.$store.state.userOrder)
+        let a = this.$store.state.userOrder.map(function(item) {
+            return item.price
+        })
+        console.log(a)
         if (this.userInfo.email === null) {
             this.$router.push('main');
             return;
@@ -601,12 +607,13 @@ export default {
         font-size: 22px;
     }
     .card img {
-        width: 20%;
-        margin: -20px 0 0 0;
+        width: 15%;
+        margin: -13px 0 0 0;
     }
     .title img {
         position: absolute;
-        right: 1px
+        right: -6px;
+        top: 0;
     }
     .user-info {
         font-size: 24px;
@@ -661,6 +668,20 @@ export default {
     }
     .spin {
         animation: spinner 1s linear infinite;
+    }
+    .delivery-text {
+        background: rgb(255, 65, 54);
+        border-radius: 1.2rem;
+        font-size: 24px;
+        padding: 5px;
+    }
+    .check {
+        background: rgb(194, 252, 37);
+        border-radius: 1.2rem;
+        font-size: 25px;
+    }
+    input[type=radio] {
+        display: none;
     }
     input[type=number] {
         padding: 5px auto;

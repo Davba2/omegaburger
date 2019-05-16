@@ -253,9 +253,7 @@ export default {
         getUserCoord: function () {
             console.log('wrok');
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(this.showCoord);
-            } else {
-                this.position = "Невозможно определить ваши коориданаты";
+                navigator.geolocation.getCurrentPosition(this.showCoord, this.showError);
             }
         },
         showCoord: function (coord) {
@@ -285,27 +283,29 @@ export default {
         showError: function (error) {
             switch(error.code) {
                 case error.PERMISSION_DENIED:
-                return "User denied the request for Geolocation."
+                this.position = 'Невозможно запросить геолокацию для вас'
                 break;
                 case error.POSITION_UNAVAILABLE:
+                this.position = 'Местонахождение не доступно'
                 return "Location information is unavailable."
                 break;
                 case error.TIMEOUT:
+                this.position = 'Время запроса истекло'
                 return  "The request to get user location timed out."
                 break;
                 case error.UNKNOWN_ERROR:
-                return  "An unknown error occurred."
+                this.position = 'Неизвестная ошибка'
                 break;
             }
         },
-        radians: function (degrees) {
+        calRadians: function (degrees) {
             return degrees * Math.PI / 180;
         },
         calculateDistance: function (coord) {
             //в js нету radiands? WTF
             let shopCoord = [53.902237, 30.335839];
-            let calc = 6371 * Math.acos(Math.sin(this.radians(coord.lat)) * Math.sin(this.radians(shopCoord[0]))
-            + Math.cos(this.radians(coord.lat)) * Math.cos(this.radians(shopCoord[0])) * Math.cos(this.radians(coord.lon)-this.radians(shopCoord[1])));
+            let calc = 6371 * Math.acos(Math.sin(this.calRadians(coord.lat)) * Math.sin(this.calRadians(shopCoord[0]))
+            + Math.cos(this.calRadians(coord.lat)) * Math.cos(this.calRadians(shopCoord[0])) * Math.cos(this.calRadians(coord.lon)-this.calRadians(shopCoord[1])));
             this.userDistance = true;
             let min = (calc / 15);
             this.distanceMessage = `Вы в ${calc.toFixed(1)} км. Это в ~${ (min * 100).toFixed(0)} минутах от нас.`;
