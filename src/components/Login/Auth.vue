@@ -53,15 +53,24 @@
                                 type="submit" class="btn btn-lg button"
                                 v-on:click="sendUserData">Создать</button>
                             </div>
+                             <transition  name="fade">
+                                <div class="load-data" v-show="loading">
+                                    <div class="loader text-center" style="margin:0 auto" v-show="spinner">
+                                    </div>
+                                    <h3 class="facts-text mt-2 display-3" v-show="spinner">Загрузка..</h3>
+                                </div>
+                            </transition>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="container mt-1">
-                <p class="lead">
-                    {{authMessage}}
-                </p>
-            </div>
+            <transition  name="fade">
+                <div class="container mt-1 auth-message">
+                    <p class="lead facts-text">
+                        {{authMessage}}
+                    </p>
+                </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -76,7 +85,9 @@ export default {
             errorsEmail: [],
             passwordError: [],
             passwordCheckError: [],
-            authMessage: ''
+            authMessage: '',
+            spinner: false,
+            loading: false
         }
     },
     methods: {
@@ -89,22 +100,15 @@ export default {
 
             var userEmail = this.email;
             var userPassword = this.password;
-
-            /**
-             * Отправляет запрос к контр. User - Action Auth.
-             * Вид объекта:
-             * obj = {
-             *     userEmail
-             *     userPassword
-             * }
-             * 
-             * */
-            var obj = {
-                userEmail,
-                userPassword
+            var dataObj = {
+                Email: userEmail,
+                Password: userPassword
             }
             var self = this;
-            console.log(obj);
+            var spinner = document.querySelector('.loader');
+            this.spinner = true;
+            this.loading = true;
+            spinner.classList.add('spin');
             axios({
                 method: "POST",
                 headers: { 
@@ -112,21 +116,23 @@ export default {
                     "Access-Control-Allow-Origin": "*"
                 },
                 url: "https://localhost:44302/api/registration",
-                data: {
-                    userEmail: userEmail,
-                    userPassword: userPassword
-                }
+                data: JSON.stringify(dataObj)
             })
             .then((response) => {
             // Ответ был получен
+                spinner.classList.remove('spin');
+                self.spinner = false;
                 console.log(response);
-                if (response.status === 200) {
+                if (response.data.statusCode.statusCode === 200) {
                     self.authMessage = response.data.message;
+                    setTimeout(function(){
+                        self.$router.push('registration')
+                    }, 3200)
                 }
             })
             .catch(function (error) {
             //если ошибка
-                console.log(error);
+                self.authMessage = response.data.message;
             })
             
         },
@@ -234,6 +240,10 @@ export default {
 .error-text {
     color: #FCE70C;
     font-size: 18px;
+}
+div.auth-message {
+    padding-right: 0px;
+    padding-left: 0px;
 }
 @media screen and (max-width: 400px) {
     .form-input {

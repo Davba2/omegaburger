@@ -92,10 +92,12 @@
                             Общее количество зак. продуктов - <span name="summaryCountProduct">{{summaryCountProduct}}</span>
                         </span>
                         <br/>
-                        <button v-on:click="printOrder" name="printOrder"
-                        class="btn bg-button-info">
-                            Печать
-                        </button>
+                        <div v-show="showButtons">
+                            <button v-on:click="printOrder" name="printOrder"
+                            class="btn bg-button-info">
+                                Печать
+                            </button>
+                        </div>
                         <div class="row">
                             <div class="col-12 orders-info" v-for="(item, index) in order" v-bind:key="item.orderId">
                                 <h3>Вы заказывали:</h3>
@@ -113,17 +115,19 @@
                                             Цена - <kbd>{{item.orderAmount}} BYN</kbd>
                                         </div>
                                         <div class="col-md-12 col-12 text-center mb-2">
-                                            <button class="btn bg-button-info" v-on:click="printOr" :data-id="index">Печать</button>
+                                            <button class="btn bg-button-info" v-on:click="printCurrentOrder" :data-id="index">Печать</button>
                                         </div> 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button v-on:click="toggler" data-name="left" class="btn bg-button-info" 
-                        style="margin-right: 2px"
-                        >&#8592;</button>
+                        <div v-show="showButtons">
+                            <button v-on:click="toggler" data-name="left" class="btn bg-button-info" 
+                            style="margin-right: 2px"
+                            >&#8592;</button>
                         
-                        <button v-on:click="toggler" data-name="right" class="btn bg-button-info">&#8594;</button>
+                            <button v-on:click="toggler" data-name="right" class="btn bg-button-info">&#8594;</button>
+                        </div>
                     </div>
 
                 </div>
@@ -155,7 +159,8 @@ export default {
            summaryCountProduct: 0,
            summaryPrice: 0,
            showOrder: false,
-           togglerCount: 4
+           togglerCount: 4,
+           showButtons: false
         }
     },
     components: {
@@ -260,8 +265,39 @@ export default {
                         font-size: 1.2rem;
                     }
                     body {
-                        width: 600px;
+                        width: 620px;
                         margin: 0 auto;
+                    }
+                    .text-style {
+                        font-size: 52px;
+                        letter-spacing: 6px;
+                        line-height: 1;
+                        margin: 0;
+                        position: relative;
+                    }
+                    .top {
+                        background: white;
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        position: absolute;
+                        z-index: 1;
+                        -webkit-text-fill-color: transparent;
+                        text-fill-color: transparent;
+                        margin-left: 30px;
+                        width: 561px;
+                        margin-top: 1px;
+                    }
+                    .bottom {
+                        text-shadow: 
+                        2px 1px rgb(0, 0, 0),
+                        4px 2px rgb(0, 0, 0), 
+                        6px 4px rgb(0, 0, 0),
+                        8px 5px rgb(0, 0, 0),
+                        10px 6px rgb(0, 0, 0),
+                        12px 7px rgb(0, 0, 0),
+                        14px 8px rgb(0, 0, 0);
+                        margin-bottom: 20px;
+                            
                     }
                     hr {
                         border-top: 2px dotted black;
@@ -274,10 +310,9 @@ export default {
                     }
                 </style>`);
             mywindow.document.write('</head><body>');
-            mywindow.document.write('<h1>' + `
-                <p>История заказов аккаунта ${this.userInfo.email}</p>
-                ` + 
-                '</h1>');
+            mywindow.document.write(`
+                <div class="text-style top">История заказов аккаунта ${this.userInfo.email}</div>
+                <div class="text-style bottom">История заказов аккаунта ${this.userInfo.email}</div>`);
             //mywindow.document.write(document.querySelector('.cat-info').innerHTML);
             
             for (var i = 0; i < mainRow.children.length; i++) {
@@ -330,10 +365,11 @@ export default {
             }, 1000);
             //mywindow.close();
         },
-        printOr: function (event) {
+        printCurrentOrder: function (event) {
             var id = +event.target.dataset.id;
             var orderData = this.order[id];
             event.preventDefault();
+            console.log(orderData.delivery.name)
             var mywindow = window.open('', 'PRINT', 'height=800,width=800');
             console.log(orderData.orderDate)
             var date = new Date(Date.parse(orderData.orderDate));
@@ -419,7 +455,7 @@ export default {
             let time = document.createElement('p');
             time.textContent = 'Дата заказа ' + new Date().toLocaleString();
             let pickDelivery = document.createElement('p');
-            pickDelivery.textContent = 'Доставка ';
+            pickDelivery.textContent = 'Доставка ' + orderData.delivery.name;
             let productCount =  document.createElement('p');
             productCount.textContent = 'Товаров всего ' + orderData.goods.length + ' шт.';
             let orderCost = document.createElement('p');
@@ -482,8 +518,12 @@ export default {
                 console.log(response)
                 if (response.data.statusCode.statusCode === 200) {
                     self.$store.dispatch('addPhone', self.phone);
-                    self.phoneHide = false;
-                    self.phoneError = false;
+                    self.phoneErrorMessage = 'Телефон добавлен';
+                    self.phoneError = true;
+                    setTimeout(function() {
+                        self.phoneHide = false;
+                        self.phoneError = false;
+                    }, 1000)
                 } else {
                     self.phoneErrorMessage = response.data.message;
                     self.phoneError = true;
@@ -525,8 +565,12 @@ export default {
                 console.log(response)
                 if (response.data.statusCode.statusCode === 200) {
                     self.$store.dispatch('addLocation', self.location);
-                    self.streetHide = false;
-                    self.locationError = false;
+                    self.locationErrorMessage = 'Адрес добавлен';
+                    self.locationError = true;
+                    setTimeout(function() {
+                        self.streetHide = false;
+                        self.locationError = false;
+                    }, 1400)
                 } else {
                     self.locationErrorMessage = response.data.message;
                     self.locationError = true;
@@ -560,27 +604,30 @@ export default {
                 console.log('Загружен');
                 console.log(data)
                 self.order = data;
+                if (self.order.length > 0) {
+                    self.showButtons = true;
+                    self.summaryPrice = data.map(function(item) {
+                        return item.orderAmount
+                    }).reduce(function(acc, item) {
+                        return acc + item;
+                    });
+                    self.summaryCountProduct = data.map(function(item) {
+                        return item.goods.length
+                    }).reduce(function(acc, item) {
+                        return acc + item;
+                    });
+                }
                 self.showOrder = true;
                 console.log(self.order)
-                self.summaryPrice = data.map(function(item) {
-                    return item.orderAmount
-                }).reduce(function(acc, item) {
-                    return acc + item;
-                });
-                self.summaryCountProduct = data.map(function(item) {
-                    return item.goods.length
-                }).reduce(function(acc, item) {
-                    return acc + item;
-                });
+                
                 setTimeout(function(){
                     let row = document.querySelectorAll('.orders-info');
-                    console.log(row)
                     if (row.length > 5) {
                         for (let i = self.togglerCount; i < row.length; i++) {
                             row[i].style.display = "none";
                         }
                 }
-                }, 300)
+                }, 200)
             })
             .catch(function(error) {
                 self.errorText = 'Ошибка при загрузке ваших данных. Повторите попытку';

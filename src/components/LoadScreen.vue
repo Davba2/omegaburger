@@ -86,7 +86,7 @@ export default {
         if (this.$store.state.catalog.length > 0) {
             self.$router.push('main');
             return;
-            //this.$store.state.loadScreen = false;
+            this.$store.state.loadScreen = false;
         } else {
               setTimeout(function(){
                 self.showLoad = true;
@@ -102,7 +102,7 @@ export default {
                 if (response.status === 200) {
                         self.message = 'Все загружено...';
                         setTimeout(function(){
-                            //self.showLoad = false;
+                            self.showLoad = false;
                         }, 3400)
                         setTimeout(function() {
                             var data = response.data;
@@ -116,8 +116,8 @@ export default {
                             self.dispatchData(sweat, 'sweat');
                         }, 4400)
                         setTimeout(function() {
-                            //self.showLoad = false;
-                            //self.$router.push('main'); 
+                            self.showLoad = false;
+                            self.$router.push('main'); 
                             
                     }, 5400)
                 } else {
