@@ -119,7 +119,7 @@ export default {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*"
                 },
-                url: "https://localhost:44302/api/token",
+                url: "/api/token",
                 data: JSON.stringify(loginData)
             })
             .then((response) => {

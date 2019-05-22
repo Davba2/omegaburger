@@ -495,7 +495,7 @@ export default {
                     "Content-Type": "application/json",
                     "Authorization": token
                 },
-                url: "https://localhost:44302/api/phone",
+                url: "/api/phone",
                 data: JSON.stringify(data)
             })
             .then(function(response) {
@@ -537,7 +537,7 @@ export default {
                     "Content-Type": "application/json",
                     "Authorization": token
                 },
-                url: "https://localhost:44302/api/address",
+                url: "/api/address",
                 data: JSON.stringify(data)
             })
             .then(function(response) {
@@ -573,7 +573,7 @@ export default {
                     "Content-Type": "application/json",
                     "Authorization": token
                 },
-                url: `https://localhost:44302/api/orders/${id}`,
+                url: `/api/orders/${id}`,
             })
             .then(function(response) {
                 var data = response.data;
@@ -613,7 +613,7 @@ export default {
                     "Content-Type": "application/json",
                     "Authorization": token
                 },
-                url: `https://localhost:44302/api/phone/?email=${email}`
+                url: `/api/phone/?email=${email}`
                 })
                 .then(function(response) {
                     if (response.status === 200) {
@@ -629,7 +629,7 @@ export default {
                         "Content-Type": "application/json",
                         "Authorization": token
                     },
-                    url: `https://localhost:44302/api/address/?email=${email}`
+                    url: `/api/address/?email=${email}`
                 })
                 .then(function(response) {
                     if (response.status === 200) {

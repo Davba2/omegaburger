@@ -77,7 +77,7 @@ export default {
             headers: { 
                 "Content-Type": "application/json",
             },
-            url: "https://localhost:44302/api/delivery"
+            url: "/api/delivery"
         }).then(function(response) {
             if (response.status === 200) {
                 self.$store.dispatch('addDelivery', response.data);
@@ -96,7 +96,7 @@ export default {
                 headers: { 
                     "Content-Type": "application/json",
                 },
-                url: "https://localhost:44302/api/catalog",
+                url: "/api/catalog",
             })
             .then(function(response) {
                 if (response.status === 200) {

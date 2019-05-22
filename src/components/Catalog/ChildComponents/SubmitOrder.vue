@@ -405,7 +405,7 @@ export default {
                     "Content-Type": "application/json",
                     "Authorization": token
                 },
-                url: "https://localhost:44302/api/orders",
+                url: "/api/orders",
                 data: JSON.stringify(data)
             })
             .then(function(response) {
@@ -444,7 +444,7 @@ export default {
                         "Content-Type": "application/json",
                         "Authorization": token
                     },
-                    url: "https://localhost:44302/api/phone",
+                    url: "/api/phone",
                     data: JSON.stringify(data)
                 })
                 .then(function(response) {
@@ -484,7 +484,7 @@ export default {
                     "Content-Type": "application/json",
                     "Authorization": token
                 },
-                url: "https://localhost:44302/api/address",
+                url: "/api/address",
                 data: JSON.stringify(data)
             })
             .then(function(response) {

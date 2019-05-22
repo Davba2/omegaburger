@@ -115,7 +115,7 @@ export default {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*"
                 },
-                url: "https://localhost:44302/api/registration",
+                url: "/api/registration",
                 data: JSON.stringify(dataObj)
             })
             .then((response) => {
