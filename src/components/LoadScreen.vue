@@ -79,6 +79,7 @@ export default {
             },
             url: "/api/delivery"
         }).then(function(response) {
+            console.log(response)
             if (response.status === 200) {
                 self.$store.dispatch('addDelivery', response.data);
             }
@@ -99,6 +100,7 @@ export default {
                 url: "/api/catalog",
             })
             .then(function(response) {
+                console.log(response)
                 if (response.status === 200) {
                         self.message = 'Все загружено...';
                         setTimeout(function(){

@@ -233,7 +233,7 @@ export default {
                     headers: { 
                         "Content-Type": "application/json",
                     },
-                    url: "/api/catalog",
+                    url: "https://localhost:44302/api/catalog",
                 })
                 .then(function(response) {
                     if (response.status === 200) {

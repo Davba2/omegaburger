@@ -120,11 +120,10 @@
             <div class="row mt-2">
                 <div class="col-md-12 col-12">
                     <kbd class="user-info">Укажите <span style="font-weight: bold">способ</span> доставки </kbd><br/>
-                    <label v-for="item in getDelivery"  class="delivery-text" v-on:click="toggleDeliveryText">
+                    <label v-for="item in getDelivery"  class="delivery-text m-2" v-on:click="toggleDeliveryText">
                         <input type="radio" v-model="pickedDelivery" :value="item.id"/>
                         {{item.name}}
                     </label>
-                    <br/>
                 </div>
                 {{pickedDelivery}}
             </div>
@@ -556,6 +555,43 @@ export default {
             this.$router.push('main');
             return;
         }
+        var refresh = this.getToken;
+        var access = this.userInfo.accessToken;
+        var token = 'Bearer ' + access; 
+        var self = this;
+        var id = this.userInfo.Id;
+        var email = this.userInfo.email;
+        if (this.userInfo.phone === null || this.userInfo.location === null) {
+            console.log('fdsfd')
+            axios({
+            method: "GET",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": token
+            },
+            url: `/api/phone/?email=${email}`
+            })
+            .then(function(response) {
+                if (response.status === 200) {
+                    self.$store.dispatch('addPhone', response.data);
+                }
+            })
+
+            axios({
+                method: "GET",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                url: `/api/address/?email=${email}`
+            })
+            .then(function(response) {
+                if (response.status === 200) {
+                    self.$store.dispatch('addLocation', response.data);
+                }                    
+            })
+
+        }
         window.scrollTo(0, 60);
         // this.$nextTick(() => {
         //     this.map = L.map(this.$refs['mapElement']).setView([53.902237, 30.335839], 14);
@@ -667,6 +703,9 @@ export default {
         border-radius: 1.2rem;
         font-size: 24px;
         padding: 5px;
+    }
+    .delivery-text:hover {
+        cursor: pointer;
     }
     .check {
         background: rgb(194, 252, 37);
