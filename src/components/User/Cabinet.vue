@@ -181,12 +181,10 @@ export default {
                 }
                 if (this.togglerCount + 3 <= length) {
                     let breakC = this.togglerCount + 3;
-                    console.log(this.togglerCount)
                     this.iterateBack(row, length - 1, 0);
                     this.iterateTo(row, breakC, this.togglerCount);
                     this.togglerCount += 3;
                 } else if (length - this.togglerCount <= 3) {
-                    console.log(this.togglerCount)
                     this.iterateTo(row, length - 1, this.togglerCount);
                     this.iterateBack(row, this.togglerCount, 0);
                     this.togglerCount = length - 1;
@@ -205,23 +203,16 @@ export default {
                     } else if (this.togglerCount < 0) {
                         this.togglerCount = 3;
                     }
-                    console.log('хватает');
-                    console.log(this.togglerCount)
                     //this.iterateBack(row, length -1, 0);
                     setTimeout(function(){
                         self.iterateTo(row, self.togglerCount, breakC);
-                        console.log(row[0]);
-                        console.log(row[3]);
                     }, 0)
                 } else if (this.togglerCount - 7 < 0) {
-                    console.log('Меньше 8')
-                    console.log(this.togglerCount)
                     this.togglerCount = 3;
                     this.iterateBack(row, length - 1 , 3);
                     setTimeout(function(){
                         self.iterateTo(row, 3, 0);
-                        console.log(row[0]);
-                        console.log(row[3]);
+
                     }, 0)
                 }
             }
@@ -229,7 +220,6 @@ export default {
             //     row[i].style.display = "none";
             // }
             
-            console.log(buttonValue);
         },
         iterateTo: function(array, breakC, start) {
             for (let i = start; i <= breakC; i++) {
@@ -342,7 +332,6 @@ export default {
                 } else {
                     mywindow.document.body.appendChild(document.createElement('hr'));
                 }
-                //console.log(mainRow.children[i])
             }
             let summary = document.createElement('div');
             summary.classList.add('content');
@@ -369,11 +358,8 @@ export default {
             var id = +event.target.dataset.id;
             var orderData = this.order[id];
             event.preventDefault();
-            console.log(orderData.delivery.name)
             var mywindow = window.open('', 'PRINT', 'height=800,width=800');
-            console.log(orderData.orderDate)
             var date = new Date(Date.parse(orderData.orderDate));
-            console.log(date)
             mywindow.document.write(`<html>
                 <head>
                 <title>Чек о заказе</title>
@@ -502,8 +488,6 @@ export default {
                 Phone: this.phone
             };
             var token = 'Bearer ' + access; 
-            console.log(token)
-            console.log(data)
             var self = this;
             axios({
                 method: "POST",
@@ -515,7 +499,6 @@ export default {
                 data: JSON.stringify(data)
             })
             .then(function(response) {
-                console.log(response)
                 if (response.data.statusCode.statusCode === 200) {
                     self.$store.dispatch('addPhone', self.phone);
                     self.phoneErrorMessage = 'Телефон добавлен';
@@ -547,10 +530,6 @@ export default {
                 Address: this.location
             };
             var token = 'Bearer ' + access; 
-            console.log(refresh)
-            console.log('___')
-            console.log(token)
-            console.log(data)
             var self = this;
             axios({
                 method: "POST",
@@ -562,7 +541,6 @@ export default {
                 data: JSON.stringify(data)
             })
             .then(function(response) {
-                console.log(response)
                 if (response.data.statusCode.statusCode === 200) {
                     self.$store.dispatch('addLocation', self.location);
                     self.locationErrorMessage = 'Адрес добавлен';
@@ -589,8 +567,6 @@ export default {
             var self = this;
             var id = this.userInfo.Id;
             var email = this.userInfo.email;
-            console.log(email)
-            console.log(token)
             axios({
                 method: "GET",
                 headers: { 
@@ -601,8 +577,7 @@ export default {
             })
             .then(function(response) {
                 var data = response.data;
-                console.log('Загружен');
-                console.log(data)
+
                 self.order = data;
                 if (self.order.length > 0) {
                     self.showButtons = true;
@@ -618,7 +593,6 @@ export default {
                     });
                 }
                 self.showOrder = true;
-                console.log(self.order)
                 
                 setTimeout(function(){
                     let row = document.querySelectorAll('.orders-info');
@@ -633,7 +607,6 @@ export default {
                 self.errorText = 'Ошибка при загрузке ваших данных. Повторите попытку';
             });
             if (this.userInfo.phone === null || this.userInfo.location === null) {
-                console.log('Загрузка номаера и адреса')
                 axios({
                 method: "GET",
                 headers: { 

@@ -26,7 +26,6 @@ export default {
     methods: {
         addToOrder: function (event) {
             var element = event.target.id;
-            console.log(event.target)
             this.$emit('addToOrder', {
                 element: element,
                 type: 'drinks'

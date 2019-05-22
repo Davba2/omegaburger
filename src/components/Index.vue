@@ -247,11 +247,9 @@ export default {
     },
     methods: {
         toggleComments: function () {
-            console.log(this.show);
             this.show = !this.show;
         },
         getUserCoord: function () {
-            console.log('wrok');
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(this.showCoord, this.showError);
             }
@@ -408,7 +406,6 @@ export default {
                     url: 'https://static-cdn.jtvnw.net/emoticons/v1/1611444/3.0'
                 }
         ];
-        console.log(self.commentSecond)
         //this.interval = setInterval(() => this.toggleComments(), 11000);
         let toggleCommentsInterval = setInterval(function() {
             self.show = false;
@@ -419,11 +416,10 @@ export default {
             arrayItem.sort(function() {
                 return Math.random() - 0.5;
             }).slice(0, 4);
-            console.log('вызваю')
             setTimeout(function() {
                  self.intervalComment(objArray, arrayItem);
             }, 500)
-        }, 5000000)
+        }, 20000)
     },
     mounted () {
         document.querySelector('body').style.backgroundColor = "#841424";

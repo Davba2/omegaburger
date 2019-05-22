@@ -156,7 +156,6 @@ export default {
                 //     this.$router.push('/catalog')
                 // })
             }).catch((error) => {
-                console.log(error);
                  setTimeout(function() {
                     spinner.classList.remove('spin');
                     self.spinner = false;

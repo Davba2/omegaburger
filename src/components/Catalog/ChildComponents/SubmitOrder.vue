@@ -215,7 +215,7 @@ export default {
                     labels[i].classList.remove('check');
                 }
                 label.classList.add('check');
-                console.log('hhh')
+               
             }
         },
         printOrder: function(event) {
@@ -326,23 +326,17 @@ export default {
         
         },
         savePickedDelivery: function(event) {
-            console.log(this.pickedDelivery)
+            
         },
         removePick: function(event) {
             var id = event.target.closest('.collapse').getAttribute('id');
             var element = +event.target.dataset.name;
             var idItem;
             var self = this;
-            console.log(id)
-            console.log(element)
-            console.log(this.$store.state.userOrder);
-            console.log('сверху закзаы')
             this.$store.state.userOrder.forEach(function(item) {
                 if (item.id === +id) {
-                    console.log(item)
                     item.picks.forEach(function(el, index) {
                         if (el.id === +element) {
-                            console.log(el)
                             item.picks[index].notInOrder = true;
                             self.$forceUpdate();
                             return;
@@ -554,11 +548,9 @@ export default {
         }
      },
     mounted () {
-        console.log(this.$store.state.userOrder)
         let a = this.$store.state.userOrder.map(function(item) {
             return item.price
         })
-        console.log(a)
         if (this.userInfo.email === null) {
             this.$router.push('main');
             return;

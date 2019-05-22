@@ -100,7 +100,6 @@ export default {
             var checkExistingComponents = this.togglerPicks.every(function(item) {
                 return item.notInOrder === true;
             })
-            console.log(checkExistingComponents)
             if (checkExistingComponents) {
                 this.componentExistingError = true;
                 setTimeout(function(){
@@ -128,24 +127,19 @@ export default {
             });
             this.changed = !this.changed;
             this.togglerPicks = null;
-            console.log(this.togglerPicks)
+
             this.togglerPicks = this.compNames.slice();
             this.$forceUpdate();
             this.$forceUpdate();
         },
         calcCalculation: function (event) {
-            console.log(this.togglerPicks);
+
             let componentId;
             let id = event.target.previousSibling.id;
-            console.log(id);
             var self = this;
             this.togglerPicks.forEach(function (item, index) {
-                console.log(`Айди равена ${item.id}`)
                 if (item.id === +id && item.notInOrder === false) {
-                    console.log(item)
                     self.$emit('updateCurrentNut', item, 'desc');
-                    //self.current.cal -= item.calories;
-                    console.log(self.current)
                     item.notInOrder = true;
                     return;
                 } else if (item.id === +id && item.notInOrder) {
@@ -167,11 +161,9 @@ export default {
             this.togglerPicks = this.compNames.slice();
         },
         changed: function() {
-            console.log(`Значение теперь ${this.changed}`);
             this.togglerPicks = this.compNames.slice();
         },
         checkedPicks: function () {
-            console.log('Изменилось')
         }
     },
     computed: {

@@ -57,18 +57,15 @@ export default {
             this.current = null;
             this.current = clone;
             this.$forceUpdate();
-            console.log(toggle)
         },
         fuckYou: function (event) {
-            console.log('1')
-            console.log('Нажад');
+
             let dataType = event.target.dataset.type;
             var name = event.target.closest('a').getAttribute("href").substring(1);
             if (this.state === name) {
                 $('html, body').animate({scrollTop: 300},'50');
                 this.state = '';
             } else if (this.state !== name) {
-                console.log('не совпало')
                 var item = this.catalog.filter(function (item) {
                     return item.name === name;
                 });
@@ -105,8 +102,7 @@ export default {
             this.compNames = cloneComponent;
         },
         showDesc: function (event) {
-            console.log('helo')
-            console.log(event.target.id);
+
         },
         calculate: function (type, array) {
             return array.map(function(item) {

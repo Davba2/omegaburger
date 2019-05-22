@@ -166,8 +166,7 @@ export default {
             this.$store.dispatch('addToOrder', data);
             this.toggleNumber(data.type);
             this.showConOrder = true;
-            console.log(this.$store.state.userOrder)
-            console.log(typeof this.$store.state.userOrder)
+
         },
         toggleNumber: function (type) {
             this.$store.dispatch('updateCounter', type);
@@ -211,7 +210,6 @@ export default {
         }
     },
     mounted () {
-        console.log(this.$store.state.catalog)
         var array = this.catalog;
         var spinner = document.querySelector('.loader');
         document.querySelector('body').style.backgroundColor = "#841424";
@@ -238,13 +236,11 @@ export default {
                     url: "https://localhost:44302/api/catalog",
                 })
                 .then(function(response) {
-                    console.log(response);
                     if (response.status === 200) {
                             setTimeout(function() {
                             self.loading = false;
                             var data = response.data;
                             self.$store.dispatch('addCatalog', data);
-                            console.log(data);
                             setTimeout(function() {
                                 spinner.classList.remove('spin');
                             }, 500)
