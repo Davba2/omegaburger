@@ -124,6 +124,7 @@
                         <input type="radio" v-model="pickedDelivery" :value="item.id"/>
                         {{item.name}}
                     </label>
+                    <br/>
                 </div>
                 {{pickedDelivery}}
             </div>

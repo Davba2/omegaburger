@@ -249,12 +249,13 @@ export default {
     margin: 15px 0 15px 0;
 }
 .section-input input {
-    -webkit-text-fill-color: rgb(191, 241, 210);
+    -webkit-text-fill-color: black;
     border: none;
     border-bottom: 2px solid white;
     border-radius: 0;
     background: inherit;
     outline: none;
+    font-size: 20px;
 }
 .section-input input:focus {
     outline-style: none;
