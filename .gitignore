@@ -1,7 +1,6 @@
 .DS_Store
 node_modules
-/dist
-
+/src/h
 # local env files
 .env.local
 .env.*.local
