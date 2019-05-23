@@ -77,7 +77,7 @@ export default {
             headers: { 
                 "Content-Type": "application/json",
             },
-            url: "/api/delivery"
+            url: "https://localhost:44302/api/delivery"
         }).then(function(response) {
             console.log(response)
             if (response.status === 200) {
@@ -97,7 +97,7 @@ export default {
                 headers: { 
                     "Content-Type": "application/json",
                 },
-                url: "/api/catalog",
+                url: "https://localhost:44302/api/catalog",
             })
             .then(function(response) {
                 console.log(response)
@@ -112,10 +112,12 @@ export default {
                             var drinks = self.getData(data, 2);
                             var snacks = self.getData(data, 3);
                             var sweat = self.getData(data, 4);
+                            var salad = self.getData(data, 5);
                             self.dispatchData(burgers, 'burger');
                             self.dispatchData(drinks, 'drinks');
                             self.dispatchData(snacks, 'snacks');
                             self.dispatchData(sweat, 'sweat');
+                            self.dispatchData(salad, 'salad');
                         }, 4400)
                         setTimeout(function() {
                             self.showLoad = false;

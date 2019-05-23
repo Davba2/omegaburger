@@ -19,18 +19,18 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <p class="nutritional-text">{{current.protein}}</p>
+                                            <p class="nutritional-text">{{current.protein.toFixed(1)}}</p>
                                         </td>
                                         <td>
-                                            <p class="nutritional-text">{{current.carbo}}</p>
+                                            <p class="nutritional-text">{{current.carbo.toFixed(1)}}</p>
                                         </td>
                                         <td>
-                                            <p class="nutritional-text">{{current.fat}}</p>
+                                            <p class="nutritional-text">{{current.fat.toFixed(1)}}</p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">
-                                            <p class="nutritional-text">{{current.cal}} кКал</p>
+                                            <p class="nutritional-text">{{current.cal.toFixed(1)}} кКал</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -60,7 +60,7 @@
                             class="img img-fluid" alt="Гамбургер" name="productImg"/>
                             <div class="facts-text">
                                 <p class="current-price">
-                                    Цена - {{current.price}} BYN
+                                    Цена - {{current.price.toFixed(1)}} BYN
                                 </p>
                             </div>
                             <div>

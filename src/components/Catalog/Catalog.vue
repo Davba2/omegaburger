@@ -70,16 +70,16 @@
                             @addToOrder='addToOrder'/>
                         </div>
                     </div>
-                    <div class="collapse salad" id="demo2">
-                        <div class="container text-center">
+                    <div class="collapse salad"  id="demo2">
+                        <div class="text-center">
                             <div class="catalog-items text-center">
                             <burger 
-                                v-bind:catalog="catalog['dishes']"
+                                v-bind:catalog="catalog['salad']"
                                 @addToOrder='addToOrder'/>
                             </div>
                         </div>
                     </div>
-                    <div class="collapse sweat" id="demo3">
+                    <div class="collapse sweat " id="demo3">
                             <div class="catalog-items text-center">
                             <burger 
                                 v-bind:catalog="catalog['sweat']"
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                     <div class="collapse drinks" id="demo4">
-                        <div class="container text-center">
+                        <div class="text-center">
                             <div class="catalog-items text-center">
                                     <burger 
                                     v-bind:catalog="catalog['drinks']"
@@ -96,10 +96,10 @@
                         </div>  
                     </div>
                     <div class="collapse dishes" id="demo5">
-                        <div class="container text-center">
+                        <div class="text-center">
                             <div class="catalog-items text-center">
                                     <burger 
-                                    v-bind:catalog="catalog['dishes']"
+                                    v-bind:catalog="catalog['snacks']"
                                     @addToOrder='addToOrder'/>
                                 </div>
                         </div> 
@@ -233,7 +233,7 @@ export default {
                     headers: { 
                         "Content-Type": "application/json",
                     },
-                    url: "https://localhost:44302/api/catalog",
+                    url: "/api/catalog",
                 })
                 .then(function(response) {
                     if (response.status === 200) {
@@ -372,7 +372,7 @@ export default {
     background:  #E8FDF5;
 }
 .sweat {
-    background: #001B44;
+    background: rgb(26, 106, 226);
 }
 .facts-text {
     font-size: 28px;
