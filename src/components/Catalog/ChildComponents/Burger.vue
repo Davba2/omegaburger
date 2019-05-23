@@ -6,15 +6,16 @@
                      <p class="desc-title">
                         {{item.name}}
                     </p>
-                    <a :href="'#'+item.name" :data-type="item.typeId" @click="fuckYou" class="plead" data-toggle="collapse">
-                        <img src="http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png" style="width: 75%"/>
+                    <a :href="'#'+item.name" :data-type="item.typeId" class="plead" data-toggle="collapse">
+                        <img src="http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png" :data-type="item.typeId" @click="fuckYou" style="width: 75%"/>
                     </a>
                 </div>
             </div>
         </div>
     <!--Отдельный компонент для просмотра бургера и с возможностью добавлять начинки-->
         <div ref='item-body'>
-           <C :current="current" @addToOrder='addToOrder' @updateCurrentNut='updateCurrentNut' :compNames="compNames"/>
+           <C :current="current" @addToOrder='addToOrder' :type="type"
+           @updateCurrentNut='updateCurrentNut' :compNames="compNames"/>
         </div>
     </div>
 </template>
@@ -30,7 +31,31 @@ export default {
             currentIt: 'comp',
             current: {},
             state: '',
-            component: {}
+            component: {},
+            typeData: [
+                {
+                    name: 'burger',
+                    id: 1
+                },
+                {
+                    name: 'drinks',
+                    id: 2
+                },
+                {
+                    name: 'snacks',
+                    id: 3
+                },
+                {
+                    name: 'sweat',
+                    id: 4
+                },
+                {
+                    name: 'salad',
+                    id: 5
+                },
+
+            ],
+            type: ''
         }
     },
     props: ['catalog'],
@@ -59,8 +84,17 @@ export default {
             this.$forceUpdate();
         },
         fuckYou: function (event) {
-
-            let dataType = event.target.dataset.type;
+            let target = event.target;
+            let dataType = target.dataset.type
+            var typeD = '';
+            this.typeData.forEach(function(item) {
+                if (+item.id === +dataType) {
+                    typeD = item.name;
+                    return;
+                }
+            });
+            this.type = typeD;
+            console.log(this.type)
             var name = event.target.closest('a').getAttribute("href").substring(1);
             if (this.state === name) {
                 $('html, body').animate({scrollTop: 300},'50');
@@ -73,11 +107,11 @@ export default {
                 this.current = item[0];
                 this.compoment = item[0].components;
                 if (this.component.length !== 0) {
-                    this.current.price = this.calculate('cost', this.compoment);
-                    this.current.cal = this.calculate('calories', this.compoment);
-                    this.current.fat = this.calculate('fat', this.compoment);
-                    this.current.carbo = this.calculate('сarbohydrates', this.compoment);
-                    this.current.protein = this.calculate('proteint', this.compoment);
+                    this.current.price = +this.calculate('cost', this.compoment);
+                    this.current.cal = +this.calculate('calories', this.compoment);
+                    this.current.fat = +this.calculate('fat', this.compoment);
+                    this.current.carbo = +this.calculate('сarbohydrates', this.compoment);
+                    this.current.protein = +this.calculate('proteint', this.compoment);
                     this.compNames = this.compoment.slice();
                     this.compNames.forEach(function(item) {
                         item.notInOrder = false;
@@ -109,7 +143,7 @@ export default {
                 return item[type];
             }).reduce(function(acc, item) {
                 return acc + item;
-            })
+            }).toFixed(1);
         }
     },
     computed: {

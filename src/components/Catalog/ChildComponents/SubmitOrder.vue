@@ -413,6 +413,9 @@ export default {
                 self.spinner = false;
                 if (response.data.statusCode.statusCode === 200) {
                     self.successSubmit = true;
+                    self.$store.state.orderCounter = 0;
+                    self.$store.state.order = [];
+                    self.$store.dispatch('reserCounter');
                 } else {
                     self.errorText = response.message;
                 }

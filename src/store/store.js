@@ -95,7 +95,7 @@ export const store = new Vuex.Store({
                 second: 0,
                 url: require('@/assets/1365596.svg')
             },
-            dishes: {
+            salad: {
                 first: 0,
                 second: 0,
                 url: require('@/assets/1408052.svg')
@@ -108,9 +108,16 @@ export const store = new Vuex.Store({
         },
         orderHistory: [],
         catalog: {},
-        delivery: []
+        delivery: [],
+        orderCounter: 0
     },
     mutations: {
+        resetCounter (state) {
+            Object.keys(state.counterData).forEach(function(item) {
+                item.first = 0;
+                item.second = 0;
+            });
+        },
         setUser (state, payload) {
             state.user.email = payload.email;
             state.user.logged = true;
@@ -184,6 +191,9 @@ export const store = new Vuex.Store({
         }
     },
     actions: {
+        resetCounter ({commit}) {
+            commit('resetCounter');
+        },
         logOut({ commit }) {
             commit('logOut');
         },
@@ -239,7 +249,7 @@ export const store = new Vuex.Store({
             }).reduce(function(acc, element) {
                 return acc + element;
             })
-            return sumPrice;
+            return sumPrice.toFixed(1);
 
         },
         getCounterData (state) {

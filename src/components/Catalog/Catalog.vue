@@ -16,7 +16,7 @@
                 >
                     <div class="row omega" style="margin-right: 0px">
                         <Counter v-bind:counterData="counterData.burger"/>
-                        <Counter v-bind:counterData="counterData.dishes"/>
+                        <Counter v-bind:counterData="counterData.salad"/>
                         <Counter v-bind:counterData="counterData.sweat"/> 
                         <Counter v-bind:counterData="counterData.drinks"/>  
                         <Counter v-bind:counterData="counterData.snacks"/> 
@@ -130,7 +130,8 @@ export default {
             array: [],
             isChanged: false,
             spinner: false,
-            loading: true
+            loading: true,
+            currentType: ''
            
     }},
     components: {

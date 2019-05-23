@@ -60,7 +60,7 @@
                             class="img img-fluid" alt="Гамбургер" name="productImg"/>
                             <div class="facts-text">
                                 <p class="current-price">
-                                    Цена - {{current.price.toFixed(1)}} BYN
+                                    Цена - {{+current.price.toFixed(1)}} BYN
                                 </p>
                             </div>
                             <div>
@@ -83,9 +83,8 @@
 
 
 export default {
-    props: ['current', 'compNames'],
+    props: ['current', 'compNames', 'type'],
     data() { return {
-      count: 0,
       order: '',
       checkedPicks: [],
       togglerPicks: this.compNames.slice(),
@@ -96,7 +95,6 @@ export default {
     methods: {
         addToOrder: function (event) {
             var self = this;
-
             var checkExistingComponents = this.togglerPicks.every(function(item) {
                 return item.notInOrder === true;
             })
@@ -109,7 +107,7 @@ export default {
             }
             var element = this.current;
             this.order = element;
-            this.count++;
+            this.$store.state.orderCounter++;
             let fuckme = [];
             for (var i = 0; i < this.togglerPicks.length; i++) {
                 fuckme[i] = this.togglerPicks[i]
@@ -118,12 +116,12 @@ export default {
             //     return item;
             // }).slice();
             this.$emit('addToOrder', {
-                id: this.count,
+                id: this.$store.state.orderCounter,
                 typeId: element.id,
                 price: element.price,
                 title: element.name,
                 picks: fuckme,
-                type: 'burger'
+                type: this.type
             });
             this.changed = !this.changed;
             this.togglerPicks = null;
