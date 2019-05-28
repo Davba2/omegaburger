@@ -13,7 +13,8 @@ export const store = new Vuex.Store({
             expired: null,
             phone: null,
             location: null,
-            Id: null
+            Id: null,
+            RoleId: null
         },
         loadScreen: true,
         commnets: [],
@@ -125,6 +126,7 @@ export const store = new Vuex.Store({
             state.user.refreshToken = payload.refreshToken;
             state.user.expired = payload.ExpiredIn;
             state.user.Id = payload.Id;
+            state.user.RoleId = payload.role;
         },
         ToOrder (state, payload) {
             state.userOrder.push(payload)

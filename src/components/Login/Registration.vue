@@ -119,13 +119,14 @@ export default {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*"
                 },
-                url: "/api/token",
+                url: "https://localhost:44302/api/token",
                 data: JSON.stringify(loginData)
             })
             .then((response) => {
             // Ответ был получен
             console.log(response)
             if (response.data.StatusCode.StatusCode === 200) {
+                console.log(response)
                 setTimeout(function() {
                     spinner.classList.remove('spin');
                     self.spinner = false;
@@ -140,7 +141,8 @@ export default {
                     accessToken: response.data.AccessToken,
                     refreshToken: response.data.RefreshToken,
                     expiredIn: response.data.ExpiredIn,
-                    Id: response.data.Id
+                    Id: response.data.Id,
+                    role: response.data.RoleId
                 };
                 this.$store.dispatch('registerUser', payload);
                 // console.log(response)

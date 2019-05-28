@@ -77,7 +77,7 @@ export default {
             headers: { 
                 "Content-Type": "application/json",
             },
-            url: "/api/delivery"
+            url: "https://localhost:44302/api/delivery"
         }).then(function(response) {
             console.log(response)
             if (response.status === 200) {
@@ -97,7 +97,7 @@ export default {
                 headers: { 
                     "Content-Type": "application/json",
                 },
-                url: "/api/catalog",
+                url: "https://localhost:44302/api/catalog",
             })
             .then(function(response) {
                 console.log(response)
