@@ -15,7 +15,8 @@
                         </li>
                         <div v-if="this.$store.state.user.RoleId === 1">
                             <li class="nav-item">
-                                <a href="https://localhost:44302/manage" class="admin">Панель</a>
+                                <a href="https://localhost:44302/manage"  
+                                target="_blank" class="admin">Панель</a>
                             </li>
                         </div>
                     </ul>
