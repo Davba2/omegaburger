@@ -66,11 +66,9 @@ export default {
                 data: data,
                 type: field
             });
-        }
-    },
-
-    mounted () {
-        var self = this;
+        },
+        loadCatalogAndDelivery: function() {
+            var self = this;
         this.$store.state.loadScreen = true;
         axios({
             method: "GET",
@@ -145,6 +143,11 @@ export default {
             })
         }
       
+        }
+    },
+
+    mounted () {
+        this.loadCatalogAndDelivery();
     }
 }
 </script>

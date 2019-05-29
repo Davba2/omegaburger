@@ -7,7 +7,7 @@
                         {{item.name}}
                     </p>
                     <a :href="'#'+item.name" :data-type="item.typeId" class="plead" data-toggle="collapse">
-                        <img src="http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png" :data-type="item.typeId" @click="fuckYou" style="width: 75%"/>
+                        <img src="http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png" :data-type="item.typeId" @click="setObj" style="width: 75%"/>
                     </a>
                 </div>
             </div>
@@ -83,7 +83,7 @@ export default {
             this.current = clone;
             this.$forceUpdate();
         },
-        fuckYou: function (event) {
+        setObj: function (event) {
             let target = event.target;
             let dataType = target.dataset.type
             var typeD = '';

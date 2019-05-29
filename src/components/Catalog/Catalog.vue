@@ -174,13 +174,13 @@ export default {
         },
         changeStickyBG: function (event) {
             if (document.querySelector('.catalog-body')) {
-                if (window.scrollY > 330) {
-                document.getElementById('stickyCounter')
-                .classList.add('sticky-active');
-            } else {
-                document.getElementById('stickyCounter')
-                .className = 'sticky'
-            }
+                    if (window.scrollY > 330) {
+                    document.getElementById('stickyCounter')
+                    .classList.add('sticky-active');
+                } else {
+                    document.getElementById('stickyCounter')
+                    .className = 'sticky'
+                }
             }
         },
         submitOrder: function () {

@@ -46,7 +46,7 @@
                 </div>
             </div>
 		</section>
-        <section id="facts" @mouseover="f">
+        <section id="facts" @mouseover="countNumber">
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="mb-4 col-12 col-md-4 col-lg-4 text-center merits">
@@ -316,10 +316,7 @@ export default {
             this.showSecond = true;
             this.showThird = true;
         },
-        compareRandom: function () {
-            return Math.random() - 0.5;
-        },
-        f: function () {
+        countNumber: function () {
             if (this.$route.path === '/main') {
                 if (!this.statToggle && window.scrollY > 1600) {
                 let duration = 4;
@@ -349,7 +346,7 @@ export default {
     },
     created() {
         let self = this;
-        window.addEventListener('scroll', this.f);
+        window.addEventListener('scroll', this.countNumber);
         let objArray = [
                 {
                     name: 'Олечка',
@@ -424,8 +421,8 @@ export default {
     mounted () {
         document.querySelector('body').style.backgroundColor = "#841424";
         this.$store.state.loadScreen = false;
-        //document.querySelector('#facts').addEventListener('hover', this.f);
-        //this.f();
+        //document.querySelector('#facts').addEventListener('hover', this.countNumber);
+        //this.countNumber();
         this.$nextTick(() => {
             this.map = L.map(this.$refs['mapElement']).setView([53.902237, 30.335839], 14);
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);

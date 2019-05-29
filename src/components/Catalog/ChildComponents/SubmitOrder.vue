@@ -291,6 +291,7 @@ export default {
             let paragraph = document.createElement('p');
             paragraph.textContent = 'Товары:';
             div.appendChild(paragraph);
+            var userLocation = this.userInfo.location;
             let ol = document.createElement('ol');
             this.goods.forEach(function(item) {
                 let li = document.createElement('li');
@@ -301,7 +302,8 @@ export default {
             let hr = document.createElement('hr');
             div.appendChild(hr);
             let time = document.createElement('p');
-            time.textContent = 'Дата заказа ' + new Date().toLocaleString();
+            var orderDate = new Date().toLocaleString();
+            time.textContent = 'Дата заказа ' + orderDate;
             let pickDelivery = document.createElement('p');
             pickDelivery.textContent = 'Доставка ' + this.pickedDeliveryName.toLowerCase();
             let productCount =  document.createElement('p');
@@ -395,6 +397,7 @@ export default {
             });
             var data = {
                 UserId: this.userInfo.Id,
+                Address: this.userInfo.location,
                 OrderId: 10,
                 DeliveryId: this.pickedDelivery,
                 Goods: this.goods
