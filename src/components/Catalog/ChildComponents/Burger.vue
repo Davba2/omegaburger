@@ -7,7 +7,8 @@
                         {{item.name}}
                     </p>
                     <a :href="'#'+item.name" :data-type="item.typeId" class="plead" data-toggle="collapse">
-                        <img src="http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png" :data-type="item.typeId" @click="setObj" style="width: 75%"/>
+                        <img :src="getImgUrl(item.imgURL)" :id="item.imgURL"
+                        :data-type="item.typeId" @click="setObj" style="width: 75%"/>
                     </a>
                 </div>
             </div>
@@ -15,7 +16,8 @@
     <!--Отдельный компонент для просмотра бургера и с возможностью добавлять начинки-->
         <div ref='item-body'>
            <C :current="current" @addToOrder='addToOrder' :type="type"
-           @updateCurrentNut='updateCurrentNut' :compNames="compNames"/>
+           @updateCurrentNut='updateCurrentNut' :compNames="compNames"
+           :catalog="catalog"/>
         </div>
     </div>
 </template>
@@ -64,6 +66,10 @@ export default {
         C
     },
     methods: {
+        getImgUrl(image) {
+            var images = require.context('@/assets/', false)
+            return images('./' + image)
+        },
         updateCurrentNut: function(data, toggle) {
             if (toggle === 'up') {
                 this.current.cal += data.calories;

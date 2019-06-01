@@ -56,22 +56,37 @@
                             <p class="plead title-item">
                                 {{current.name}}
                             </p>
-                            <img src="http://www.pngmart.com/files/5/Hamburger-PNG-Photos.png"
-                            class="img img-fluid" alt="Гамбургер" name="productImg"/>
+                            <img :src="getImgUrl(current.imgURL)"
+                            class="img img-fluid" alt="Гамбургер" :id="current.imgURL"/>
                             <div class="facts-text">
                                 <p class="current-price">
                                     Цена - {{+current.price.toFixed(1)}} BYN
                                 </p>
                             </div>
-                            <div>
-                                <button class="btn btn-danger" name="addProduct"
-                                :id="current.id"  v-on:click="addToOrder">Добавить</button>
-                            </div>
-                            <transition name="fade">
-                                <div v-if="componentExistingError" class="text-danger mt-1">
-                                    Добавьте хотя бы <kbd>1</kbd> компонент
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <button class="btn btn-danger" name="addProduct"
+                                    :id="current.id"  v-on:click="addToOrder">Добавить</button>
                                 </div>
-                            </transition>
+                                <div class="col-md-6 col-12">
+                                    <button class="btn btn-danger" name="printProduct"
+                                    :id="current.id"  v-on:click="printProduct">Распечатать</button>
+                                </div>
+                                <div class="col-md-12 col-12 mt-1 mb-1">
+                                    <select v-model="selected" class="compare">
+                                        <option v-for="subling in catalog" :id="subling.id">
+                                            {{subling.name}}
+                                        </option>
+                                    </select>
+                                    <button class="btn btn-danger" name="compareProduct"
+                                    :id="current.id"  v-on:click="compareProduct" style="margin-left: 12px;">Сравнить</button>
+                                </div>
+                                <transition name="fade">
+                                    <div v-if="componentExistingError" class="text-danger mt-1">
+                                        Добавьте хотя бы <kbd>1</kbd> компонент
+                                    </div>
+                                </transition>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -83,8 +98,9 @@
 
 
 export default {
-    props: ['current', 'compNames', 'type'],
+    props: ['current', 'compNames', 'type', 'catalog'],
     data() { return {
+      selected: this.catalog[0].name,
       order: '',
       checkedPicks: [],
       togglerPicks: this.compNames.slice(),
@@ -93,6 +109,369 @@ export default {
       componentExistingError: false
     }},
     methods: {
+        getImgUrl(image) {
+            var images = require.context('@/assets/', false)
+            return images('./' + image)
+        },
+        calComponent: function(data, type) {
+            let val = data.components.reduce(function(acc, item){
+                return acc + item[type]
+            }, 0);
+            return +val.toFixed(1);
+        },
+        compareProduct: function(event) {
+            let id;
+            var self = this;
+            this.catalog.forEach(function(item, index){
+                if (item.name === self.selected) {
+                    id = index;
+                }
+            });
+            var item = this.catalog[id];
+            var mywindow = window.open('', 'PRINT', 'height=800,width=800');
+            
+            mywindow.document.write(`<html>
+                <head>
+                <title>Сравнения продуктов</title>
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+                <style>
+                    * {
+                        text-align: center;
+                        color: black;
+                        font-family: Fira Code, monospace;
+                        font-size: 1.2rem;
+                    }
+                    .text-style {
+                        font-size: 52px;
+                        letter-spacing: 6px;
+                        line-height: 1;
+                        margin: 0;
+                        position: relative;
+                    }
+                    .top {
+                        background: white;
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        position: absolute;
+                        z-index: 1;
+                        -webkit-text-fill-color: transparent;
+                        text-fill-color: transparent;
+                        margin-left: 51px;
+                        margin-top: 1px;
+                        width: 600px;
+                    }
+                    .bottom {
+                         text-shadow: 
+                            2px 1px rgb(0, 0, 0),
+                            4px 2px rgb(0, 0, 0), 
+                            6px 4px rgb(0, 0, 0),
+                            8px 5px rgb(0, 0, 0),
+                            10px 6px rgb(0, 0, 0),
+                            12px 7px rgb(0, 0, 0),
+                            14px 8px rgb(0, 0, 0);
+                    }
+                    body {
+                        width: 700px;
+                        margin: 0 auto;
+                    }
+                    hr {
+                        border-top: 2px dotted black;
+                    }
+                    .content * {
+                        text-align: left;
+                    }
+                    time {
+                        text-align: left;
+                    }
+                    .col-md-4 {
+                        font-weight: 550;
+                    }
+                    div .img-fluid {
+                        width: 400px;
+                    }
+                    img {
+                        margin: 0 auto;
+                        width: 40%;
+                    }
+            </style>`);
+            mywindow.document.write('</head><body>');
+            mywindow.document.write(
+                '<h1>' + `
+                <div class="top text-style">Сравнение</div>
+                <div class="bottom text-style">Сравнение</div>
+                ` + 
+                '</h1>'
+            );
+            let div = document.createElement('div');
+            div.classList.add('container');
+            let Product = document.createElement('div');
+            Product.classList.add('col-md-12');
+            Product.classList.add('col-12');
+            Product.classList.add('data');
+            let price = this.calComponent(item, 'cost')
+            let cal = this.calComponent(item, 'calories');
+            let fat = this.calComponent(item, 'fat')
+            let proteint = this.calComponent(item, 'proteint')
+            let сarbohydrates = this.calComponent(item, 'сarbohydrates');
+            let imgUrl = this.current.imgURL;
+            let trueIMg = document.getElementById(imgUrl);
+            let imgUrl2 = item.imgURL;
+            let trueIMg2 = document.getElementById(imgUrl2);
+            Product.innerHTML = `
+                <br/>
+                <div class="row">
+                    <div class="col-md-4" style="border-bottom: 1px solid">
+                        ${this.current.name}
+                    </div>
+                    <div class="col-md-4">
+                        
+                    </div>
+                    <div class="col-md-4" style="border-bottom: 1px solid">
+                        ${item.name}
+                    </div>
+                </div>
+                <p>
+                    Цена
+                </p>
+                <div class="row">
+                    <div class="col-md-4">
+                        ${this.current.price.toFixed(1)}
+                    </div>
+                    <div class="col-md-4">
+                        <kbd>VS</kbd>
+                    </div>
+                    <div class="col-md-4">
+                        ${price}
+                    </div>
+                </div>
+                <p>
+                    Жиры
+                </p>
+                <div class="row">
+                    <div class="col-md-4">
+                        ${this.current.fat.toFixed(1)}
+                    </div>
+                    <div class="col-md-4">
+                        <kbd>VS</kbd>
+                    </div>
+                    <div class="col-md-4">
+                        ${fat}
+                    </div>
+                </div>
+                <p>
+                    Углеводы
+                </p>
+                <div class="row">
+                    <div class="col-md-4">
+                        ${this.current.carbo.toFixed(1)}
+                    </div>
+                    <div class="col-md-4">
+                        <kbd>VS</kbd>
+                    </div>
+                    <div class="col-md-4">
+                        ${сarbohydrates}
+                    </div>
+                </div>
+                <p>
+                    Белки
+                </p>
+                <div class="row">
+                    <div class="col-md-4">
+                        ${this.current.protein.toFixed(1)}
+                    </div>
+                    <div class="col-md-4">
+                        <kbd>VS</kbd>
+                    </div>
+                    <div class="col-md-4">
+                        ${proteint}
+                    </div>
+                </div>
+                <p>
+                    Калорийность
+                </p>
+                <div class="row">
+                    <div class="col-md-4">
+                        ${this.current.cal.toFixed(1)}
+                    </div>
+                    <div class="col-md-4">
+                        <kbd>VS</kbd>
+                    </div>
+                    <div class="col-md-4">
+                        ${cal}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="${trueIMg.src}"
+                            class="img img-fluid"/>
+                    </div>
+                    <div class="col-md-4">
+                        
+                    </div>
+                    <div class="col-md-4">
+                        <img src="${trueIMg2.src}"
+                            class="img img-fluid"/>
+                    </div>
+                </div>
+                
+            `;
+            div.appendChild(Product);
+            let img = document.createElement('img');
+            img.src = 'https://i.ibb.co/cwqw8tq/cut-logo-1.png';
+            img.style.cssFloat = 'right';
+            div.appendChild(img);
+            mywindow.document.body.appendChild(div);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            setTimeout(function() {
+                mywindow.focus();
+                mywindow.print();
+            }, 3000)
+            
+        },
+        printProduct: function(event) {
+            var mywindow = window.open('', 'PRINT', 'height=800,width=800');
+            
+            mywindow.document.write(`<html>
+                <head>
+                <title>Информация о продукте</title>
+                <style>
+                    * {
+                        text-align: center;
+                        color: black;
+                        font-family: Fira Code, monospace;
+                        font-size: 1.2rem;
+                    }
+                    .text-style {
+                        font-size: 52px;
+                        letter-spacing: 6px;
+                        line-height: 1;
+                        margin: 0;
+                        position: relative;
+                    }
+                    .top {
+                        background: white;
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        position: absolute;
+                        z-index: 1;
+                        -webkit-text-fill-color: transparent;
+                        text-fill-color: transparent;
+                        margin-left: 1px;
+                        margin-top: 1px;
+                        width: 600px;
+                    }
+                    .bottom {
+                         text-shadow: 
+                            2px 1px rgb(0, 0, 0),
+                            4px 2px rgb(0, 0, 0), 
+                            6px 4px rgb(0, 0, 0),
+                            8px 5px rgb(0, 0, 0),
+                            10px 6px rgb(0, 0, 0),
+                            12px 7px rgb(0, 0, 0),
+                            14px 8px rgb(0, 0, 0);
+                    }
+                    body {
+                        width: 600px;
+                        margin: 0 auto;
+                    }
+                    hr {
+                        border-top: 2px dotted black;
+                    }
+                    .content * {
+                        text-align: left;
+                    }
+                    time {
+                        text-align: left;
+                    }
+                    .table {
+                        width: 100%;
+                        padding: 0px;
+                        border-collapse: collapse;
+                    }
+                    .table th {
+                        text-align: center;
+                    }
+                    .table td {
+                        font-weight: normal;
+                        text-align: center;
+                        padding: 0.25rem 0;
+                        border-bottom: 1px solid;
+                        white-space: nowrap;
+                    }
+                    .main-img {
+                        width: 70%;
+                    }
+                    img {
+                        margin: 0 auto;
+                        width: 40%;
+                    }
+            </style>`);
+            mywindow.document.write('</head><body>');
+            mywindow.document.write(
+                '<h1>' + `
+                <div class="top text-style">Информация о ${this.current.name}</div>
+                <div class="bottom text-style">Информация о ${this.current.name}</div>
+                ` + 
+                '</h1>'
+            );
+            let div = document.createElement('div');
+            div.classList.add('content');
+            let paragraph = document.createElement('p');
+            let imgMain = document.createElement('img');
+            let hr = document.createElement('hr');
+            let imgUrl = this.current.imgURL;
+            let trueIMg = document.getElementById(imgUrl);
+            imgMain.src = trueIMg.src;
+            imgMain.classList.add('main-img');
+            div.appendChild(imgMain);
+            div.appendChild(hr);
+            paragraph.textContent = 'Компоненты:';
+            div.appendChild(paragraph);
+            let ol = document.createElement('ol');
+            this.current.components.forEach(function(item) {
+                let li = document.createElement('li');
+                li.textContent = item.name
+                ol.appendChild(li);
+            });
+            div.appendChild(ol);
+            div.appendChild(hr);
+            let table = document.createElement('table');
+            table.classList.add('table')
+            table.innerHTML = `
+            <tbody>
+                <tr>
+                    <th>Белки</th>
+                    <th>Углеводы</th>
+                    <th>Жиры</th>
+                    <th>Калорийность</th>
+                </tr>
+                <tr>
+                    <td>${this.current.protein.toFixed(1)}</td>
+                    <td>${this.current.carbo.toFixed(1)}</td>
+                    <td>${this.current.fat.toFixed(1)}</td>
+                    <td>${this.current.cal.toFixed(1)}</td>
+                </tr>
+            </tbody>
+            `;
+
+            let price = document.createElement('p');
+            price.textContent = 'Стоимость ' + this.current.price.toFixed(1) + ' BYN';
+            price.style.textAlign = 'center';
+            div.appendChild(table);
+            div.appendChild(price);
+            let img = document.createElement('img');
+            img.src = 'https://i.ibb.co/cwqw8tq/cut-logo-1.png';
+            img.style.cssFloat = 'right';
+            div.appendChild(img);
+            mywindow.document.body.appendChild(div);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            setTimeout(function() {
+                mywindow.focus();
+                mywindow.print();
+            }, 2000)
+        },
         addToOrder: function (event) {
             var self = this;
             var checkExistingComponents = this.togglerPicks.every(function(item) {
@@ -164,10 +543,8 @@ export default {
         checkedPicks: function () {
         }
     },
-    computed: {
-        // togglerPicks () {
-        //     return this.compNames.slice()
-        // }
+    mounted() {
+        
     }
 }
 </script>
@@ -287,5 +664,11 @@ label:active:after {
 div.text-danger {
     font-size: 1.4rem;
     border-bottom: 1px black solid;
+}
+.compare {
+    padding: 5px;
+    text-align: left;
+    margin: 0 auto;
+
 }
 </style>
