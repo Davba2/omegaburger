@@ -352,55 +352,43 @@ export default {
                     name: 'Олечка',
                     age: 23,
                     text: 'Невероятно вкусно! После того, как попробовала двойной гамбургер от шефа Пуарди, слюнки аж потекли.',
-                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1651240/3.0'
+                    url: 'https://image.flaticon.com/icons/svg/145/145844.svg'
                 },
                 {
                     name: 'Габриэль',
                     age: 17,
                     text: 'Очень вкусно!',
-                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1589348/3.0' 
+                    url: 'https://image.flaticon.com/icons/svg/145/145847.svg' 
                 },
                 {
                     name: 'Жора',
                     age: 23,
                     text: 'Че гамбургер не такой как на пичке?',
-                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/195855/3.0'
+                    url: 'https://image.flaticon.com/icons/svg/145/145849.svg'
                 },
                 {
                     name: 'Сергей',
                     age: 24,
                     text: 'Цены немного завышены, но в целом покупать здесь можно',
-                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1564343/3.0'
+                    url: 'https://image.flaticon.com/icons/svg/145/145845.svg'
                 },
                 {
                     name: 'Гоша',
                     age: 35,
                     text: 'Вкусно....',
-                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1817217/3.0'
+                    url: 'https://image.flaticon.com/icons/svg/145/145845.svg'
                 },
                 {
                     name: 'Вика',
                     age: 22,
                     text: 'Быстро доставили + всегда вкусно.',
-                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/143034/3.0'
+                    url: 'https://image.flaticon.com/icons/svg/145/145850.svg'
                 },
                 {
-                    name: 'Александр',
+                    name: 'Александра',
                     age: 28,
                     text: 'Рекомендую!',
-                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/109723/3.0'
-                },
-                {
-                    name: 'Вадим',
-                    age: 15,
-                    text: 'Ха-ха, неплохая сеть питания))',
-                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1597801/3.0'
-                },
-                {
-                    name: 'Никита',
-                    age: 33,
-                    text: 'Нормальные закуски. Но цены не очень',
-                    url: 'https://static-cdn.jtvnw.net/emoticons/v1/1611444/3.0'
+                    url: 'https://image.flaticon.com/icons/svg/145/145850.svg'
                 }
         ];
         //this.interval = setInterval(() => this.toggleComments(), 11000);
@@ -486,7 +474,7 @@ html body {
 }
 #overlay-fixed {
     height: 610px;
-    background: url("https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-653433.jpg");
+    background: url("https://w.wallhaven.cc/full/83/wallhaven-83okz2.jpg");
     color:#fff;
 }
 .carousel-image-1 {
